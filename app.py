@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from dotenv import load_dotenv
 import os
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Triage api running"
+    return render_template("index.html")
 
 @app.route('/predict', methods=['POST'])
 def predict():

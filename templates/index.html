@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Router</title>
+</head>
+<body>
+
+<h2>Patient Router</h2>
+
+<label>Symptoms (comma separated):</label><br> <input id="symptoms" placeholder="e.g. chest_pain, breathlessness"><br><br>
+<label>Age:</label><br> <input id="age" type="number"><br><br>
+<label>Duration: (days):</label><br> <input id="duration" type="number"><br><br>
+
+<button onclick="predict()">Predict</button>
+
+<h3>Result:</h3>
+<pre id="result"></pre>
+
+<script>
+ async function predict() {
+     const symptoms = document.getElementById('symptoms').value
+         .split(",")
+         .map(s => s.trim());
+
+     const age = Number(document.getElementById('age').value);
+     const duration = Number(document.getElementById('duration').value);
+
+     const res = await fetch("/predict", {
+         method: 'POST',
+         headers: {
+             "Content-Type": "application/json"
+         },
+         body: JSON.stringify({
+             symptoms: symptoms,
+             age: age,
+             duration: duration
+         })
+     });
+
+     const data = await res.json();
+     document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+ }
+</script>
+
+</body>
+</html>
