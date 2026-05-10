@@ -1,0 +1,9 @@
+# idea specific
+.idea/
+
+# python
+venv/
+__pycache__/
+
+# secrets
+.env
