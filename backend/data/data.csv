@@ -1,0 +1,501 @@
+age,duration,symptoms,vitals,gender,priority,department
+55,4,"breathlessness, fatigue","hr_high, bp_high",female,high,cardiology
+58,3,"diarrhea, nausea, fever",normal,female,low,gastrology
+36,6,"dizziness, blurred vision","bp_low, bp_high",male,medium,neurology
+21,7,"fever, fatigue, blurred vision","temp_high, hr_high",male,low,pulmonology
+65,4,"fatigue, chest pain","hr_high, bp_high",female,high,cardiology
+23,2,"breathlessness, fever","temp_high, hr_high",female,medium,pulmonology
+49,26,"swelling, joint pain, chest pain",normal,female,medium,orthopedics
+84,15,"joint pain, stiffness, headache",hr_high,male,medium,orthopedics
+79,2,"dizziness, headache","bp_high, bp_low, hr_low",male,medium,neurology
+44,26,"stiffness, swelling",normal,male,low,orthopedics
+21,4,"vomiting, diarrhea, body pain",normal,male,low,gastrology
+32,5,"body pain, fever","temp_high, hr_high",male,low,general
+52,19,"limited movement, joint pain",hr_low,male,low,orthopedics
+30,4,"blurred vision, dizziness, abdominal pain","bp_high, bp_low",male,medium,neurology
+67,11,"limited movement, swelling",normal,male,low,orthopedics
+52,2,"fever, weakness",temp_high,male,low,general
+54,4,"body pain, fever, nausea",temp_high,male,low,general
+47,1,"weakness, body pain",temp_high,male,low,general
+46,1,"diarrhea, abdominal pain",normal,female,low,gastrology
+44,2,"cough, fever, diarrhea","temp_high, hr_high",female,low,pulmonology
+58,2,"fatigue, breathlessness","hr_high, bp_high",female,high,cardiology
+59,3,"blurred vision, dizziness","bp_low, bp_high",female,medium,neurology
+45,1,"weakness, fever","temp_high, bp_high",male,medium,general
+40,27,"stiffness, limited movement",normal,female,low,orthopedics
+70,3,"sweating, chest pain, vomiting","bp_high, hr_high",female,high,cardiology
+53,4,"cough, fever","temp_high, hr_high",male,low,pulmonology
+66,5,"cough, fatigue","hr_high, temp_high",female,medium,pulmonology
+45,1,"vomiting, nausea",normal,female,low,gastrology
+35,5,"body pain, fever",temp_high,male,low,general
+25,5,"weakness, fatigue","temp_high, hr_high",female,low,general
+52,8,"confusion, dizziness, stiffness","bp_high, bp_low",male,medium,neurology
+59,3,"body pain, fatigue",temp_high,male,low,general
+79,5,"breathlessness, sweating","hr_high, bp_high",female,high,cardiology
+16,4,"fever, weakness",temp_high,male,low,general
+52,5,"fever, fatigue","temp_high, hr_high",male,low,pulmonology
+45,2,"breathlessness, fever, dizziness","temp_high, hr_high",male,medium,pulmonology
+78,5,"chest pain, breathlessness","bp_high, hr_high, temp_low",male,high,cardiology
+70,10,"stiffness, joint pain",normal,male,low,orthopedics
+66,3,"chest pain, breathlessness, confusion","hr_high, bp_high",male,high,cardiology
+44,1,"headache, confusion","bp_low, bp_high",male,medium,neurology
+54,4,"abdominal pain, vomiting",normal,female,low,gastrology
+72,4,"breathlessness, chest pain","bp_high, hr_high",male,high,cardiology
+65,4,"chest pain, sweating","bp_high, hr_high",male,high,cardiology
+30,10,"blurred vision, headache","bp_low, bp_high",female,medium,neurology
+65,13,"swelling, limited movement, joint pain",normal,female,low,orthopedics
+67,10,"dizziness, blurred vision","bp_low, bp_high",female,medium,neurology
+78,11,"limited movement, stiffness",normal,male,low,orthopedics
+33,4,"weakness, body pain",temp_high,female,low,general
+54,5,"abdominal pain, vomiting",temp_low,male,low,gastrology
+36,5,"body pain, fever",temp_high,female,low,general
+55,5,"body pain, fever",temp_high,female,low,general
+56,2,"vomiting, abdominal pain",normal,male,low,gastrology
+31,1,"fever, breathlessness","temp_high, hr_high, bp_high",male,high,pulmonology
+56,10,"stiffness, joint pain",bp_low,male,low,orthopedics
+63,3,"breathlessness, fever","hr_high, temp_high",male,high,pulmonology
+51,3,"sweating, fatigue","bp_high, hr_high, temp_low",female,medium,cardiology
+31,4,"fatigue, weakness",temp_high,male,low,general
+77,5,"headache, confusion","bp_low, bp_high",female,medium,neurology
+49,3,"chest pain, breathlessness","bp_high, hr_high",female,high,cardiology
+62,1,"fatigue, sweating","hr_high, bp_high",female,high,cardiology
+27,5,"fatigue, fever","temp_high, hr_low",female,low,general
+80,19,"joint pain, stiffness",normal,female,low,orthopedics
+25,3,"diarrhea, nausea",normal,male,low,gastrology
+49,10,"headache, blurred vision, abdominal pain","bp_low, bp_high",female,medium,neurology
+65,5,"fatigue, sweating, swelling","bp_high, hr_high",male,high,cardiology
+67,7,"blurred vision, dizziness","bp_high, bp_low, temp_high",male,medium,neurology
+22,3,"vomiting, abdominal pain",normal,male,low,gastrology
+57,3,"body pain, weakness",temp_high,female,low,general
+67,10,"joint pain, swelling",hr_high,male,medium,orthopedics
+45,2,"fatigue, sweating","bp_high, hr_high",male,medium,cardiology
+55,29,"swelling, stiffness",bp_high,male,medium,orthopedics
+64,7,"headache, confusion","bp_low, bp_high",male,medium,neurology
+22,2,"cough, fever","temp_high, hr_high",female,low,pulmonology
+49,1,"chest pain, breathlessness, blurred vision","bp_high, hr_high",female,high,cardiology
+30,7,"blurred vision, confusion","bp_high, bp_low",female,medium,neurology
+51,30,"joint pain, swelling",normal,female,low,orthopedics
+44,8,"swelling, joint pain",temp_low,female,low,orthopedics
+22,1,"weakness, fever, diarrhea",temp_high,male,low,general
+36,6,"fatigue, cough","hr_high, temp_high",male,low,pulmonology
+20,2,"fever, fatigue","temp_high, hr_high",male,low,pulmonology
+83,29,"stiffness, swelling",normal,male,low,orthopedics
+47,3,"abdominal pain, vomiting",normal,male,low,gastrology
+41,5,"dizziness, headache","bp_high, bp_low",male,medium,neurology
+49,1,"confusion, headache, swelling","bp_low, bp_high",female,medium,neurology
+49,3,"nausea, abdominal pain",normal,male,low,gastrology
+67,5,"breathlessness, fatigue, swelling","temp_high, hr_high",female,high,pulmonology
+63,3,"cough, fever","temp_high, hr_high",male,medium,pulmonology
+64,4,"headache, confusion","bp_low, bp_high",female,medium,neurology
+78,29,"stiffness, limited movement",normal,female,low,orthopedics
+66,14,"limited movement, joint pain",temp_high,female,low,orthopedics
+57,3,"chest pain, fatigue, blurred vision","bp_high, hr_high",female,high,cardiology
+60,4,"breathlessness, fever, vomiting","temp_high, hr_high",female,medium,pulmonology
+45,5,"breathlessness, chest pain, diarrhea","hr_high, bp_high",male,high,cardiology
+61,4,"fatigue, sweating","hr_high, bp_high",female,high,cardiology
+52,3,"diarrhea, nausea",normal,male,low,gastrology
+37,1,"diarrhea, nausea, vomiting",normal,male,low,gastrology
+43,9,"stiffness, swelling",normal,male,low,orthopedics
+42,5,"weakness, fever",temp_high,female,low,general
+38,3,"vomiting, diarrhea",hr_high,female,low,gastrology
+42,7,"breathlessness, fatigue","temp_high, hr_high",male,medium,pulmonology
+67,7,"stiffness, swelling",normal,male,low,orthopedics
+71,21,"stiffness, limited movement, joint pain",normal,male,low,orthopedics
+80,3,"breathlessness, chest pain, nausea","bp_high, hr_high",male,high,cardiology
+50,5,"fever, weakness, joint pain",temp_high,female,low,general
+45,24,"stiffness, limited movement",hr_low,female,low,orthopedics
+62,1,"fever, breathlessness","temp_high, hr_high",female,high,pulmonology
+57,7,"fever, breathlessness","hr_high, temp_high",female,medium,pulmonology
+62,5,"sweating, breathlessness, joint pain","bp_high, hr_high",male,high,cardiology
+23,2,"weakness, fever, nausea",temp_high,female,low,general
+15,1,"body pain, fever, diarrhea","temp_high, bp_high",male,medium,general
+47,4,"abdominal pain, diarrhea",normal,male,low,gastrology
+47,9,"stiffness, joint pain",temp_high,male,low,orthopedics
+52,29,"stiffness, joint pain",temp_low,male,low,orthopedics
+64,10,"dizziness, blurred vision","bp_low, bp_high",male,medium,neurology
+67,7,"stiffness, limited movement, breathlessness",normal,male,medium,orthopedics
+66,2,"dizziness, headache, abdominal pain","bp_high, bp_low",female,medium,neurology
+53,9,"confusion, blurred vision","bp_low, bp_high",male,medium,neurology
+72,2,"confusion, dizziness","bp_low, bp_high, hr_low",male,medium,neurology
+31,1,"abdominal pain, diarrhea",temp_high,female,low,gastrology
+24,7,"cough, breathlessness","temp_high, hr_high",male,medium,pulmonology
+60,2,"diarrhea, abdominal pain",normal,female,low,gastrology
+76,9,"blurred vision, dizziness, headache","bp_low, bp_high",female,medium,neurology
+26,2,"body pain, fatigue",temp_high,male,low,general
+45,3,"fatigue, fever","temp_high, hr_high",male,low,pulmonology
+50,4,"abdominal pain, diarrhea, breathlessness",normal,female,medium,gastrology
+44,30,"limited movement, swelling",normal,male,low,orthopedics
+27,1,"weakness, body pain",temp_high,female,low,general
+27,5,"body pain, fatigue",temp_high,female,low,general
+79,23,"swelling, stiffness",temp_high,female,low,orthopedics
+27,7,"breathlessness, cough","temp_high, hr_high",male,medium,pulmonology
+60,1,"chest pain, sweating","bp_high, hr_high",male,high,cardiology
+55,1,"diarrhea, abdominal pain",normal,male,low,gastrology
+31,7,"headache, dizziness","bp_high, bp_low",male,medium,neurology
+63,3,"blurred vision, dizziness, headache","bp_low, bp_high, temp_low",female,medium,neurology
+27,5,"breathlessness, fever","hr_high, temp_high, bp_low",female,medium,pulmonology
+50,4,"chest pain, sweating","hr_high, bp_high",male,high,cardiology
+72,4,"sweating, breathlessness","hr_high, bp_high",male,high,cardiology
+58,7,"cough, breathlessness","hr_high, temp_high",female,medium,pulmonology
+29,7,"cough, fever, nausea","hr_high, temp_high",male,low,pulmonology
+65,4,"dizziness, headache, confusion","bp_high, bp_low",female,medium,neurology
+58,3,"breathlessness, fatigue","bp_high, hr_high",male,high,cardiology
+65,14,"stiffness, limited movement, abdominal pain",normal,female,low,orthopedics
+22,2,"cough, fatigue","hr_high, temp_high",female,low,pulmonology
+44,8,"headache, dizziness, cough","bp_low, bp_high",male,medium,neurology
+57,5,"nausea, vomiting",normal,female,low,gastrology
+45,21,"limited movement, joint pain",normal,female,low,orthopedics
+20,6,"breathlessness, fatigue, nausea","hr_high, temp_high",female,medium,pulmonology
+73,8,"confusion, dizziness","bp_high, bp_low, hr_low",female,medium,neurology
+78,9,"headache, blurred vision","bp_high, bp_low, temp_high",male,medium,neurology
+37,2,"vomiting, diarrhea",normal,male,low,gastrology
+40,26,"swelling, stiffness",hr_high,male,low,orthopedics
+58,4,"abdominal pain, nausea",normal,male,low,gastrology
+56,3,"fever, body pain","temp_high, hr_low",male,low,general
+75,28,"joint pain, swelling, diarrhea",normal,male,low,orthopedics
+63,2,"vomiting, nausea, joint pain",normal,male,low,gastrology
+24,2,"fever, breathlessness, joint pain","temp_high, hr_high",male,medium,pulmonology
+70,3,"confusion, dizziness","bp_high, bp_low",male,medium,neurology
+67,4,"chest pain, breathlessness","hr_high, bp_high, temp_high",female,high,cardiology
+31,4,"fever, weakness","temp_high, hr_high",female,low,general
+49,5,"nausea, abdominal pain, joint pain",normal,female,low,gastrology
+75,1,"chest pain, sweating, breathlessness","hr_high, bp_high",female,high,cardiology
+77,9,"blurred vision, dizziness","bp_high, bp_low",female,medium,neurology
+34,5,"fever, fatigue",temp_high,female,low,general
+40,4,"vomiting, abdominal pain, sweating",hr_high,female,low,gastrology
+60,1,"fever, body pain",temp_high,male,low,general
+62,4,"blurred vision, dizziness, sweating","bp_low, bp_high",male,medium,neurology
+41,6,"blurred vision, headache","bp_high, bp_low",female,medium,neurology
+35,4,"fever, weakness",temp_high,female,low,general
+72,8,"headache, dizziness, stiffness","bp_low, bp_high, temp_low",male,medium,neurology
+56,1,"diarrhea, nausea",normal,male,low,gastrology
+42,3,"fever, fatigue",temp_high,male,low,general
+49,2,"chest pain, breathlessness, stiffness","hr_high, bp_high",female,high,cardiology
+66,2,"breathlessness, sweating","bp_high, hr_high",female,high,cardiology
+43,5,"confusion, dizziness","bp_low, bp_high",female,medium,neurology
+59,1,"fatigue, chest pain","hr_high, bp_high",male,high,cardiology
+45,1,"fatigue, chest pain","hr_high, bp_high",male,high,cardiology
+63,7,"dizziness, blurred vision","bp_low, bp_high",male,medium,neurology
+21,4,"cough, fatigue, nausea","temp_high, hr_high",male,low,pulmonology
+31,1,"fever, body pain, sweating",temp_high,male,low,general
+61,5,"blurred vision, dizziness","bp_low, bp_high",female,medium,neurology
+16,5,"fever, weakness, confusion",temp_high,male,low,general
+25,1,"body pain, weakness","temp_high, hr_high",female,low,general
+25,4,"fever, fatigue",temp_high,male,low,general
+26,4,"fatigue, fever, joint pain","hr_high, temp_high",male,low,pulmonology
+22,5,"fatigue, body pain",temp_high,male,low,general
+45,6,"confusion, blurred vision, cough","bp_high, bp_low",male,medium,neurology
+69,2,"fever, breathlessness, blurred vision","temp_high, hr_high",male,high,pulmonology
+24,2,"diarrhea, abdominal pain",temp_high,male,low,gastrology
+16,5,"fever, weakness",temp_high,female,low,general
+55,6,"blurred vision, confusion","bp_high, bp_low",male,medium,neurology
+78,15,"joint pain, limited movement, fever",normal,male,low,orthopedics
+26,2,"vomiting, nausea, blurred vision",normal,female,low,gastrology
+45,4,"breathlessness, chest pain","hr_high, bp_high",male,high,cardiology
+61,4,"breathlessness, cough","hr_high, temp_high",male,high,pulmonology
+55,5,"diarrhea, vomiting",temp_low,male,low,gastrology
+58,19,"joint pain, stiffness",hr_low,female,low,orthopedics
+67,25,"swelling, joint pain",normal,female,low,orthopedics
+55,1,"breathlessness, sweating","bp_high, hr_high",male,high,cardiology
+59,4,"nausea, abdominal pain, dizziness",hr_high,female,low,gastrology
+55,8,"dizziness, blurred vision, fatigue","bp_high, bp_low",male,medium,neurology
+55,3,"nausea, vomiting",normal,female,low,gastrology
+55,13,"joint pain, swelling",normal,female,low,orthopedics
+35,2,"fever, body pain, swelling","temp_high, hr_high",male,low,general
+47,5,"fatigue, chest pain","hr_high, bp_high",female,high,cardiology
+39,6,"cough, fatigue, joint pain","hr_high, temp_high",female,low,pulmonology
+56,4,"fever, cough","temp_high, hr_high",female,low,pulmonology
+49,4,"nausea, vomiting",bp_low,male,low,gastrology
+69,1,"breathlessness, cough","hr_high, temp_high",male,high,pulmonology
+37,5,"diarrhea, vomiting",normal,female,low,gastrology
+36,7,"cough, fever","hr_high, temp_high",male,low,pulmonology
+59,25,"limited movement, stiffness",bp_high,male,medium,orthopedics
+74,4,"chest pain, breathlessness, cough","hr_high, bp_high",female,high,cardiology
+28,1,"abdominal pain, vomiting",normal,female,low,gastrology
+19,3,"fever, weakness, breathlessness",temp_high,male,medium,general
+80,29,"limited movement, swelling",normal,male,low,orthopedics
+75,27,"stiffness, limited movement, weakness",normal,female,low,orthopedics
+67,3,"cough, breathlessness","temp_high, hr_high",male,high,pulmonology
+64,4,"fever, cough","hr_high, temp_high",female,medium,pulmonology
+35,7,"cough, breathlessness","temp_high, hr_high",male,medium,pulmonology
+45,3,"fever, weakness",temp_high,male,low,general
+64,5,"fatigue, sweating, fever","hr_high, bp_high",male,high,cardiology
+42,2,"nausea, abdominal pain",normal,female,low,gastrology
+52,2,"cough, breathlessness, body pain","hr_high, temp_high",male,medium,pulmonology
+67,7,"fatigue, breathlessness","temp_high, hr_high",female,high,pulmonology
+28,3,"fever, body pain, swelling",temp_high,male,low,general
+79,4,"sweating, fatigue, vomiting","bp_high, hr_high",female,high,cardiology
+44,4,"fatigue, body pain",temp_high,male,low,general
+41,1,"headache, dizziness","bp_high, bp_low",female,medium,neurology
+65,1,"fatigue, cough, diarrhea","temp_high, hr_high",female,medium,pulmonology
+76,8,"dizziness, headache","bp_low, bp_high",male,medium,neurology
+73,9,"blurred vision, headache","bp_high, bp_low",female,medium,neurology
+52,4,"fatigue, body pain",temp_high,male,low,general
+60,3,"blurred vision, headache","bp_high, bp_low",male,medium,neurology
+51,5,"cough, fatigue","temp_high, hr_high",male,low,pulmonology
+24,2,"diarrhea, abdominal pain, body pain",temp_high,female,low,gastrology
+31,2,"nausea, vomiting",normal,female,low,gastrology
+39,10,"blurred vision, confusion, weakness","bp_high, bp_low, temp_low",female,medium,neurology
+60,2,"fever, cough, weakness","hr_high, temp_high",female,low,pulmonology
+39,5,"fever, body pain, vomiting",temp_high,female,low,general
+59,4,"nausea, diarrhea, dizziness",normal,male,low,gastrology
+81,8,"swelling, joint pain",temp_low,male,low,orthopedics
+49,1,"weakness, fever, chest pain","temp_high, hr_low",female,medium,general
+64,1,"breathlessness, sweating, nausea","bp_high, hr_high",male,high,cardiology
+67,8,"confusion, blurred vision","bp_high, bp_low, temp_low",male,medium,neurology
+53,7,"headache, blurred vision","bp_high, bp_low",female,medium,neurology
+54,3,"nausea, abdominal pain",normal,female,low,gastrology
+73,17,"limited movement, joint pain, confusion",normal,female,low,orthopedics
+55,5,"vomiting, diarrhea",temp_high,female,low,gastrology
+63,1,"chest pain, fatigue","hr_high, bp_high",male,high,cardiology
+22,2,"vomiting, abdominal pain",normal,male,low,gastrology
+70,1,"cough, fever, nausea","hr_high, temp_high",female,medium,pulmonology
+24,1,"cough, fever, stiffness","hr_high, temp_high",female,low,pulmonology
+42,10,"blurred vision, dizziness","bp_low, bp_high",female,medium,neurology
+31,1,"abdominal pain, vomiting",bp_high,female,medium,gastrology
+49,2,"sweating, breathlessness","hr_high, bp_high",female,high,cardiology
+51,5,"headache, confusion, sweating","bp_low, bp_high",male,medium,neurology
+59,7,"fever, fatigue","hr_high, temp_high",female,low,pulmonology
+54,5,"chest pain, fatigue","hr_high, bp_high",male,high,cardiology
+67,16,"swelling, limited movement",normal,male,low,orthopedics
+52,14,"swelling, joint pain",temp_low,male,low,orthopedics
+38,3,"fever, weakness",temp_high,female,low,general
+32,7,"breathlessness, fever","hr_high, temp_high",male,medium,pulmonology
+51,1,"blurred vision, dizziness","bp_high, bp_low",female,medium,neurology
+58,1,"fatigue, chest pain, weakness","bp_high, hr_high",male,high,cardiology
+76,11,"stiffness, joint pain",bp_low,female,low,orthopedics
+36,5,"diarrhea, vomiting, cough",normal,female,low,gastrology
+21,1,"vomiting, diarrhea, body pain",temp_low,male,low,gastrology
+47,7,"fever, cough","temp_high, hr_high",male,low,pulmonology
+41,1,"fever, breathlessness","temp_high, hr_high",female,medium,pulmonology
+62,3,"chest pain, sweating","bp_high, hr_high",female,high,cardiology
+37,3,"nausea, diarrhea",normal,male,low,gastrology
+52,3,"weakness, fever, chest pain",temp_high,male,medium,general
+54,11,"swelling, joint pain",normal,female,low,orthopedics
+45,4,"nausea, diarrhea",normal,male,low,gastrology
+57,5,"cough, breathlessness","temp_high, hr_high, bp_low",female,medium,pulmonology
+42,2,"abdominal pain, nausea, limited movement",normal,female,low,gastrology
+51,2,"fever, weakness",temp_high,male,low,general
+73,27,"swelling, stiffness",normal,male,low,orthopedics
+76,8,"joint pain, swelling",normal,female,low,orthopedics
+52,5,"breathlessness, sweating","hr_high, bp_high",male,high,cardiology
+43,7,"fever, breathlessness, chest pain","temp_high, hr_high",female,high,pulmonology
+45,3,"vomiting, abdominal pain",normal,male,low,gastrology
+50,1,"chest pain, breathlessness","hr_high, bp_high, temp_low",male,high,cardiology
+80,9,"dizziness, headache","bp_high, bp_low, hr_low",male,medium,neurology
+37,3,"headache, dizziness","bp_low, bp_high",female,medium,neurology
+34,5,"confusion, blurred vision","bp_low, bp_high",male,medium,neurology
+71,3,"sweating, breathlessness","hr_high, bp_high",male,high,cardiology
+32,3,"weakness, fatigue",temp_high,female,low,general
+25,3,"weakness, fatigue",temp_high,male,low,general
+55,8,"dizziness, headache","bp_high, bp_low",male,medium,neurology
+62,7,"breathlessness, fever, weakness","temp_high, hr_high",male,high,pulmonology
+43,7,"fever, breathlessness, abdominal pain","temp_high, hr_high",male,medium,pulmonology
+58,27,"swelling, joint pain",normal,female,low,orthopedics
+34,3,"confusion, headache, fever","bp_high, bp_low, hr_low",male,medium,neurology
+48,6,"cough, fatigue","temp_high, hr_high",female,low,pulmonology
+70,3,"fatigue, chest pain","bp_high, hr_high",male,high,cardiology
+72,6,"confusion, dizziness","bp_low, bp_high",male,medium,neurology
+54,3,"fatigue, sweating","bp_high, hr_high",female,medium,cardiology
+62,22,"joint pain, limited movement",normal,female,low,orthopedics
+50,9,"blurred vision, headache","bp_low, bp_high",male,medium,neurology
+76,4,"headache, confusion","bp_high, bp_low",male,medium,neurology
+75,2,"chest pain, breathlessness","bp_high, hr_high",female,high,cardiology
+66,19,"joint pain, swelling",normal,female,low,orthopedics
+56,4,"weakness, body pain",temp_high,female,low,general
+73,9,"blurred vision, dizziness","bp_high, bp_low",female,medium,neurology
+54,2,"sweating, chest pain, confusion","hr_high, bp_high",male,high,cardiology
+50,3,"cough, fever, limited movement","hr_high, temp_high",male,low,pulmonology
+58,3,"abdominal pain, diarrhea, limited movement",temp_low,male,low,gastrology
+40,4,"fever, cough, body pain","temp_high, hr_high, bp_low",female,low,pulmonology
+72,3,"breathlessness, fatigue","hr_high, bp_high",female,high,cardiology
+58,3,"blurred vision, headache","bp_low, bp_high",male,medium,neurology
+60,4,"chest pain, breathlessness, blurred vision","hr_high, bp_high",male,high,cardiology
+53,5,"sweating, breathlessness","bp_high, hr_high",female,high,cardiology
+26,2,"fatigue, fever","temp_high, bp_high",female,medium,general
+64,4,"vomiting, abdominal pain",temp_high,male,low,gastrology
+58,2,"fatigue, weakness","temp_high, bp_low",female,low,general
+68,1,"chest pain, fatigue, vomiting","hr_high, bp_high",male,high,cardiology
+37,5,"fatigue, breathlessness","temp_high, hr_high",female,medium,pulmonology
+68,18,"joint pain, stiffness",normal,male,low,orthopedics
+54,2,"weakness, fever","temp_high, bp_high",male,medium,general
+52,3,"headache, confusion","bp_high, bp_low",male,medium,neurology
+83,12,"limited movement, stiffness",normal,male,low,orthopedics
+47,2,"blurred vision, dizziness","bp_low, bp_high",female,medium,neurology
+24,5,"vomiting, diarrhea",hr_high,female,low,gastrology
+66,1,"fatigue, fever, body pain","temp_high, hr_high, bp_high",female,high,pulmonology
+39,3,"fatigue, weakness",temp_high,male,low,general
+59,5,"weakness, fatigue","temp_high, bp_low",male,low,general
+79,3,"chest pain, sweating","hr_high, bp_high",male,high,cardiology
+43,1,"body pain, weakness","temp_high, bp_low",female,low,general
+48,3,"diarrhea, abdominal pain",normal,female,low,gastrology
+47,8,"headache, dizziness","bp_high, bp_low",male,medium,neurology
+79,19,"swelling, stiffness",normal,female,low,orthopedics
+34,1,"weakness, fatigue","temp_high, bp_low",female,low,general
+56,6,"blurred vision, dizziness","bp_low, bp_high, temp_low",female,medium,neurology
+57,1,"body pain, weakness, stiffness",temp_high,male,low,general
+37,4,"fever, fatigue","temp_high, hr_high",female,low,pulmonology
+41,26,"joint pain, stiffness, headache",normal,female,low,orthopedics
+43,5,"nausea, diarrhea",normal,male,low,gastrology
+52,17,"swelling, joint pain",hr_high,female,low,orthopedics
+63,19,"stiffness, limited movement",normal,male,low,orthopedics
+49,2,"fever, body pain",temp_high,female,low,general
+48,6,"headache, dizziness","bp_low, bp_high, temp_low",female,medium,neurology
+76,13,"swelling, joint pain",hr_low,female,low,orthopedics
+61,3,"dizziness, headache","bp_high, bp_low",male,medium,neurology
+57,22,"limited movement, stiffness, blurred vision",normal,male,low,orthopedics
+30,4,"fever, weakness",temp_high,male,low,general
+50,4,"fever, cough","temp_high, hr_high",male,low,pulmonology
+61,5,"nausea, abdominal pain",normal,female,low,gastrology
+29,5,"fever, cough, sweating","temp_high, hr_high",male,low,pulmonology
+38,10,"dizziness, blurred vision, vomiting","bp_high, bp_low",female,medium,neurology
+77,11,"joint pain, limited movement, fatigue",normal,male,low,orthopedics
+75,9,"blurred vision, dizziness","bp_high, bp_low, hr_low",female,medium,neurology
+45,4,"abdominal pain, nausea",normal,female,low,gastrology
+43,10,"limited movement, swelling, stiffness",temp_low,female,low,orthopedics
+80,6,"headache, dizziness","bp_high, bp_low",female,medium,neurology
+64,9,"dizziness, headache","bp_low, bp_high",male,medium,neurology
+39,4,"nausea, abdominal pain, fever",normal,female,low,gastrology
+31,5,"fever, weakness, body pain",temp_high,male,low,general
+69,7,"fatigue, breathlessness, fever","hr_high, temp_high",female,high,pulmonology
+44,3,"fatigue, body pain",temp_high,female,low,general
+37,1,"cough, breathlessness","temp_high, hr_high",male,medium,pulmonology
+34,2,"body pain, weakness","temp_high, bp_high",male,medium,general
+26,3,"abdominal pain, vomiting",normal,female,low,gastrology
+54,4,"nausea, diarrhea",bp_low,female,low,gastrology
+50,7,"confusion, dizziness, limited movement","bp_high, bp_low",male,medium,neurology
+62,4,"fatigue, breathlessness","hr_high, bp_high",female,high,cardiology
+58,2,"fatigue, cough","hr_high, temp_high",female,low,pulmonology
+15,2,"weakness, body pain",temp_high,male,low,general
+80,30,"swelling, stiffness",normal,male,low,orthopedics
+50,10,"dizziness, headache","bp_low, bp_high, temp_high",male,medium,neurology
+52,2,"fever, body pain, cough",temp_high,male,low,general
+16,2,"weakness, body pain","temp_high, hr_low",female,low,general
+53,10,"limited movement, joint pain, stiffness",bp_low,male,low,orthopedics
+82,17,"limited movement, stiffness, breathlessness",normal,male,medium,orthopedics
+28,2,"nausea, abdominal pain",temp_high,female,low,gastrology
+77,13,"swelling, stiffness",normal,male,low,orthopedics
+30,5,"fatigue, fever, diarrhea","temp_high, hr_high",female,low,pulmonology
+39,7,"headache, blurred vision","bp_low, bp_high",female,medium,neurology
+53,3,"abdominal pain, nausea",temp_low,female,low,gastrology
+23,5,"vomiting, abdominal pain",hr_high,male,low,gastrology
+49,2,"fever, fatigue",temp_high,male,low,general
+76,27,"limited movement, swelling",hr_low,female,low,orthopedics
+62,5,"cough, fatigue","temp_high, hr_high",female,medium,pulmonology
+80,10,"stiffness, swelling",normal,female,low,orthopedics
+59,10,"dizziness, confusion","bp_high, bp_low, temp_high",female,medium,neurology
+47,1,"breathlessness, sweating","bp_high, hr_high",female,high,cardiology
+19,4,"fatigue, fever",temp_high,female,low,general
+66,5,"sweating, chest pain","bp_high, hr_high",male,high,cardiology
+18,2,"weakness, fever",temp_high,female,low,general
+63,1,"breathlessness, cough, dizziness","hr_high, temp_high",male,high,pulmonology
+61,5,"fatigue, chest pain, stiffness","hr_high, bp_high",female,high,cardiology
+41,3,"blurred vision, dizziness, swelling","bp_high, bp_low",male,medium,neurology
+51,3,"vomiting, diarrhea, blurred vision",normal,male,low,gastrology
+56,2,"sweating, chest pain","hr_high, bp_high",female,high,cardiology
+78,8,"headache, blurred vision","bp_low, bp_high",male,medium,neurology
+41,5,"headache, blurred vision","bp_high, bp_low, hr_low",male,medium,neurology
+56,1,"breathlessness, cough","hr_high, temp_high",male,medium,pulmonology
+47,4,"cough, breathlessness","temp_high, hr_high",female,medium,pulmonology
+61,8,"dizziness, confusion","bp_low, bp_high, hr_low",female,medium,neurology
+47,2,"blurred vision, dizziness","bp_low, bp_high",male,medium,neurology
+43,1,"nausea, diarrhea",temp_low,female,low,gastrology
+34,2,"abdominal pain, vomiting",normal,female,low,gastrology
+42,9,"swelling, limited movement",normal,female,low,orthopedics
+60,4,"fever, fatigue",temp_high,male,low,general
+79,24,"joint pain, swelling, cough",normal,female,low,orthopedics
+27,4,"cough, breathlessness","temp_high, hr_high",male,medium,pulmonology
+78,30,"limited movement, swelling",hr_low,female,low,orthopedics
+40,1,"cough, fatigue","temp_high, hr_high",female,low,pulmonology
+52,5,"confusion, headache","bp_high, bp_low",female,medium,neurology
+42,26,"swelling, stiffness",hr_low,female,low,orthopedics
+48,5,"nausea, vomiting",temp_low,female,low,gastrology
+22,7,"fatigue, breathlessness","temp_high, hr_high",male,medium,pulmonology
+21,5,"diarrhea, abdominal pain",normal,female,low,gastrology
+80,4,"sweating, breathlessness","hr_high, bp_high",female,high,cardiology
+45,5,"sweating, breathlessness","bp_high, hr_high",female,high,cardiology
+54,21,"joint pain, stiffness",normal,female,low,orthopedics
+30,1,"weakness, body pain, vomiting",temp_high,female,low,general
+28,3,"breathlessness, cough","temp_high, hr_high",female,medium,pulmonology
+64,6,"confusion, blurred vision","bp_low, bp_high",male,medium,neurology
+66,4,"chest pain, sweating","hr_high, bp_high",female,high,cardiology
+80,10,"limited movement, stiffness",normal,male,low,orthopedics
+40,5,"vomiting, nausea, breathlessness",normal,male,medium,gastrology
+71,5,"blurred vision, headache","bp_low, bp_high",female,medium,neurology
+50,21,"swelling, limited movement",normal,male,low,orthopedics
+66,6,"confusion, headache","bp_high, bp_low",male,medium,neurology
+33,2,"fatigue, fever",temp_high,male,low,general
+66,21,"swelling, stiffness, chest pain",normal,female,medium,orthopedics
+59,30,"joint pain, limited movement",bp_low,male,low,orthopedics
+40,4,"fever, cough","hr_high, temp_high, bp_low",female,low,pulmonology
+67,2,"fatigue, sweating","bp_high, hr_high",male,high,cardiology
+45,12,"limited movement, joint pain",normal,male,low,orthopedics
+67,1,"fatigue, cough","hr_high, temp_high",male,medium,pulmonology
+59,3,"dizziness, confusion","bp_high, bp_low",female,medium,neurology
+49,5,"weakness, body pain",temp_high,female,low,general
+51,4,"breathlessness, sweating","hr_high, bp_high",female,high,cardiology
+67,2,"sweating, chest pain","hr_high, bp_high",male,high,cardiology
+35,2,"fever, cough","hr_high, temp_high",female,low,pulmonology
+59,15,"limited movement, joint pain",normal,male,low,orthopedics
+18,3,"fever, body pain",temp_high,male,low,general
+29,1,"body pain, weakness",temp_high,male,low,general
+69,24,"limited movement, joint pain",hr_high,female,medium,orthopedics
+68,2,"sweating, fatigue","hr_high, bp_high",male,high,cardiology
+43,4,"nausea, diarrhea",normal,male,low,gastrology
+30,6,"cough, breathlessness","temp_high, hr_high, bp_low",female,medium,pulmonology
+53,2,"weakness, body pain","temp_high, hr_high",female,low,general
+21,4,"fatigue, fever","hr_high, temp_high",male,low,pulmonology
+66,9,"dizziness, headache","bp_low, bp_high",female,medium,neurology
+80,2,"breathlessness, sweating","bp_high, hr_high, temp_low",female,high,cardiology
+59,21,"stiffness, joint pain",normal,male,low,orthopedics
+57,5,"fever, fatigue","temp_high, bp_high",male,medium,general
+27,4,"breathlessness, fatigue","temp_high, hr_high",female,medium,pulmonology
+49,3,"dizziness, confusion, limited movement","bp_high, bp_low, hr_high",female,medium,neurology
+27,7,"fever, fatigue, headache","temp_high, hr_high",male,low,pulmonology
+53,1,"fatigue, breathlessness","temp_high, hr_high",female,medium,pulmonology
+23,1,"body pain, fatigue",temp_high,female,low,general
+53,4,"diarrhea, abdominal pain",hr_high,male,low,gastrology
+27,4,"vomiting, diarrhea",normal,female,low,gastrology
+64,21,"swelling, joint pain",normal,female,low,orthopedics
+57,3,"body pain, weakness",temp_high,female,low,general
+64,8,"blurred vision, confusion, fever","bp_high, bp_low",female,medium,neurology
+47,9,"blurred vision, dizziness, joint pain","bp_high, bp_low",female,medium,neurology
+38,3,"body pain, fever",temp_high,female,low,general
+31,4,"confusion, dizziness","bp_high, bp_low",male,medium,neurology
+73,2,"fatigue, breathlessness, weakness","hr_high, bp_high",male,high,cardiology
+27,3,"nausea, abdominal pain",normal,male,low,gastrology
+49,4,"breathlessness, cough","temp_high, hr_high",male,medium,pulmonology
+55,4,"chest pain, breathlessness, headache","bp_high, hr_high",male,high,cardiology
+45,20,"swelling, joint pain",normal,male,low,orthopedics
+75,26,"joint pain, stiffness",normal,female,low,orthopedics
+47,5,"fatigue, chest pain, sweating","hr_high, bp_high",male,high,cardiology
+52,2,"fever, weakness",temp_high,female,low,general
+40,5,"breathlessness, cough, stiffness","hr_high, temp_high",female,medium,pulmonology
+27,1,"fatigue, breathlessness","hr_high, temp_high",female,medium,pulmonology
+40,2,"blurred vision, confusion","bp_low, bp_high",male,medium,neurology
+55,1,"breathlessness, chest pain","hr_high, bp_high",male,high,cardiology
+40,1,"blurred vision, confusion","bp_low, bp_high",female,medium,neurology
+30,5,"fever, breathlessness","temp_high, hr_high",male,medium,pulmonology
+20,4,"diarrhea, nausea",hr_low,female,low,gastrology
+85,8,"limited movement, stiffness",normal,female,low,orthopedics
+72,9,"swelling, joint pain",normal,male,low,orthopedics
+57,1,"breathlessness, fatigue","hr_high, temp_high, bp_low",male,medium,pulmonology
+59,18,"limited movement, swelling, cough",normal,male,low,orthopedics
+65,2,"abdominal pain, nausea",normal,male,low,gastrology
+78,3,"headache, confusion","bp_high, bp_low",male,medium,neurology
+70,1,"sweating, chest pain","bp_high, hr_high",male,high,cardiology
+51,5,"diarrhea, abdominal pain, cough",normal,male,low,gastrology
+54,4,"weakness, fever",temp_high,female,low,general
+66,2,"blurred vision, dizziness, stiffness","bp_high, bp_low, hr_high",female,high,neurology
+66,18,"joint pain, limited movement",normal,male,low,orthopedics
+27,5,"fatigue, body pain",temp_high,male,low,general
+22,2,"fever, fatigue",temp_high,female,low,general
+44,3,"fever, body pain",temp_high,male,low,general
+25,2,"nausea, vomiting, sweating",temp_high,male,low,gastrology
+63,3,"headache, blurred vision","bp_low, bp_high",female,medium,neurology
+70,4,"chest pain, fatigue, headache","bp_high, hr_high",female,high,cardiology
+31,1,"abdominal pain, vomiting",hr_low,male,low,gastrology
+81,14,"swelling, stiffness, fever",normal,male,low,orthopedics
+82,20,"limited movement, joint pain, chest pain",normal,male,medium,orthopedics
+66,10,"joint pain, stiffness, nausea",temp_high,female,low,orthopedics
+18,1,"fatigue, body pain, breathlessness","temp_high, bp_low",female,medium,general
