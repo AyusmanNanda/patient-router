@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 
-SAMPLE_SIZE = 500 # size of dataset
+SAMPLE_SIZE = 10000 # size of dataset
 
 
 GENDERS = ['male', 'female']
