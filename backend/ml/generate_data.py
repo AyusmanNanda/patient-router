@@ -76,7 +76,13 @@ def generate_symptoms(dept):
 
 def generate_vitals(dept):
     vitals_list = DEPARTMENTS[dept]["vitals"]
-    base = random.sample(vitals_list, k=min(2, len(vitals_list)))
+
+    base = []
+    for vital in random.sample(vitals_list, k=len(vitals_list)):
+        if OPPOSITES.get(vital) not in base:
+            base.append(vital)
+        if len(base) == 2:
+            break
     if random.random() < 0.3:
         extra = random.choice(ALL_VITALS)
         if extra not in base and OPPOSITES.get(extra) not in base:
