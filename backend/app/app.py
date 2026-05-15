@@ -15,12 +15,6 @@ def home():
 def predict():
     data = request.json
 
-    #dummy response
-    return jsonify({
-        "department" : "cardiology",
-        "confidence" : 0.85,
-        "fallback" : False
-    })
 
 if __name__ == '__main__':
     app.run(debug=True)

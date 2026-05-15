@@ -20,11 +20,9 @@
 <script>
  async function predict() {
      const symptoms = document.getElementById('symptoms').value
-         .split(",")
-         .map(s => s.trim());
-
      const age = Number(document.getElementById('age').value);
      const duration = Number(document.getElementById('duration').value);
+     const vital = Number(document.getElementById('vital').value);
 
      const res = await fetch("/predict", {
          method: 'POST',

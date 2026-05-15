@@ -25,7 +25,7 @@ EMERGENCY_VITAL = ["bp_low", "hr_high"]
 CONFIDENCE_THRESHOLD = 0.60
 SAFE_FALLBACK_DEPT = "general"
 
-def predict_case(symptoms: str, vitals: str, age: int = 30):
+def predict_case(symptoms: str, vitals: str, age: int = 30, duration: int = 1):
     text = symptoms + " " + vitals
     vector = vectorizer.transform([text])
 
@@ -49,6 +49,8 @@ def predict_case(symptoms: str, vitals: str, age: int = 30):
     for symptom in symptoms_list:
         if symptom in SYMPTOMS_WEIGHT:
             score += SYMPTOMS_WEIGHT[symptom]
+            if duration <= 2:
+                score += 1
 
     for vital in vitals_list:
         if vital in VITAL_WEIGHT:
@@ -85,6 +87,11 @@ def predict_case(symptoms: str, vitals: str, age: int = 30):
             if vital not in reasons:
                 reasons.append(vital)
 
+    if duration <= 2:
+        reasons.append(f"Acute onset ({duration} days)")
+    elif duration > 14:
+        reasons.append(f"Chronic condition ({duration} days)")
+
     top_confidence = departments[0]["confidence"]
     recommended = departments[0]["department"]
 
@@ -106,6 +113,7 @@ if __name__ == "__main__":
     result = predict_case(
         "chest pain, breathlessness",
         "bp_high, hr_high",
-        65
+        65,
+        15
     )
     print("Predict: \n", json.dumps(result, indent=2))
