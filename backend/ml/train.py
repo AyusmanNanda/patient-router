@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction.text import CountVectorizer
 import joblib
+from pathlib import Path
 
 df = pd.read_csv("../data/data.csv")
 
@@ -15,17 +16,15 @@ X_vectorizer = vectorizer.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X_vectorizer, y, test_size = 0.2, random_state = 42)
 
-model = RandomForestClassifier()
+model = RandomForestClassifier(random_state = 42)
 model.fit(X_train, y_train)
 
-predict = model.predict(X_test)
-print("Accuracy: ", accuracy_score(y_test, predict))
+pred = model.predict(X_test)
+print("Accuracy: ", accuracy_score(y_test, pred))
 
-sample = ["chest pain breathlessness bp_high hr_high"]
-sample_vec = vectorizer.transform(sample)
-
-print("Prediction: ", model.predict(sample_vec)[0])
 print(df["department"].value_counts())
 
-joblib.dump(model, "./models/model.pkl")
-joblib.dump(vectorizer, "./models/vectorizer.pkl")
+BASE_DIR = Path(__file__).resolve().parent
+
+joblib.dump(model, BASE_DIR / "models/model.pkl")
+joblib.dump(vectorizer, BASE_DIR / "models/vectorizer.pkl")
