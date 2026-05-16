@@ -6,25 +6,37 @@ from sklearn.feature_extraction.text import CountVectorizer
 import joblib
 from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
+MODELS_DIR = BASE_DIR / "models"
+MODELS_DIR.mkdir(parents=True, exist_ok=True)
+
 df = pd.read_csv("../data/data.csv")
 
 X = (df["symptoms"] + " " + df["vitals"])
 y = df["department"]
 
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42, stratify = y)
+
 vectorizer = CountVectorizer()
-X_vectorizer = vectorizer.fit_transform(X)
+X_train_vec = vectorizer.fit_transform(X_train)
+X_test_vec = vectorizer.transform(X_test)
 
-X_train, X_test, y_train, y_test = train_test_split(X_vectorizer, y, test_size = 0.2, random_state = 42)
+model = RandomForestClassifier(n_estimators = 100, random_state = 42)
+model.fit(X_train_vec, y_train)
 
-model = RandomForestClassifier(random_state = 42)
-model.fit(X_train, y_train)
+train_accuracy = accuracy_score(y_train, model.predict(X_train_vec))
+test_accuracy = accuracy_score(y_test, model.predict(X_test_vec))
 
-pred = model.predict(X_test)
-print("Accuracy: ", accuracy_score(y_test, pred))
+print(f"Train Accuracy: {train_accuracy * 100:.2f}%")
+print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
 
-print(df["department"].value_counts())
+if train_accuracy - test_accuracy < 0.05:
+    print("Warning: possible overfitting detected")
 
-BASE_DIR = Path(__file__).resolve().parent
+print(f"\nDepartment distribution:\n{df['department'].value_counts()}")
 
 joblib.dump(model, BASE_DIR / "models/model.pkl")
 joblib.dump(vectorizer, BASE_DIR / "models/vectorizer.pkl")
+
+print("\nModel and vectorizer saved")
