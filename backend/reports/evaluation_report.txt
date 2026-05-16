@@ -1,0 +1,19 @@
+Model Evaluation Report
+=======================
+Test Size       : 20%
+Test Accuracy   : 97.46%
+CV Accuracy     : 97.48% (+/- 0.28%)
+
+Classification Report:
+              precision    recall  f1-score   support
+
+  cardiology       0.98      0.96      0.97      1667
+  gastrology       0.98      0.99      0.99      1667
+     general       0.98      0.95      0.96      1666
+   neurology       1.00      0.99      0.99      1667
+ orthopedics       0.98      0.99      0.98      1666
+ pulmonology       0.94      0.96      0.95      1667
+
+    accuracy                           0.97     10000
+   macro avg       0.97      0.97      0.97     10000
+weighted avg       0.97      0.97      0.97     10000
