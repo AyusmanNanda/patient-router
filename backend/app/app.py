@@ -9,10 +9,13 @@ load_dotenv()
 ML_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ml")
 sys.path.insert(0, ML_DIR)
 
-from predictor import predict_case
+from predict import predict_case
 
 app = Flask(__name__)
 
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"}), 200
 
 @app.route("/")
 def home():
@@ -54,4 +57,5 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+    app.run(debug=debug)
