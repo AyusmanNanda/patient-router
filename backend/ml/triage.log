@@ -39,3 +39,60 @@
 2026-05-16 15:49:54,275 -  * Debugger is active!
 2026-05-16 15:49:54,278 -  * Debugger PIN: 100-707-628
 2026-05-16 15:50:01,830 - 127.0.0.1 - - [16/May/2026 15:50:01] "GET / HTTP/1.1" 200 -
+2026-05-23 13:48:40,383 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-23 13:48:40,384 - [33mPress CTRL+C to quit[0m
+2026-05-23 13:49:07,454 - 127.0.0.1 - - [23/May/2026 13:49:07] "GET / HTTP/1.1" 200 -
+2026-05-23 13:49:07,568 - 127.0.0.1 - - [23/May/2026 13:49:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-23 13:49:36,414 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-23 13:49:36,415 - 127.0.0.1 - - [23/May/2026 13:49:36] "POST /predict HTTP/1.1" 200 -
+2026-05-23 13:55:19,436 - Input: symptoms='chest pain, breathlessness', vitals='bp_high, hr_high', age=65, duration=15 | Output: recommended=cardiology, priority=high, emergency=True
+2026-05-25 14:19:10,037 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-25 14:19:10,037 - [33mPress CTRL+C to quit[0m
+2026-05-25 14:19:23,524 - 127.0.0.1 - - [25/May/2026 14:19:23] "GET / HTTP/1.1" 200 -
+2026-05-25 14:19:23,607 - 127.0.0.1 - - [25/May/2026 14:19:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-25 14:19:47,608 - Input: symptoms='fever', vitals='temp_high', age=20, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 14:19:47,608 - 127.0.0.1 - - [25/May/2026 14:19:47] "POST /predict HTTP/1.1" 200 -
+2026-05-25 14:19:59,377 - 127.0.0.1 - - [25/May/2026 14:19:59] "POST /feedback HTTP/1.1" 200 -
+2026-05-25 14:26:01,936 - 127.0.0.1 - - [25/May/2026 14:26:01] "GET / HTTP/1.1" 200 -
+2026-05-25 14:26:06,477 - 127.0.0.1 - - [25/May/2026 14:26:06] "GET / HTTP/1.1" 200 -
+2026-05-25 14:26:14,766 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-25 14:26:14,766 - [33mPress CTRL+C to quit[0m
+2026-05-25 14:26:42,719 - 127.0.0.1 - - [25/May/2026 14:26:42] "GET / HTTP/1.1" 200 -
+2026-05-25 14:29:34,099 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-25 14:29:34,100 - [33mPress CTRL+C to quit[0m
+2026-05-25 14:29:37,442 - 127.0.0.1 - - [25/May/2026 14:29:37] "GET / HTTP/1.1" 200 -
+2026-05-25 14:30:01,830 - Input: symptoms='fever', vitals='temp_high, temp_low', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 14:30:01,831 - 127.0.0.1 - - [25/May/2026 14:30:01] "POST /predict HTTP/1.1" 200 -
+2026-05-25 14:34:35,691 - 127.0.0.1 - - [25/May/2026 14:34:35] "GET / HTTP/1.1" 200 -
+2026-05-25 14:35:42,808 - 127.0.0.1 - - [25/May/2026 14:35:42] "GET / HTTP/1.1" 200 -
+2026-05-25 14:36:24,366 - Input: symptoms='fever', vitals='normal', age=20, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 14:36:24,366 - 127.0.0.1 - - [25/May/2026 14:36:24] "POST /predict HTTP/1.1" 200 -
+2026-05-25 14:36:29,847 - 127.0.0.1 - - [25/May/2026 14:36:29] "POST /feedback HTTP/1.1" 200 -
+2026-05-25 14:36:55,778 - 127.0.0.1 - - [25/May/2026 14:36:55] "GET / HTTP/1.1" 200 -
+2026-05-25 14:37:04,312 - Input: symptoms='fever', vitals='normal', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 14:37:04,313 - 127.0.0.1 - - [25/May/2026 14:37:04] "POST /predict HTTP/1.1" 200 -
+2026-05-25 14:37:08,315 - 127.0.0.1 - - [25/May/2026 14:37:08] "POST /feedback HTTP/1.1" 200 -
+2026-05-25 14:37:10,614 - 127.0.0.1 - - [25/May/2026 14:37:10] "GET / HTTP/1.1" 200 -
+2026-05-25 14:37:23,679 - Input: symptoms='abdominal pain', vitals='normal', age=21, duration=2 | Output: recommended=gastrology, priority=low, emergency=False
+2026-05-25 14:37:23,679 - 127.0.0.1 - - [25/May/2026 14:37:23] "POST /predict HTTP/1.1" 200 -
+2026-05-25 14:37:31,596 - 127.0.0.1 - - [25/May/2026 14:37:31] "POST /feedback HTTP/1.1" 200 -
+2026-05-25 14:40:49,380 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-25 14:40:49,380 - [33mPress CTRL+C to quit[0m
+2026-05-25 14:40:54,482 - 127.0.0.1 - - [25/May/2026 14:40:54] "GET / HTTP/1.1" 200 -
+2026-05-25 14:41:09,798 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 14:41:09,798 - 127.0.0.1 - - [25/May/2026 14:41:09] "POST /predict HTTP/1.1" 200 -

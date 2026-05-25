@@ -129,8 +129,8 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         probs = model.predict_proba(vector)[0]
     except Exception as e:
         raise RuntimeError(f"Model prediction failed: {e}")
-    classes = model.classes_
 
+    classes = model.classes_
     top_indices = np.argsort(probs)[::-1][:3]
 
     departments = []
