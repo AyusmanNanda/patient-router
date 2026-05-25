@@ -31,7 +31,7 @@ test_accuracy = accuracy_score(y_test, model.predict(X_test_vec))
 print(f"Train Accuracy: {train_accuracy * 100:.2f}%")
 print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
 
-if train_accuracy - test_accuracy < 0.05:
+if train_accuracy - test_accuracy > 0.05:
     print("Warning: possible overfitting detected")
 
 print(f"\nDepartment distribution:\n{df['department'].value_counts()}")

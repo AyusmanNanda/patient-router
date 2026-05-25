@@ -49999,3 +49999,4 @@ age,duration,symptoms,vitals,gender,priority,department
 36,1,diarrhea,normal,male,low,gastrology
 58,4,"breathlessness, chest pain, stiffness","bp_high, hr_high",female,high,cardiology
 36,2,"cough, headache","temp_high, hr_high",male,low,pulmonology
+
