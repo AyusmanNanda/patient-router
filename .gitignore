@@ -1,8 +1,44 @@
-# idea specific
+# IDE
 .idea/
+.vscode/
 
-# python
+# Python / Flask
 venv/
-__pycache__/
+.venv/
+env/
 
-# secrets
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+instance/
+.pytest_cache/
+
+# Env
+.env
+.env.*
+
+
+# Node / React / Vite
+node_modules/
+
+# Vite build output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Model / Generated Files
+#models/*.pkl
+# data/*.csv

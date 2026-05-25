@@ -8,7 +8,7 @@ import difflib
 BASE_DIR = Path(__file__).resolve().parent
 
 logging.basicConfig(
-    filename=str(BASE_DIR / "triage.log"),
+    filename=str(BASE_DIR / "../logs/triage.log"),
     level=logging.INFO,
     format="%(asctime)s - %(message)s"
 )
