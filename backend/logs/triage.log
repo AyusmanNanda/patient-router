@@ -1,0 +1,10 @@
+2026-05-25 23:31:11,229 - Input: symptoms='chest pain, breathlessness', vitals='bp_high, hr_high', age=65, duration=15 | Output: recommended=cardiology, priority=high, emergency=True
+2026-05-25 23:31:32,210 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-25 23:31:32,210 - [33mPress CTRL+C to quit[0m
+2026-05-25 23:31:43,605 - 127.0.0.1 - - [25/May/2026 23:31:43] "GET / HTTP/1.1" 200 -
+2026-05-25 23:31:43,690 - 127.0.0.1 - - [25/May/2026 23:31:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-25 23:31:58,799 - Input: symptoms='fever', vitals='temp_high', age=20, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-25 23:31:58,799 - 127.0.0.1 - - [25/May/2026 23:31:58] "POST /predict HTTP/1.1" 200 -
