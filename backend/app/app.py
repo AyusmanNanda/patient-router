@@ -2,17 +2,18 @@ from flask import Flask, jsonify, request, render_template
 from dotenv import load_dotenv
 import sys
 import os
-import csv  # Added to handle writing to data.csv
+import csv
+from flask_cors import CORS
 
 load_dotenv()
 
-# add ml directory to path so predict_case can be imported
 ML_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ml")
 sys.path.insert(0, ML_DIR)
 
 from predict import predict_case
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/health")
 def health():
@@ -57,7 +58,6 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 
-# --- NEW FEEDBACK ROUTE ---
 @app.route("/feedback", methods=["POST"])
 def feedback():
     data = request.json
@@ -72,18 +72,14 @@ def feedback():
     correct_dept = data.get("correct_department")
     priority = data.get("priority", "low")
 
-    # Defaulting gender to 'unknown' to match your CSV schema requirements
     gender = "unknown"
 
     if not correct_dept:
         return jsonify({"error": "Correct department is required."}), 400
 
-    # Locate data.csv dynamically based on the current file's location
     data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "data.csv")
 
     try:
-        # Append the corrected data to the CSV in the exact order generate_data.py uses:
-        # age, duration, symptoms, vitals, gender, priority, department
         with open(data_path, mode="a", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow([age, duration, symptoms, vitals, gender, priority, correct_dept])
