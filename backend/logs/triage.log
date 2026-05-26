@@ -18,3 +18,8 @@
  * Running on http://127.0.0.1:5000
  * Running on http://10.40.1.166:5000
 2026-05-26 23:16:59,518 - [33mPress CTRL+C to quit[0m
+2026-05-27 01:24:48,079 - INFO - symptoms='cardiac arrest' vitals='sbp_below_90, hr_above_130' age=58 duration='acute_under_6_hours' modifier='history_of_mi' | recommended='trauma' esi=1 priority='immediate' emergency=True confidence=0.700 score=18
+2026-05-27 01:24:48,102 - INFO - symptoms='drooping face, stroke symptoms' vitals='sbp_above_200' age=72 duration='acute_under_6_hours' modifier='none' | recommended='neurology' esi=1 priority='immediate' emergency=True confidence=0.540 score=12
+2026-05-27 01:24:48,125 - INFO - symptoms='abdominal pain' vitals='' age=28 duration='subacute_under_24_hours' modifier='pregnant_1st_trimester' | recommended='gynecology' esi=2 priority='emergent' emergency=True confidence=0.939 score=4
+2026-05-27 01:24:48,153 - INFO - symptoms='sore throat, mild fever' vitals='' age=24 duration='standard' modifier='none' | recommended='general' esi=4 priority='less_urgent' emergency=False confidence=0.307 score=2
+2026-05-27 01:24:48,178 - INFO - symptoms='sob, throwing up' vitals='low oxygen' age=45 duration='subacute_under_24_hours' modifier='none' | recommended='general' esi=2 priority='emergent' emergency=True confidence=0.518 score=9
