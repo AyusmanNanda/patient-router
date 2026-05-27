@@ -13,14 +13,21 @@ from constants import (
 )
 
 BASE_DIR = Path(__file__).resolve().parent
+LOGS_DIR = BASE_DIR / "../logs"
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+MODEL_DIR = BASE_DIR / "models" / "model.pkl"
 
 logging.basicConfig(
-    filename=str(BASE_DIR / "../logs/triage.log"),
+    filename=str(LOGS_DIR / "triage.log"),
     level=logging.INFO,
     format="%(asctime)s - %(message)s"
 )
 
-model = joblib.load(str(BASE_DIR / "models" / "model.pkl"))
+try:
+    model = joblib.load(str(MODEL_DIR))
+except FileNotFoundError:
+    print(f"Failed to load model from {MODEL_DIR}")
+    exit(1)
 
 
 def normalize_term(term: str, known: list) -> str:
@@ -45,7 +52,7 @@ def normalize_list(terms: list, known: list) -> list:
     return [normalize_term(t, known) for t in terms]
 
 
-def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1):
+def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1, gender: str = "male"):
 
     if not symptoms.strip():
         raise ValueError("Symptoms cannot be empty.")
@@ -73,11 +80,9 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     vitals_list = normalize_list(vitals_list, KNOWN_VITALS)
 
     text = " ".join(symptoms_list) + " " + " ".join(vitals_list)
+    input_df = pd.DataFrame([{"text": text, "age": age, "duration": duration, "gender": gender}])
+    probs = model.predict_proba(input_df)[0]
 
-    try:
-        probs = model.predict_proba(vector)[0]
-    except Exception as e:
-        raise RuntimeError(f"Model prediction failed: {e}")
 
     classes = model.classes_
     top_indices = np.argsort(probs)[::-1][:3]
@@ -141,7 +146,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
 
     if top_confidence < CONFIDENCE_THRESHOLD:
         recommended = SAFE_FALLBACK_DEPT
-        reasons.append("Low model confidence — fallback to general")
+        reasons.append("Low model confidence - fallback to general")
 
     result = {
         "recommended": recommended,
