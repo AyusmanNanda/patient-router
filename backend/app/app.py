@@ -13,7 +13,7 @@ sys.path.insert(0, ML_DIR)
 from predict import predict_case
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, origins=["http://localhost:5173", "https://patient-router.vercel.app"], supports_credentials=True)
 
 @app.route("/health")
 def health():
