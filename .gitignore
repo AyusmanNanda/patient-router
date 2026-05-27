@@ -18,6 +18,7 @@ instance/
 # Env
 .env
 .env.*
+!.env.example
 
 
 # Node / React / Vite

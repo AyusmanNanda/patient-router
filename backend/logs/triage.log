@@ -82,3 +82,14 @@
 2026-05-27 19:40:41,023 - 127.0.0.1 - - [27/May/2026 19:40:41] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
 2026-05-27 19:41:11,927 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
 2026-05-27 19:41:11,928 - 127.0.0.1 - - [27/May/2026 19:41:11] "POST /predict HTTP/1.1" 200 -
+2026-05-27 20:38:19,475 - 127.0.0.1 - - [27/May/2026 20:38:19] "[33mGET /logs HTTP/1.1[0m" 404 -
+2026-05-27 20:38:19,484 - 127.0.0.1 - - [27/May/2026 20:38:19] "[33mGET /logs HTTP/1.1[0m" 404 -
+2026-05-27 20:38:24,030 - 127.0.0.1 - - [27/May/2026 20:38:24] "[33mGET /evaluate HTTP/1.1[0m" 404 -
+2026-05-27 20:38:24,044 - 127.0.0.1 - - [27/May/2026 20:38:24] "[33mGET /evaluate HTTP/1.1[0m" 404 -
+2026-05-27 20:38:33,758 - 127.0.0.1 - - [27/May/2026 20:38:33] "[33mGET /data/stats HTTP/1.1[0m" 404 -
+2026-05-27 20:38:33,760 - 127.0.0.1 - - [27/May/2026 20:38:33] "[33mGET /data/preview HTTP/1.1[0m" 404 -
+2026-05-27 20:38:33,769 - 127.0.0.1 - - [27/May/2026 20:38:33] "[33mGET /data/stats HTTP/1.1[0m" 404 -
+2026-05-27 20:38:33,772 - 127.0.0.1 - - [27/May/2026 20:38:33] "[33mGET /data/preview HTTP/1.1[0m" 404 -
+2026-05-27 20:38:58,557 - 127.0.0.1 - - [27/May/2026 20:38:58] "GET / HTTP/1.1" 200 -
+2026-05-27 20:39:17,361 - Input: symptoms='fever', vitals='temp_high', age=20, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-27 20:39:17,361 - 127.0.0.1 - - [27/May/2026 20:39:17] "POST /predict HTTP/1.1" 200 -
