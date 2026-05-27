@@ -7,7 +7,7 @@ import logging
 import difflib
 from constants import (
     ALIASES, KNOWN_VITALS, KNOWN_SYMPTOMS,
-    SYMPTOMS_WEIGHT, EMERGENCY_SYMPTOMS, VITAL_WEIGHT,
+    SYMPTOMS_WEIGHT, EMERGENCY_SYMPTOMS, VITALS_WEIGHT,
     EMERGENCY_VITALS, CONFIDENCE_THRESHOLD,
     SAFE_FALLBACK_DEPT, MODEL_VERSION
 )
@@ -100,7 +100,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         score += SYMPTOMS_WEIGHT.get(symptom, 0)
 
     for vital in vitals_list:
-        score += VITAL_WEIGHT.get(vital, 0)
+        score += VITALS_WEIGHT.get(vital, 0)
 
     if age > 60:
         score += 1
@@ -129,7 +129,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
                 reasons.append(symptom)
 
     for vital in vitals_list:
-        if vital in VITAL_WEIGHT or vital in EMERGENCY_VITALS:
+        if vital in VITALS_WEIGHT or vital in EMERGENCY_VITALS:
             if vital not in reasons:
                 reasons.append(vital)
 
