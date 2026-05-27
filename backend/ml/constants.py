@@ -1,11 +1,15 @@
 MODEL_VERSION = "1.1.0"
 
+SAMPLE_SIZE = 50000
+
+GENDERS = ['male', 'female']
+
 SYMPTOMS_WEIGHT = {
     "chest pain": 2,
     "breathlessness": 2,
 }
 
-VITAL_WEIGHT = {
+VITALS_WEIGHT = {
     "bp_high": 2,
     "hr_high": 1,
 }
@@ -52,4 +56,52 @@ ALIASES = {
     "tired": "fatigue",
     "tiredness": "fatigue",
     "breathless": "breathlessness",
+}
+
+DEPARTMENTS = {
+    "cardiology": {
+        "symptoms": ["chest pain", "breathlessness", "fatigue", "sweating"],
+        "vitals": ["bp_high", "hr_high"],
+        "age_range": (45, 80),
+        "duration_range": (1, 5)
+    },
+    "pulmonology": {
+        "symptoms": ["cough", "breathlessness", "fever", "fatigue"],
+        "vitals": ["temp_high", "hr_high"],
+        "age_range": (20, 70),
+        "duration_range": (1, 7)
+    },
+    "neurology": {
+        "symptoms": ["headache", "dizziness", "confusion", "blurred vision"],
+        "vitals": ["bp_low", "bp_high"],
+        "age_range": (30, 80),
+        "duration_range": (1, 10)
+    },
+    "orthopedics": {
+        "symptoms": ["joint pain", "swelling", "stiffness", "limited movement"],
+        "vitals": ["normal"],
+        "age_range": (40, 85),
+        "duration_range": (7, 30)
+    },
+    "gastrology": {
+        "symptoms": ["abdominal pain", "nausea", "vomiting", "diarrhea"],
+        "vitals": ["normal"],
+        "age_range": (20, 65),
+        "duration_range": (1, 5)
+    },
+    "general": {
+        "symptoms": ["fever", "body pain", "weakness", "fatigue"],
+        "vitals": ["temp_high"],
+        "age_range": (15, 60),
+        "duration_range": (1, 5)
+    }
+}
+
+OPPOSITES = {
+    "bp_high": "bp_low",
+    "hr_high": "hr_low",
+    "temp_high": "temp_low",
+    "bp_low": "bp_high",
+    "hr_low": "hr_high",
+    "temp_low": "temp_high",
 }
