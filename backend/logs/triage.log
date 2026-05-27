@@ -73,3 +73,12 @@
 2026-05-27 12:14:35,834 - 127.0.0.1 - - [27/May/2026 12:14:35] "[33mGET /data/stats HTTP/1.1[0m" 404 -
 2026-05-27 12:14:35,836 - 127.0.0.1 - - [27/May/2026 12:14:35] "[33mGET /data/preview HTTP/1.1[0m" 404 -
 2026-05-27 13:32:04,200 - 127.0.0.1 - - [27/May/2026 13:32:04] "[33mGET /data HTTP/1.1[0m" 404 -
+2026-05-27 19:40:04,332 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.40.1.166:5000
+2026-05-27 19:40:04,332 - [33mPress CTRL+C to quit[0m
+2026-05-27 19:40:40,882 - 127.0.0.1 - - [27/May/2026 19:40:40] "GET / HTTP/1.1" 200 -
+2026-05-27 19:40:41,023 - 127.0.0.1 - - [27/May/2026 19:40:41] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-27 19:41:11,927 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-27 19:41:11,928 - 127.0.0.1 - - [27/May/2026 19:41:11] "POST /predict HTTP/1.1" 200 -
