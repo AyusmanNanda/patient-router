@@ -29,3 +29,5 @@
 2026-05-27 11:29:27,148 - 127.0.0.1 - - [27/May/2026 11:29:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
 2026-05-27 11:29:28,513 - 127.0.0.1 - - [27/May/2026 11:29:28] "GET / HTTP/1.1" 200 -
 2026-05-27 11:29:29,029 - 127.0.0.1 - - [27/May/2026 11:29:29] "GET / HTTP/1.1" 200 -
+2026-05-27 11:31:34,182 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
+2026-05-27 11:31:34,183 - 127.0.0.1 - - [27/May/2026 11:31:34] "POST /predict HTTP/1.1" 200 -
