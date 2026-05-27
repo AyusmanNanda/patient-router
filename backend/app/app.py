@@ -35,6 +35,7 @@ def predict():
     vitals   = data.get("vitals", "").strip()
     age      = data.get("age")
     duration = data.get("duration")
+    gender = data.get("gender", "male")
 
     if not symptoms:
         return jsonify({"error": "Symptoms are required."}), 400
@@ -47,7 +48,8 @@ def predict():
             symptoms=symptoms,
             vitals=vitals,
             age=int(age),
-            duration=int(duration)
+            duration=int(duration),
+            gender=gender
         )
         return jsonify(result), 200
 
@@ -71,8 +73,7 @@ def feedback():
     duration = data.get("duration")
     correct_dept = data.get("correct_department")
     priority = data.get("priority", "low")
-
-    gender = "unknown"
+    gender=data.get("gender", "male")
 
     if not correct_dept:
         return jsonify({"error": "Correct department is required."}), 400
