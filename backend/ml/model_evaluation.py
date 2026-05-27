@@ -5,11 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    confusion_matrix,
-)
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_PATH = BASE_DIR / "../data/data.csv"
@@ -21,19 +17,26 @@ RANDOM_STATE = 42
 
 
 def load_data():
-    df = pd.read_csv(DATA_PATH)
+    try:
+        df = pd.read_csv(DATA_PATH)
+    except FileNotFoundError:
+        print(f"Failed to load data from {DATA_PATH}")
+        exit(1)
     df["text"] = df["symptoms"] + " " + df["vitals"]
     return df
 
 
 def evaluate():
-    print("Loading data and models...")
+    print("Loading data and model...")
     df = load_data()
 
-    model = joblib.load(str(BASE_DIR / "models" / "model.pkl"))
-    vectorizer = joblib.load(str(BASE_DIR / "models" / "vectorizer.pkl"))
+    try:
+        model = joblib.load(BASE_DIR / "models" / "model.pkl")
+    except FileNotFoundError:
+        print(f"Failed to load model from {BASE_DIR / 'models' / 'model.pkl'}")
+        exit(1)
 
-    X = vectorizer.transform(df["text"])
+    X = df[["text", "age", "duration", "gender"]]  # CHANGED: was vectorizer.transform(df["text"])
     y = df["department"]
 
     X_train, X_test, y_train, y_test = train_test_split(

@@ -148,7 +148,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         recommended = SAFE_FALLBACK_DEPT
         reasons.append("Low model confidence - fallback to general")
 
-    result = {
+    results = {
         "recommended": recommended,
         "departments": departments,
         "priority": priority,
@@ -164,7 +164,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         f"Output: recommended={recommended}, priority={priority}, emergency={is_emergency}"
     )
 
-    return result
+    return results
 
 
 if __name__ == "__main__":
