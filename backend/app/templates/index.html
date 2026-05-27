@@ -45,7 +45,6 @@
             background: #fff;
             color: #1a1a1a;
         }
-
         input:focus, select:focus {
             outline: none;
             border-color: #2563eb;
@@ -54,12 +53,7 @@
 
         /* Tag autocomplete */
         .autocomplete-container { position: relative; margin-bottom: 14px; }
-        .tags-display {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 6px;
-        }
+        .tags-display { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
         .pill {
             display: inline-flex;
             align-items: center;
@@ -71,15 +65,8 @@
             border-radius: 20px;
             font-size: 13px;
         }
-        .pill-close {
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            color: #1d4ed8;
-            line-height: 1;
-        }
+        .pill-close { cursor: pointer; font-weight: 700; font-size: 14px; color: #1d4ed8; line-height: 1; }
         .pill-close:hover { color: #dc2626; }
-
         .ac-input {
             width: 100%;
             padding: 9px 11px;
@@ -89,7 +76,6 @@
             margin-bottom: 0;
         }
         .ac-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
-
         .dropdown-menu {
             position: absolute;
             top: calc(100% + 2px);
@@ -103,12 +89,7 @@
             display: none;
             box-shadow: 0 4px 12px rgba(0,0,0,.1);
         }
-        .dropdown-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 13px;
-            border-bottom: 1px solid #f0f0f0;
-        }
+        .dropdown-item { padding: 8px 12px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
         .dropdown-item:last-child { border-bottom: none; }
         .dropdown-item:hover { background: #eff6ff; }
 
@@ -141,27 +122,105 @@
             margin-top: 10px;
         }
 
-        /* Result */
-        #result {
-            display: none;
+        /* Priority banner */
+        .priority-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid transparent;
+        }
+        .priority-high   { background: #fef2f2; border-color: #fca5a5; }
+        .priority-medium { background: #fff7ed; border-color: #fdba74; }
+        .priority-low    { background: #f0fdf4; border-color: #86efac; }
+
+        .priority-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #fff;
+            white-space: nowrap;
+            letter-spacing: .4px;
+        }
+        .priority-high   .priority-badge { background: #dc2626; }
+        .priority-medium .priority-badge { background: #ea580c; }
+        .priority-low    .priority-badge { background: #16a34a; }
+
+        .priority-text { flex: 1; }
+        .priority-text strong { font-size: 15px; display: block; }
+        .priority-text span   { font-size: 13px; color: #555; }
+
+        .emergency-pill {
+            display: inline-block;
+            background: #dc2626;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: .5px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .65; } }
+
+        /* Result rows */
+        .result-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+        .result-row .rl { color: #555; }
+        .result-row .rv { font-weight: 600; color: #1a1a1a; text-align: right; }
+
+        /* Department ranking */
+        .dept-list { margin-top: 12px; }
+        .dept-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .dept-item:last-child { border-bottom: none; }
+        .dept-name { flex: 1; font-weight: 500; text-transform: capitalize; }
+        .conf-bar-wrap { width: 120px; background: #e5e7eb; border-radius: 4px; height: 6px; overflow: hidden; }
+        .conf-bar { height: 100%; background: #2563eb; border-radius: 4px; }
+        .conf-pct { width: 42px; text-align: right; color: #555; font-size: 12px; }
+
+        /* Reasons */
+        .reasons-list { margin: 0; padding: 0 0 0 16px; font-size: 13px; line-height: 1.8; color: #333; }
+
+        /* Warning note */
+        .warning-note {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 10px;
+        }
+
+        /* Raw JSON */
+        details summary { cursor: pointer; font-size: 12px; color: #6b7280; margin-top: 12px; }
+        pre {
             background: #1e293b;
             color: #e2e8f0;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            overflow-x: auto;
+            margin-top: 6px;
             white-space: pre-wrap;
-            margin-top: 4px;
         }
 
         /* Feedback */
-        #feedback-container {
-            display: none;
-        }
+        #feedback-container { display: none; }
         #feedback-container p { margin-top: 0; font-weight: 600; font-size: 14px; }
         .btn-yes { background: #16a34a; color: #fff; }
         .btn-yes:hover { background: #15803d; }
         .btn-no  { background: #dc2626; color: #fff; }
-        .btn-no:hover  { background: #b91c1c; }
+        .btn-no:hover { background: #b91c1c; }
         #correction-menu { display: none; margin-top: 16px; }
         #correction-menu select { margin-bottom: 10px; }
         .btn-save { background: #2563eb; color: #fff; }
@@ -171,7 +230,7 @@
 <body>
 
 <h1>Patient Router</h1>
-<p class="subtitle">Clinical Decision Support - Department Triage</p>
+<p class="subtitle">Clinical Decision Support — Department Triage</p>
 
 <div class="card">
     <label>Symptoms <span style="color:#dc2626">*</span></label>
@@ -215,8 +274,8 @@
 </div>
 
 <div class="card" id="result-card" style="display:none;">
-    <label style="margin-bottom:8px;">Result</label>
-    <pre id="result"></pre>
+    <div id="priority-banner"></div>
+    <div id="result-body"></div>
 </div>
 
 <div class="card" id="feedback-container">
@@ -243,23 +302,22 @@
     const KNOWN_SYMPTOMS = ["abdominal pain", "blurred vision", "body pain", "breathlessness", "chest pain", "confusion", "cough", "diarrhea", "dizziness", "fatigue", "fever", "headache", "joint pain", "limited movement", "nausea", "stiffness", "sweating", "swelling", "vomiting", "weakness"];
     const KNOWN_VITALS   = ["bp_high", "bp_low", "hr_high", "hr_low", "temp_high", "temp_low", "normal"];
 
-    let selectedSymptoms = [];
-    let selectedVitals   = [];
+    let selectedSymptoms   = [];
+    let selectedVitals     = [];
     let currentSessionData = {};
 
     function resetForm() {
         selectedSymptoms = [];
         selectedVitals   = [];
-        document.getElementById('symptoms-tags').innerHTML = '';
-        document.getElementById('vitals-tags').innerHTML   = '';
-        document.getElementById('symptoms-input').value   = '';
-        document.getElementById('vitals-input').value     = '';
-        document.getElementById('age').value              = '';
-        document.getElementById('duration').value         = '';
-        document.getElementById('gender').value           = 'male';
-        document.getElementById('error').style.display         = 'none';
-        document.getElementById('result-card').style.display   = 'none';
-        document.getElementById('result').style.display        = 'none';
+        document.getElementById('symptoms-tags').innerHTML  = '';
+        document.getElementById('vitals-tags').innerHTML    = '';
+        document.getElementById('symptoms-input').value    = '';
+        document.getElementById('vitals-input').value      = '';
+        document.getElementById('age').value               = '';
+        document.getElementById('duration').value          = '';
+        document.getElementById('gender').value            = 'male';
+        document.getElementById('error').style.display          = 'none';
+        document.getElementById('result-card').style.display    = 'none';
         document.getElementById('feedback-container').style.display = 'none';
         document.getElementById('correction-menu').style.display    = 'none';
         const btn = document.getElementById('btn');
@@ -276,12 +334,12 @@
             tagsEl.innerHTML = '';
             dataArray.forEach((item, index) => {
                 const tag = document.createElement('span');
-                tag.className = 'pill';
+                tag.className   = 'pill';
                 tag.textContent = item;
                 const x = document.createElement('span');
                 x.className = 'pill-close';
                 x.innerHTML = '&times;';
-                x.onclick = () => { dataArray.splice(index, 1); renderTags(); };
+                x.onclick   = () => { dataArray.splice(index, 1); renderTags(); };
                 tag.appendChild(x);
                 tagsEl.appendChild(tag);
             });
@@ -291,14 +349,12 @@
             const query = inputEl.value.toLowerCase();
             dropdownEl.innerHTML = '';
             if (!query) { dropdownEl.style.display = 'none'; return; }
-
             const matches = optionsList.filter(o => o.toLowerCase().includes(query) && !dataArray.includes(o));
             if (!matches.length) { dropdownEl.style.display = 'none'; return; }
-
             dropdownEl.style.display = 'block';
             matches.forEach(match => {
                 const item = document.createElement('div');
-                item.className = 'dropdown-item';
+                item.className   = 'dropdown-item';
                 item.textContent = match;
                 item.onclick = () => {
                     dataArray.push(match);
@@ -328,10 +384,11 @@
         document.getElementById('error').style.display              = 'none';
         document.getElementById('feedback-container').style.display = 'none';
         document.getElementById('correction-menu').style.display    = 'none';
+        document.getElementById('result-card').style.display        = 'none';
 
-        if (!selectedSymptoms.length)          { showError('At least one symptom is required.'); return; }
-        if (!age || age <= 0 || age > 120)     { showError('Please enter a valid age.'); return; }
-        if (!duration || duration <= 0)        { showError('Please enter a valid duration.'); return; }
+        if (!selectedSymptoms.length)      { showError('At least one symptom is required.'); return; }
+        if (!age || age <= 0 || age > 120) { showError('Please enter a valid age.'); return; }
+        if (!duration || duration <= 0)    { showError('Please enter a valid duration.'); return; }
 
         const btn = document.getElementById('btn');
         btn.disabled    = true;
@@ -350,11 +407,7 @@
             }
 
             const data = await res.json();
-
-            document.getElementById('result-card').style.display = 'block';
-            const result = document.getElementById('result');
-            result.style.display = 'block';
-            result.textContent   = JSON.stringify(data, null, 2);
+            renderResult(data);
 
             currentSessionData = { symptoms, vitals, gender, age, duration, priority: data.priority || 'low' };
             document.getElementById('feedback-container').style.display = 'block';
@@ -365,6 +418,60 @@
             btn.disabled    = false;
             btn.textContent = 'Predict';
         }
+    }
+
+    function renderResult(d) {
+        // Priority banner
+        const banner = document.getElementById('priority-banner');
+        const priorityClass = `priority-${d.priority}`;
+        const priorityLabel = d.priority === 'high' ? 'HIGH PRIORITY' : d.priority === 'medium' ? 'MEDIUM PRIORITY' : 'LOW PRIORITY';
+        banner.className = `priority-banner ${priorityClass}`;
+        banner.innerHTML = `
+            <span class="priority-badge">${d.priority.toUpperCase()}</span>
+            <div class="priority-text">
+                <strong>${priorityLabel}</strong>
+                <span>Route to: <strong style="color:#1a1a1a">${d.recommended.replace(/_/g,' ').toUpperCase()}</strong></span>
+            </div>
+            ${d.emergency ? '<span class="emergency-pill">⚠ EMERGENCY</span>' : ''}
+        `;
+
+        // Body
+        let html = `
+            <div class="result-row"><span class="rl">ML Confidence</span><span class="rv">${(d.confidence * 100).toFixed(1)}%</span></div>
+            <div class="result-row"><span class="rl">Model Version</span><span class="rv">${d.model_version}</span></div>
+        `;
+
+        // Department ranking
+        html += `<div style="margin:14px 0 4px;font-size:13px;font-weight:600;">Department Ranking</div><div class="dept-list">`;
+        d.departments.forEach((dept, i) => {
+            html += `
+                <div class="dept-item">
+                    <span style="color:#9ca3af;font-size:12px;width:14px">${i + 1}</span>
+                    <span class="dept-name">${dept.department.replace(/_/g, ' ')}</span>
+                    <div class="conf-bar-wrap"><div class="conf-bar" style="width:${(dept.confidence * 100).toFixed(0)}%"></div></div>
+                    <span class="conf-pct">${(dept.confidence * 100).toFixed(1)}%</span>
+                </div>`;
+        });
+        html += `</div>`;
+
+        // Clinical reasoning
+        if (d.reasons && d.reasons.length) {
+            html += `<div style="margin:14px 0 6px;font-size:13px;font-weight:600;">Clinical Reasoning</div>
+                     <ul class="reasons-list">`;
+            d.reasons.forEach(r => { html += `<li>${r}</li>`; });
+            html += `</ul>`;
+        }
+
+        // Warning
+        if (d.warning) {
+            html += `<div class="warning-note">ℹ ${d.warning}</div>`;
+        }
+
+        // Raw JSON
+        html += `<details><summary>View raw output</summary><pre>${JSON.stringify(d, null, 2)}</pre></details>`;
+
+        document.getElementById('result-body').innerHTML = html;
+        document.getElementById('result-card').style.display = 'block';
     }
 
     function showCorrectionMenu() {
