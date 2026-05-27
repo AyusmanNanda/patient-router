@@ -1,38 +1,28 @@
-import { NavLink, useLocation } from 'react-router-dom'
-import { Stethoscope, Cpu, FileText, BarChart3, Database } from 'lucide-react'
+interface Props {
+    title: string
+    subtitle?: string
+}
 
-const NAV = [
-  { path: '/',         label: 'Patient Router', icon: Stethoscope },
-  { path: '/training', label: 'Train Model',    icon: Cpu         },
-  { path: '/logs',     label: 'System Logs',    icon: FileText    },
-  { path: '/evaluate', label: 'Evaluation',     icon: BarChart3   },
-  { path: '/data',     label: 'Data Manager',   icon: Database    },
-]
-
-export default function Sidebar() {
-  const loc = useLocation()
-  return (
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="sidebar-title">Patient Router</div>
-          <div className="sidebar-sub">Clinical Decision Support</div>
-        </div>
-
-        <nav className="sidebar-nav">
-          {NAV.map(({ path, label, icon: Icon }) => (
-              <NavLink
-                  key={path}
-                  to={path}
-                  end={path === '/'}
-                  className={({ isActive }) =>
-                      'nav-link' + (isActive || (path !== '/' && loc.pathname.startsWith(path)) ? ' active' : '')
-                  }
-              >
-                <Icon size={15} strokeWidth={1.75} />
-                {label}
-              </NavLink>
-          ))}
-        </nav>
-      </aside>
-  )
+export default function Topbar({ title, subtitle }: Props) {
+    return (
+        <>
+            <div className="topbar">
+                <div className="topbar-breadcrumb">
+                    <span>PatientRouter</span>
+                    <span style={{ color: '#cbd5e1' }}>›</span>
+                    <strong>{title}</strong>
+                </div>
+                <div className="topbar-right">
+          <span className="status-dot">
+            <span className="dot dot-green" />
+            Flask API Connected
+          </span>
+                </div>
+            </div>
+            <div className="page-header">
+                <div className="page-title">{title}</div>
+                {subtitle && <div className="page-subtitle">{subtitle}</div>}
+            </div>
+        </>
+    )
 }
