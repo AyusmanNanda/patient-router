@@ -8,7 +8,7 @@ export default function App() {
             <Sidebar />
             <main className="main-content">
                 <Routes>
-                    <Route path="/"          element={<PatientRouter />} />
+                    <Route path="/" element={<PatientRouter />} />
                 </Routes>
             </main>
         </div>
