@@ -56,8 +56,11 @@ def train():
 
     print(f"Department distribution: \n{df['department'].value_counts()}")
 
-    joblib.dump(model, MODELS_DIR / "model.pkl")
-    print("Model saved")
+    try:
+        joblib.dump(model, MODELS_DIR / "model.pkl")
+        print("Model saved")
+    except IOError:
+        print("Failed to save model")
 
 if __name__ == "__main__":
     train()
