@@ -2,416 +2,660 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Patient Router</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Triage Router | v5.0.0</title>
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
-            font-family: sans-serif;
-            max-width: 600px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 660px;
             margin: 40px auto;
-            padding: 0 20px;
-            color: #222;
+            padding: 0 20px 60px;
+            color: #1a1a1a;
+            background: #f5f5f5;
         }
 
-        h2 { margin-bottom: 24px; }
+        h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+        .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
 
         label {
             display: block;
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: #444;
+            font-size: 13px;
             font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
         }
 
-        input, select {
+        input[type="number"],
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
+            padding: 9px 11px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
-            box-sizing: border-box;
+            margin-bottom: 14px;
+            background: #fff;
+            color: #1a1a1a;
         }
-
         input:focus, select:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.12);
         }
 
-        button {
-            padding: 10px 24px;
-            background: #2c3e50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        button:hover { background: #1a252f; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .button-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn-reset {
-            background: #95a5a6;
-        }
-
-        .btn-reset:hover {
-            background: #7f8c8d;
-        }
-        .autocomplete-container {
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        .tags-display {
+        /* Tag autocomplete */
+        .ac-wrap { position: relative; margin-bottom: 14px; }
+        .tags {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-bottom: 8px;
+            min-height: 0;
+            margin-bottom: 6px;
         }
-
-        .pill {
-            background: #e1f0fa;
-            color: #2980b9;
-            padding: 4px 10px;
-            border-radius: 16px;
-            font-size: 13px;
-            display: flex;
+        .tag {
+            display: inline-flex;
             align-items: center;
-            border: 1px solid #b9dcf2;
+            gap: 5px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 13px;
         }
-
-        .pill-close {
-            margin-left: 6px;
+        .tag-x {
             cursor: pointer;
-            font-weight: bold;
-            color: #2980b9;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1d4ed8;
+            line-height: 1;
         }
-
-        .pill-close:hover { color: #c0392b; }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
+        .tag-x:hover { color: #dc2626; }
+        .ac-input {
+            width: 100%;
+            padding: 9px 11px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            max-height: 150px;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 0;
         }
-
+        .ac-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 2px);
+            left: 0; right: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            max-height: 180px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        }
         .dropdown-item {
             padding: 8px 12px;
             cursor: pointer;
-            font-size: 14px;
-            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
         }
-
-        .dropdown-item:hover { background: #f1f8ff; }
         .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: #eff6ff; }
+        .dropdown-empty { padding: 10px 12px; font-size: 13px; color: #999; }
 
-        #error {
-            color: #c0392b;
+        /* Buttons */
+        .btn-row { display: flex; gap: 10px; margin-top: 4px; }
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .15s;
+        }
+        .btn-primary { background: #1e3a5f; color: #fff; }
+        .btn-primary:hover { background: #162d4a; }
+        .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+        .btn-secondary { background: #e5e7eb; color: #374151; }
+        .btn-secondary:hover { background: #d1d5db; }
+
+        /* Error */
+        .error-box {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            border-radius: 6px;
+            padding: 10px 14px;
             font-size: 13px;
+            margin-top: 10px;
+        }
+
+        /* Results */
+        #result { display: none; }
+
+        .esi-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            border: 1px solid transparent;
+        }
+        .esi-1 { background: #fef2f2; border-color: #fca5a5; }
+        .esi-2 { background: #fff7ed; border-color: #fdba74; }
+        .esi-3 { background: #fefce8; border-color: #fde047; }
+        .esi-4 { background: #f0fdf4; border-color: #86efac; }
+        .esi-5 { background: #eff6ff; border-color: #93c5fd; }
+
+        .esi-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #fff;
+            white-space: nowrap;
+            letter-spacing: .4px;
+        }
+        .esi-1 .esi-badge { background: #dc2626; }
+        .esi-2 .esi-badge { background: #ea580c; }
+        .esi-3 .esi-badge { background: #ca8a04; }
+        .esi-4 .esi-badge { background: #16a34a; }
+        .esi-5 .esi-badge { background: #2563eb; }
+
+        .esi-text { flex: 1; }
+        .esi-text strong { font-size: 15px; display: block; }
+        .esi-text span   { font-size: 13px; color: #555; }
+
+        .emergency-pill {
+            display: inline-block;
+            background: #dc2626;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: .5px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: .65; }
+        }
+
+        .result-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+        .result-row .label { color: #555; }
+        .result-row .value { font-weight: 600; color: #1a1a1a; text-align: right; }
+
+        .dept-list { margin-top: 12px; }
+        .dept-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .dept-item:last-child { border-bottom: none; }
+        .dept-name { flex: 1; font-weight: 500; text-transform: capitalize; }
+        .conf-bar-wrap { width: 120px; background: #e5e7eb; border-radius: 4px; height: 6px; overflow: hidden; }
+        .conf-bar { height: 100%; background: #2563eb; border-radius: 4px; transition: width .4s; }
+        .conf-pct { width: 42px; text-align: right; color: #555; }
+
+        .reasons-list { margin: 0; padding: 0 0 0 16px; font-size: 13px; line-height: 1.8; color: #333; }
+
+        .interaction-alert {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: #92400e;
+            margin-bottom: 6px;
+        }
+        .interaction-alert strong { display: block; font-size: 12px; color: #b45309; margin-bottom: 2px; }
+
+        .unrecognised-note {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #6b7280;
             margin-top: 8px;
-            display: none;
-            padding: 10px;
-            background: #fadbd8;
-            border-radius: 4px;
         }
 
-        #result {
-            margin-top: 24px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 4px;
-            padding: 16px;
-            font-size: 13px;
+        details summary { cursor: pointer; font-size: 12px; color: #6b7280; margin-top: 12px; }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            overflow-x: auto;
+            margin-top: 6px;
             white-space: pre-wrap;
-            display: none;
         }
+
+        /* Feedback */
+        #feedback-card { display: none; }
+        .feedback-q { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+        .feedback-btns { display: flex; gap: 10px; }
+        .btn-yes { background: #16a34a; color: #fff; }
+        .btn-yes:hover { background: #15803d; }
+        .btn-no  { background: #dc2626; color: #fff; }
+        .btn-no:hover { background: #b91c1c; }
+        #correction-panel { display: none; margin-top: 16px; }
+        .feedback-ok { color: #16a34a; font-size: 13px; font-weight: 600; margin-top: 8px; display: none; }
+
+        /* Loading skeleton */
+        .loading-text { font-size: 13px; color: #6b7280; padding: 12px 0; }
     </style>
 </head>
 <body>
 
-<h2>Patient Router</h2>
+<h1>CDSS Patient Triage Router</h1>
+<p class="subtitle">Clinical Decision Support System &mdash; v5.0.0</p>
 
-<label>Symptoms</label>
-<div class="autocomplete-container">
-    <div id="symptoms-tags" class="tags-display"></div>
-    <input type="text" id="symptoms-input" placeholder="Type a symptom and select..." autocomplete="off" style="margin-bottom: 0;">
-    <div id="symptoms-dropdown" class="dropdown-menu"></div>
-</div>
+<div class="card">
+    <label>Symptoms <span style="color:#dc2626">*</span></label>
+    <div class="ac-wrap">
+        <div id="sym-tags" class="tags"></div>
+        <input class="ac-input" id="sym-input" type="text" placeholder="Type to search symptoms…" autocomplete="off">
+        <div class="dropdown" id="sym-dropdown"></div>
+    </div>
 
-<label>Vitals</label>
-<div class="autocomplete-container">
-    <div id="vitals-tags" class="tags-display"></div>
-    <input type="text" id="vitals-input" placeholder="Type a vital sign and select..." autocomplete="off" style="margin-bottom: 0;">
-    <div id="vitals-dropdown" class="dropdown-menu"></div>
-</div>
+    <label>Vitals &amp; Neuro Assessment</label>
+    <div class="ac-wrap">
+        <div id="vit-tags" class="tags"></div>
+        <input class="ac-input" id="vit-input" type="text" placeholder="Type to search vitals…" autocomplete="off">
+        <div class="dropdown" id="vit-dropdown"></div>
+    </div>
 
-<label>Gender</label>
-<select id="gender">
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    <option value="other">Other</option>
-</select>
+    <div style="display:flex; gap:16px;">
+        <div style="flex:1;">
+            <label>Age <span style="color:#dc2626">*</span></label>
+            <input id="age" type="number" min="0" max="120" placeholder="e.g. 45">
+        </div>
+        <div style="flex:1;">
+            <label>Gender</label>
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+    </div>
 
-<label>Age</label>
-<input id="age" type="number" placeholder="e.g. 45">
+    <label>Duration of Symptoms</label>
+    <select id="duration">
+        <option value="acute_under_6_hours">Acute (&lt; 6 hours)</option>
+        <option value="subacute_under_24_hours">Subacute (6–24 hours)</option>
+        <option value="standard" selected>Standard (1–30 days)</option>
+        <option value="chronic_over_30_days">Chronic (&gt; 30 days)</option>
+    </select>
 
-<label>Duration (days)</label>
-<input id="duration" type="number" placeholder="e.g. 3">
+    <label>Clinical Modifier / Comorbidity</label>
+    <select id="modifier">
+        <option value="none">None</option>
+        <option value="immunocompromised">Immunocompromised (Chemo / HIV / Cancer)</option>
+        <option value="pregnant_1st_trimester">Pregnant — 1st Trimester</option>
+        <option value="pregnant_2nd_trimester">Pregnant — 2nd Trimester</option>
+        <option value="pregnant_3rd_trimester">Pregnant — 3rd Trimester</option>
+        <option value="on_blood_thinners">On Blood Thinners (Warfarin / Eliquis)</option>
+        <option value="history_of_mi">History of Heart Attack (MI)</option>
+        <option value="esrd_dialysis">Kidney Failure / On Dialysis</option>
+        <option value="copd">COPD / Emphysema</option>
+        <option value="chf">Chronic Heart Failure (CHF)</option>
+        <option value="pediatric_infant">Neonate / Infant (&lt; 1 year)</option>
+        <option value="pediatric_child">Child (1–11 years)</option>
+        <option value="geriatric">Elderly Patient (75+)</option>
+    </select>
 
-<div class="button-group">
-    <button id="btn" onclick="predict()">Predict</button>
-    <button id="reset-btn" class="btn-reset" onclick="resetForm()">Reset</button>
-</div>
-<div id="error"></div>
+    <div id="error-box" class="error-box"></div>
 
-<h3>Result</h3>
-<pre id="result"></pre>
-
-<div id="feedback-container" style="display: none; margin-top: 24px; padding: 16px; background: #e8f4f8; border-radius: 4px; border: 1px solid #b9dcf2;">
-    <p style="margin-top: 0; font-weight: bold;">Was this prediction correct?</p>
-    <button onclick="submitFeedback(true)" style="background: #27ae60;">Yes</button>
-    <button onclick="showCorrectionMenu()" style="background: #c0392b;">No</button>
-
-    <div id="correction-menu" style="display: none; margin-top: 16px;">
-        <label>Select the correct department:</label>
-        <select id="correct-dept" style="width: 100%; padding: 8px; margin-bottom: 12px;">
-            <option value="cardiology">Cardiology</option>
-            <option value="pulmonology">Pulmonology</option>
-            <option value="neurology">Neurology</option>
-            <option value="orthopedics">Orthopedics</option>
-            <option value="gastrology">Gastrology</option>
-            <option value="general">General</option>
-        </select>
-        <button onclick="submitFeedback(false)" style="background: #2980b9;">Save to Training Data</button>
+    <div class="btn-row">
+        <button class="btn btn-primary" id="btn-predict" onclick="predict()">Predict Triage</button>
+        <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
     </div>
 </div>
 
+<!-- Result -->
+<div id="result" class="card">
+    <div id="esi-banner"></div>
+    <div id="result-body"></div>
+</div>
+
+<!-- Feedback -->
+<div id="feedback-card" class="card">
+    <div class="feedback-q">Was this routing correct?</div>
+    <div class="feedback-btns">
+        <button class="btn btn-yes" onclick="submitFeedback(true)">✓ Correct</button>
+        <button class="btn btn-no"  onclick="document.getElementById('correction-panel').style.display='block'">✗ Incorrect</button>
+    </div>
+    <div id="correction-panel">
+        <label style="margin-top:14px;">Select the correct department:</label>
+        <select id="correct-dept" style="margin-bottom:10px;">
+            <!-- populated from /api/vocab -->
+        </select>
+        <button class="btn btn-primary" onclick="submitFeedback(false)">Save Correction</button>
+    </div>
+    <div class="feedback-ok" id="feedback-ok">✓ Feedback saved — thank you.</div>
+</div>
+
 <script>
-    const KNOWN_SYMPTOMS = ["abdominal pain", "blurred vision", "body pain", "breathlessness", "chest pain", "confusion", "cough", "diarrhea", "dizziness", "fatigue", "fever", "headache", "joint pain", "limited movement", "nausea", "stiffness", "sweating", "swelling", "vomiting", "weakness"];
-    const KNOWN_VITALS = ["bp_high", "bp_low", "hr_high", "hr_low", "temp_high", "temp_low", "normal"];
+    const API = 'http://127.0.0.1:5000';
 
-    let selectedSymptoms = [];
-    let selectedVitals = [];
+    // Vocabulary loaded from /api/vocab at startup
+    let vocabSymptoms = [];
+    let vocabVitals   = [];
 
-    function resetForm() {
-        selectedSymptoms = [];
-        selectedVitals = [];
-        document.getElementById('symptoms-tags').innerHTML = '';
-        document.getElementById('vitals-tags').innerHTML = '';
-        document.getElementById('symptoms-input').value = '';
-        document.getElementById('vitals-input').value = '';
-        document.getElementById('age').value = '';
-        document.getElementById('duration').value = '';
-        document.getElementById('gender').value = 'male';
-        document.getElementById('error').style.display = 'none';
-        document.getElementById('result').style.display = 'none';
-        document.getElementById('feedback-container').style.display = 'none';
-        document.getElementById('correction-menu').style.display = 'none';
-        const btn = document.getElementById('btn');
-        btn.disabled = false;
-        btn.textContent = 'Predict';
+    // Selected tag arrays
+    let selSymptoms = [];
+    let selVitals   = [];
+
+    // Last prediction result (for feedback)
+    let lastResult  = null;
+    let lastInputs  = {};
+
+    // ---------------------------------------------------------------------------
+    // Load vocabulary from backend
+    // ---------------------------------------------------------------------------
+    async function loadVocab() {
+        try {
+            const res  = await fetch(`${API}/api/vocab`);
+            const data = await res.json();
+            vocabSymptoms = data.symptoms.map(o => o.label);
+            vocabVitals   = data.vitals.map(o => o.label);
+
+            // Populate department select in feedback panel
+            const deptSel = document.getElementById('correct-dept');
+            deptSel.innerHTML = data.departments
+                .map(d => `<option value="${d.value}">${d.label}</option>`)
+                .join('');
+        } catch (e) {
+            // Fallback: autocomplete still works with empty lists; server normalises anyway
+            console.warn('Could not load vocab from API:', e.message);
+        }
     }
 
-    function setupAutocomplete(inputId, dropdownId, tagsId, optionsList, dataArray) {
-        const inputEl = document.getElementById(inputId);
-        const dropdownEl = document.getElementById(dropdownId);
-        const tagsContainerEl = document.getElementById(tagsId);
+    // ---------------------------------------------------------------------------
+    // Tag autocomplete
+    // ---------------------------------------------------------------------------
+    function makeAutocomplete(inputId, dropdownId, tagsId, getOptions, dataArr) {
+        const inp  = document.getElementById(inputId);
+        const drop = document.getElementById(dropdownId);
+        const tags = document.getElementById(tagsId);
 
         function renderTags() {
-            tagsContainerEl.innerHTML = '';
-            dataArray.forEach((item, index) => {
+            tags.innerHTML = '';
+            dataArr.forEach((item, i) => {
                 const tag = document.createElement('span');
-                tag.className = 'pill';
+                tag.className = 'tag';
                 tag.textContent = item;
-
-                const closeBtn = document.createElement('span');
-                closeBtn.className = 'pill-close';
-                closeBtn.innerHTML = '&times;';
-                closeBtn.onclick = () => {
-                    dataArray.splice(index, 1);
-                    renderTags();
-                };
-
-                tag.appendChild(closeBtn);
-                tagsContainerEl.appendChild(tag);
+                const x = document.createElement('span');
+                x.className = 'tag-x';
+                x.innerHTML = '&times;';
+                x.onclick = () => { dataArr.splice(i, 1); renderTags(); };
+                tag.appendChild(x);
+                tags.appendChild(tag);
             });
         }
 
-        inputEl.addEventListener('input', () => {
-            const query = inputEl.value.toLowerCase();
-            dropdownEl.innerHTML = '';
+        inp.addEventListener('input', () => {
+            const q = inp.value.toLowerCase().trim();
+            drop.innerHTML = '';
+            if (!q) { drop.style.display = 'none'; return; }
 
-            if (!query) {
-                dropdownEl.style.display = 'none';
-                return;
-            }
-
-            // Find matches that aren't already selected
-            const matches = optionsList.filter(opt =>
-                opt.toLowerCase().includes(query) && !dataArray.includes(opt)
+            const matches = getOptions().filter(o =>
+                o.toLowerCase().includes(q) && !dataArr.includes(o)
             );
 
-            if (matches.length > 0) {
-                dropdownEl.style.display = 'block';
-                matches.forEach(match => {
-                    const item = document.createElement('div');
-                    item.className = 'dropdown-item';
-                    item.textContent = match;
-                    item.onclick = () => {
-                        dataArray.push(match);
-                        inputEl.value = '';
-                        dropdownEl.style.display = 'none';
-                        renderTags();
-                    };
-                    dropdownEl.appendChild(item);
-                });
-            } else {
-                dropdownEl.style.display = 'none';
+            if (!matches.length) {
+                drop.innerHTML = '<div class="dropdown-empty">No matches — type to search</div>';
+                drop.style.display = 'block';
+                return;
             }
+            drop.style.display = 'block';
+            matches.slice(0, 12).forEach(m => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.textContent = m;
+                item.onmousedown = e => {
+                    e.preventDefault();
+                    dataArr.push(m);
+                    inp.value = '';
+                    drop.style.display = 'none';
+                    renderTags();
+                };
+                drop.appendChild(item);
+            });
         });
 
-        // Hide dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (e.target !== inputEl && e.target !== dropdownEl) {
-                dropdownEl.style.display = 'none';
-            }
-        });
+        inp.addEventListener('blur', () => setTimeout(() => drop.style.display = 'none', 150));
+        inp.addEventListener('focus', () => { if (inp.value) inp.dispatchEvent(new Event('input')); });
+
+        return renderTags;
     }
 
-    setupAutocomplete('symptoms-input', 'symptoms-dropdown', 'symptoms-tags', KNOWN_SYMPTOMS, selectedSymptoms);
-    setupAutocomplete('vitals-input', 'vitals-dropdown', 'vitals-tags', KNOWN_VITALS, selectedVitals);
+    makeAutocomplete('sym-input', 'sym-dropdown', 'sym-tags', () => vocabSymptoms, selSymptoms);
+    makeAutocomplete('vit-input', 'vit-dropdown', 'vit-tags', () => vocabVitals,   selVitals);
 
-
-    let currentSessionData = {};
-
+    // ---------------------------------------------------------------------------
+    // Predict
+    // ---------------------------------------------------------------------------
     async function predict() {
-        const symptoms = selectedSymptoms.join(', ');
-        const vitals   = selectedVitals.join(', ');
-
-        const gender   = document.getElementById('gender').value;
+        const errorBox = document.getElementById('error-box');
+        errorBox.style.display = 'none';
+        document.getElementById('result').style.display = 'none';
+        document.getElementById('feedback-card').style.display = 'none';
+        document.getElementById('feedback-ok').style.display = 'none';
+        document.getElementById('correction-panel').style.display = 'none';
 
         const age      = Number(document.getElementById('age').value);
+        const gender   = document.getElementById('gender').value;
+        const duration = document.getElementById('duration').value;
+        const modifier = document.getElementById('modifier').value;
 
-        const duration = Number(document.getElementById('duration').value);
+        if (!selSymptoms.length) { showError('At least one symptom is required.'); return; }
+        if (!age || age < 0 || age > 120) { showError('Please enter a valid age (0–120).'); return; }
 
-        const errorDiv = document.getElementById('error');
+        const symptoms = selSymptoms.join(', ');
+        const vitals   = selVitals.join(', ');
 
-        errorDiv.style.display = 'none';
-
-        document.getElementById('feedback-container').style.display = 'none';
-        document.getElementById('correction-menu').style.display = 'none';
-
-        if (selectedSymptoms.length === 0) {
-            showError('At least one symptom is required.');
-            return;
-        }
-        if (!age || age <= 0 || age > 120) {
-            showError('Please enter a valid age.');
-            return;
-        }
-        if (!duration || duration <= 0) {
-            showError('Please enter a valid duration.');
-            return;
-        }
-
-        const btn = document.getElementById('btn');
-        btn.disabled = true;
-
-        btn.textContent = 'Loading...';
+        const btn = document.getElementById('btn-predict');
+        btn.disabled   = true;
+        btn.textContent = 'Analysing…';
 
         try {
-            const res = await fetch('/predict', {
-                method: 'POST',
+            const res = await fetch(`${API}/api/triage`, {
+                method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ symptoms, vitals, age, duration })
+                body:    JSON.stringify({ symptoms, vitals, age, gender, duration, modifier }),
             });
 
+            const json = await res.json();
+
             if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.detail || err.error || `Server error ${res.status}`);
+                throw new Error(json.error || `Server error ${res.status}`);
             }
 
-            const data = await res.json();
+            const d = json.data;
+            lastResult = d;
+            lastInputs = { symptoms, vitals, age, gender, duration, modifier, recommended: d.recommended };
 
-            const result = document.getElementById('result');
-
-            result.style.display = 'block';
-
-            result.textContent = JSON.stringify(data, null, 2);
-
-            currentSessionData = {
-                symptoms,
-                vitals,
-                gender,
-                age,
-                duration,
-                priority: data.priority || 'low'
-            };
-            document.getElementById('feedback-container').style.display = 'block';
+            renderResult(d);
 
         } catch (err) {
-            showError(err.message || 'Something went wrong. Is the server running?');
+            showError(err.message || 'Request failed. Is app.py running on port 5000?');
         } finally {
-            btn.disabled = false;
-            btn.textContent = 'Predict';
+            btn.disabled   = false;
+            btn.textContent = 'Predict Triage';
         }
     }
 
-    function showCorrectionMenu() {
-        document.getElementById('correction-menu').style.display = 'block';
+    // ---------------------------------------------------------------------------
+    // Render result
+    // ---------------------------------------------------------------------------
+    const ESI_LABELS = {
+        1: 'IMMEDIATE — Resuscitation',
+        2: 'EMERGENT',
+        3: 'URGENT',
+        4: 'Less Urgent',
+        5: 'Non-Urgent',
+    };
+
+    function renderResult(d) {
+        const resultDiv = document.getElementById('result');
+        const banner    = document.getElementById('esi-banner');
+        const body      = document.getElementById('result-body');
+
+        // ESI banner
+        banner.className = `esi-banner esi-${d.esi_level}`;
+        banner.innerHTML = `
+    <span class="esi-badge">ESI ${d.esi_level}</span>
+    <div class="esi-text">
+      <strong>${ESI_LABELS[d.esi_level] || d.priority.toUpperCase()}</strong>
+      <span>Route to: <strong style="color:#1a1a1a">${d.recommended.replace(/_/g,' ').toUpperCase()}</strong></span>
+    </div>
+    ${d.emergency ? '<span class="emergency-pill">⚠ EMERGENCY</span>' : ''}
+  `;
+
+        // Summary rows
+        let html = `
+    <div class="result-row"><span class="label">ML Confidence</span><span class="value">${(d.confidence*100).toFixed(1)}%</span></div>
+    <div class="result-row"><span class="label">Triage Score</span><span class="value">${d.score}</span></div>
+  `;
+
+        // Top-3 department ranking
+        html += `<div style="margin:12px 0 4px;font-size:13px;font-weight:600;">Department Ranking</div>
+           <div class="dept-list">`;
+        d.departments.forEach((dept, i) => {
+            html += `
+      <div class="dept-item">
+        <span style="color:#9ca3af;font-size:12px;width:14px">${i+1}</span>
+        <span class="dept-name">${dept.department.replace(/_/g,' ')}</span>
+        <div class="conf-bar-wrap"><div class="conf-bar" style="width:${(dept.confidence*100).toFixed(0)}%"></div></div>
+        <span class="conf-pct">${(dept.confidence*100).toFixed(1)}%</span>
+      </div>`;
+        });
+        html += `</div>`;
+
+        // Critical interactions
+        if (d.interactions && d.interactions.length) {
+            html += `<div style="margin:14px 0 6px;font-size:13px;font-weight:600;">⚠ Critical Interactions</div>`;
+            d.interactions.forEach(ix => {
+                html += `<div class="interaction-alert">
+        <strong>${ix.suggested_dept.replace(/_/g,' ').toUpperCase()} — ESI upgrade +${ix.esi_upgrade}</strong>
+        ${ix.note}
+      </div>`;
+            });
+        }
+
+        // Clinical reasoning
+        if (d.reasons && d.reasons.length) {
+            html += `<div style="margin:14px 0 6px;font-size:13px;font-weight:600;">Clinical Reasoning</div>
+             <ul class="reasons-list">`;
+            d.reasons.forEach(r => { html += `<li>${r}</li>`; });
+            html += `</ul>`;
+        }
+
+        // Unrecognised terms warning
+        if (d.unrecognised && d.unrecognised.length) {
+            html += `<div class="unrecognised-note">
+      ⚠ These terms were not recognised and were ignored:
+      <strong>${d.unrecognised.join(', ')}</strong>
+    </div>`;
+        }
+
+        // Vitals missing warning
+        if (d.vitals_missing) {
+            html += `<div class="unrecognised-note">
+      ℹ Vitals were not provided — add vitals for a more accurate assessment.
+    </div>`;
+        }
+
+        // Raw JSON collapsible
+        html += `<details>
+    <summary>View raw model output</summary>
+    <pre>${JSON.stringify(d, null, 2)}</pre>
+  </details>`;
+
+        body.innerHTML = html;
+        resultDiv.style.display  = 'block';
+        document.getElementById('feedback-card').style.display = 'block';
     }
 
+    // ---------------------------------------------------------------------------
+    // Feedback
+    // ---------------------------------------------------------------------------
     async function submitFeedback(isCorrect) {
         if (isCorrect) {
-            alert("Thanks! The model was accurate.");
-            document.getElementById('feedback-container').style.display = 'none';
+            document.getElementById('feedback-card').style.display = 'none';
+            document.getElementById('feedback-ok').style.display   = 'block';
             return;
         }
 
         const correctDept = document.getElementById('correct-dept').value;
-
-        const payload = { ...currentSessionData, correct_department: correctDept };
+        const payload     = { ...lastInputs, correct_department: correctDept };
 
         try {
-            const res = await fetch('/feedback', {
-                method: 'POST',
+            const res = await fetch(`${API}/api/feedback`, {
+                method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body:    JSON.stringify(payload),
             });
-
-            if (res.ok) {
-                alert("Correction saved to data.csv successfully!");
-                document.getElementById('feedback-container').style.display = 'none';
-            } else {
-                throw new Error("Failed to save correction.");
-            }
+            const json = await res.json();
+            if (!res.ok) throw new Error(json.error);
+            document.getElementById('correction-panel').style.display = 'none';
+            document.getElementById('feedback-ok').style.display      = 'block';
         } catch (err) {
-            alert("Error saving feedback: " + err.message);
+            showError('Feedback save failed: ' + err.message);
         }
     }
 
+    // ---------------------------------------------------------------------------
+    // Helpers
+    // ---------------------------------------------------------------------------
     function showError(msg) {
-        const div = document.getElementById('error');
-        div.textContent = msg;
-        div.style.display = 'block';
+        const div = document.getElementById('error-box');
+        div.textContent    = msg;
+        div.style.display  = 'block';
     }
-</script>
 
+    function resetForm() {
+        selSymptoms.length = 0;
+        selVitals.length   = 0;
+        document.getElementById('sym-tags').innerHTML = '';
+        document.getElementById('vit-tags').innerHTML = '';
+        document.getElementById('sym-input').value    = '';
+        document.getElementById('vit-input').value    = '';
+        document.getElementById('age').value          = '';
+        document.getElementById('gender').value       = 'male';
+        document.getElementById('duration').value     = 'standard';
+        document.getElementById('modifier').value     = 'none';
+        document.getElementById('error-box').style.display    = 'none';
+        document.getElementById('result').style.display       = 'none';
+        document.getElementById('feedback-card').style.display = 'none';
+        document.getElementById('feedback-ok').style.display  = 'none';
+        document.getElementById('correction-panel').style.display = 'none';
+    }
+
+    // ---------------------------------------------------------------------------
+    // Init
+    // ---------------------------------------------------------------------------
+    loadVocab();
+</script>
 </body>
 </html>
