@@ -1,76 +1,33 @@
 from pathlib import Path
 import joblib
 import numpy as np
+import pandas as pd 
 import json
 import logging
 import difflib
+from constants import (
+    ALIASES, KNOWN_VITALS, KNOWN_SYMPTOMS,
+    SYMPTOMS_WEIGHT, EMERGENCY_SYMPTOMS, VITALS_WEIGHT,
+    EMERGENCY_VITALS, CONFIDENCE_THRESHOLD,
+    SAFE_FALLBACK_DEPT, MODEL_VERSION
+)
 
 BASE_DIR = Path(__file__).resolve().parent
+LOGS_DIR = BASE_DIR / "../logs"
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+MODEL_DIR = BASE_DIR / "models" / "model.pkl"
 
 logging.basicConfig(
-    filename=str(BASE_DIR / "../logs/triage.log"),
+    filename=str(LOGS_DIR / "triage.log"),
     level=logging.INFO,
     format="%(asctime)s - %(message)s"
 )
 
-model = joblib.load(str(BASE_DIR / "models" / "model.pkl"))
-vectorizer = joblib.load(str(BASE_DIR / "models" / "vectorizer.pkl"))
-
-MODEL_VERSION = "1.0.0"
-
-SYMPTOMS_WEIGHT = {
-    "chest pain": 2,
-    "breathlessness": 2,
-}
-
-VITAL_WEIGHT = {
-    "bp_high": 2,
-    "hr_high": 1,
-}
-
-EMERGENCY_SYMPTOMS = ["chest pain", "breathlessness", "confusion"]
-EMERGENCY_VITALS = ["bp_low", "hr_high"]
-
-CONFIDENCE_THRESHOLD = 0.60
-SAFE_FALLBACK_DEPT = "general"
-
-KNOWN_SYMPTOMS = [
-    "chest pain", "breathlessness", "fatigue", "sweating",
-    "cough", "fever", "headache", "dizziness", "confusion",
-    "blurred vision", "joint pain", "swelling", "stiffness",
-    "limited movement", "abdominal pain", "nausea", "vomiting",
-    "diarrhea", "body pain", "weakness"
-]
-
-KNOWN_VITALS = ["bp_high", "bp_low", "hr_high", "hr_low", "temp_high", "temp_low", "normal"]
-
-ALIASES = {
-    "bp high": "bp_high",
-    "bp low": "bp_low",
-    "hr high": "hr_high",
-    "hr low": "hr_low",
-    "temp high": "temp_high",
-    "temp low": "temp_low",
-    "high bp": "bp_high",
-    "low bp": "bp_low",
-    "high hr": "hr_high",
-    "high temp": "temp_high",
-    "shortness of breath": "breathlessness",
-    "short of breath": "breathlessness",
-    "sob": "breathlessness",
-    "chest tightness": "chest pain",
-    "stomach pain": "abdominal pain",
-    "stomach ache": "abdominal pain",
-    "belly pain": "abdominal pain",
-    "loose motion": "diarrhea",
-    "loose motions": "diarrhea",
-    "blurred": "blurred vision",
-    "blur": "blurred vision",
-    "joint ache": "joint pain",
-    "tired": "fatigue",
-    "tiredness": "fatigue",
-    "breathless": "breathlessness",
-}
+try:
+    model = joblib.load(str(MODEL_DIR))
+except FileNotFoundError:
+    print(f"Failed to load model from {MODEL_DIR}")
+    exit(1)
 
 
 def normalize_term(term: str, known: list) -> str:
@@ -95,7 +52,7 @@ def normalize_list(terms: list, known: list) -> list:
     return [normalize_term(t, known) for t in terms]
 
 
-def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1):
+def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1, gender: str = "male"):
 
     if not symptoms.strip():
         raise ValueError("Symptoms cannot be empty.")
@@ -123,12 +80,9 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     vitals_list = normalize_list(vitals_list, KNOWN_VITALS)
 
     text = " ".join(symptoms_list) + " " + " ".join(vitals_list)
-    vector = vectorizer.transform([text])
+    input_df = pd.DataFrame([{"text": text, "age": age, "duration": duration, "gender": gender}])
+    probs = model.predict_proba(input_df)[0]
 
-    try:
-        probs = model.predict_proba(vector)[0]
-    except Exception as e:
-        raise RuntimeError(f"Model prediction failed: {e}")
 
     classes = model.classes_
     top_indices = np.argsort(probs)[::-1][:3]
@@ -146,7 +100,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         score += SYMPTOMS_WEIGHT.get(symptom, 0)
 
     for vital in vitals_list:
-        score += VITAL_WEIGHT.get(vital, 0)
+        score += VITALS_WEIGHT.get(vital, 0)
 
     if age > 60:
         score += 1
@@ -175,7 +129,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
                 reasons.append(symptom)
 
     for vital in vitals_list:
-        if vital in VITAL_WEIGHT or vital in EMERGENCY_VITALS:
+        if vital in VITALS_WEIGHT or vital in EMERGENCY_VITALS:
             if vital not in reasons:
                 reasons.append(vital)
 
@@ -192,9 +146,9 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
 
     if top_confidence < CONFIDENCE_THRESHOLD:
         recommended = SAFE_FALLBACK_DEPT
-        reasons.append("Low model confidence — fallback to general")
+        reasons.append("Low model confidence - fallback to general")
 
-    result = {
+    results = {
         "recommended": recommended,
         "departments": departments,
         "priority": priority,
@@ -210,7 +164,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         f"Output: recommended={recommended}, priority={priority}, emergency={is_emergency}"
     )
 
-    return result
+    return results
 
 
 if __name__ == "__main__":
