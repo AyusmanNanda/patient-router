@@ -151,3 +151,15 @@
 2026-05-28 01:31:13,629 - 127.0.0.1 - - [28/May/2026 01:31:13] "OPTIONS /predict HTTP/1.1" 200 -
 2026-05-28 01:31:13,654 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=low, emergency=False
 2026-05-28 01:31:13,655 - 127.0.0.1 - - [28/May/2026 01:31:13] "POST /predict HTTP/1.1" 200 -
+2026-05-28 07:26:05,196 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.147.174.166:5000
+2026-05-28 07:26:05,196 - [33mPress CTRL+C to quit[0m
+2026-05-28 07:27:43,512 - 127.0.0.1 - - [28/May/2026 07:27:43] "GET / HTTP/1.1" 200 -
+2026-05-28 07:27:43,599 - 127.0.0.1 - - [28/May/2026 07:27:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-31 21:45:11,564 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.189.166:5000
+2026-05-31 21:45:11,564 - [33mPress CTRL+C to quit[0m

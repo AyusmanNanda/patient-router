@@ -4,13 +4,11 @@ import sys
 import os
 import csv
 from flask_cors import CORS
+from ml.constants import MODEL_VERSION
 
 load_dotenv()
 
-ML_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ml")
-sys.path.insert(0, ML_DIR)
-
-from predict import predict_case
+from ml.predict import predict_case
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173", "https://patient-router.vercel.app"], supports_credentials=True)
@@ -21,7 +19,11 @@ def health():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return jsonify({
+                    "service": "Patient Router API",
+                    "status": "ok",
+                    "model version": MODEL_VERSION,
+                    })
 
 
 @app.route("/predict", methods=["POST"])
@@ -78,7 +80,7 @@ def feedback():
     if not correct_dept:
         return jsonify({"error": "Correct department is required."}), 400
 
-    data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "data.csv")
+    data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "data", "data.csv")
 
     try:
         with open(data_path, mode="a", newline="", encoding="utf-8") as f:
