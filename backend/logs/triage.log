@@ -368,3 +368,15 @@ TypeError: predict() missing 1 required positional argument: 'data'
 2026-06-01 20:58:53,163 - 127.0.0.1 - - [01/Jun/2026 20:58:53] "GET /health HTTP/1.1" 200 -
 2026-06-01 20:58:59,114 - 127.0.0.1 - - [01/Jun/2026 20:58:59] "[31m[1mGET /predict HTTP/1.1[0m" 405 -
 2026-06-01 20:59:07,792 - 127.0.0.1 - - [01/Jun/2026 20:59:07] "GET / HTTP/1.1" 200 -
+2026-06-01 22:08:35,414 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.44.42.166:5000
+2026-06-01 22:08:35,414 - [33mPress CTRL+C to quit[0m
+2026-06-01 22:08:35,416 -  * Restarting with stat
+2026-06-01 22:08:37,535 -  * Debugger is active!
+2026-06-01 22:08:37,557 -  * Debugger PIN: 124-603-283
+2026-06-01 22:18:56,244 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/model_evaluation.py', reloading
+2026-06-01 22:18:56,602 -  * Restarting with stat
+2026-06-01 22:18:59,092 -  * Debugger is active!
+2026-06-01 22:18:59,097 -  * Debugger PIN: 124-603-283
