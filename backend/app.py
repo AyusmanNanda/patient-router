@@ -7,9 +7,10 @@ from flask_cors import CORS
 from ml.constants import MODEL_VERSION
 
 from routes.predictRoute import predict_bp
+from routes.homeRoute import home_bp
+from routes.healthRoute import health_bp
 
 load_dotenv()
-
 app = Flask(__name__)
 CORS(app,
      origins=
@@ -19,18 +20,8 @@ CORS(app,
 )
 
 app.register_blueprint(predict_bp)
-
-@app.route("/health")
-def health():
-    return jsonify({"status": "ok"}), 200
-
-@app.route("/")
-def home():
-    return jsonify({
-                    "service": "Patient Router API",
-                    "status": "ok",
-                    "model version": MODEL_VERSION,
-                    })
+app.register_blueprint(home_bp)
+app.register_blueprint(health_bp)
 
 @app.route("/feedback", methods=["POST"])
 def feedback():
