@@ -2,8 +2,8 @@ Model Evaluation Report
 =======================================================
 Synthetic test accuracy  : 98.41%
 5-Fold CV accuracy       : 98.57% (±0.08%)
-Real-world accuracy      : 58.33%
-Generalisation gap       : 40.1pp  ← key research finding
+Edge-case accuracy       : 82.35%
+Generalisation gap       : 16.1pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
