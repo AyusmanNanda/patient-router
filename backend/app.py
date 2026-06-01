@@ -6,12 +6,19 @@ import csv
 from flask_cors import CORS
 from ml.constants import MODEL_VERSION
 
+from routes.predictRoute import predict_bp
+
 load_dotenv()
 
-from ml.predict import predict_case
-
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "https://patient-router.vercel.app"], supports_credentials=True)
+CORS(app,
+     origins=
+     ["http://localhost:5173",
+      "https://patient-router.vercel.app"],
+     supports_credentials=True
+)
+
+app.register_blueprint(predict_bp)
 
 @app.route("/health")
 def health():
@@ -24,43 +31,6 @@ def home():
                     "status": "ok",
                     "model version": MODEL_VERSION,
                     })
-
-
-@app.route("/predict", methods=["POST"])
-def predict():
-    data = request.json
-
-    if not data:
-        return jsonify({"error": "Request body is required."}), 400
-
-    symptoms = data.get("symptoms", "").strip()
-    vitals   = data.get("vitals", "").strip()
-    age      = data.get("age")
-    duration = data.get("duration")
-    gender = data.get("gender", "male")
-
-    if not symptoms:
-        return jsonify({"error": "Symptoms are required."}), 400
-
-    if age is None or duration is None:
-        return jsonify({"error": "Age and duration are required."}), 400
-
-    try:
-        result = predict_case(
-            symptoms=symptoms,
-            vitals=vitals,
-            age=int(age),
-            duration=int(duration),
-            gender=gender
-        )
-        return jsonify(result), 200
-
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-    except RuntimeError as e:
-        return jsonify({"error": str(e)}), 500
-
 
 @app.route("/feedback", methods=["POST"])
 def feedback():
