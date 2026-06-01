@@ -1,10 +1,8 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from dotenv import load_dotenv
-import sys
 import os
 import csv
 from flask_cors import CORS
-from ml.constants import MODEL_VERSION
 
 from routes.predictRoute import predict_bp
 from routes.homeRoute import home_bp
