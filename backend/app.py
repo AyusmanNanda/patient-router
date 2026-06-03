@@ -10,15 +10,12 @@ from routes.healthRoute import health_bp
 
 load_dotenv()
 frontend_url = os.getenv("FRONTEND_URL")
-production_frontend_url = os.getenv("PRODUCTION_FRONTEND_URL")
-if not frontend_url or not production_frontend_url:
+if not frontend_url:
     raise RuntimeError("FRONTEND_URL and PRODUCTION_FRONTEND_URL must be set")
 app = Flask(__name__)
 CORS(app,
      origins=
-     [frontend_url,
-      production_frontend_url,
-      ],
+     [frontend_url],
      supports_credentials=True
 )
 
