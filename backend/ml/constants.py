@@ -1,6 +1,6 @@
 MODEL_VERSION = "1.1.0"
 
-SAMPLE_SIZE = 150000
+SAMPLE_SIZE = 50000
 
 GENDERS = ['male', 'female', 'other']
 
