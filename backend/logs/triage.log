@@ -315,3 +315,17 @@
 2026-06-05 01:16:51,479 -  * Debugger is active!
 2026-06-05 01:16:51,481 -  * Debugger PIN: 124-603-283
 2026-06-05 01:18:25,486 - 127.0.0.1 - - [05/Jun/2026 01:18:25] "POST /train HTTP/1.1" 200 -
+2026-06-05 01:30:31,376 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/app.py', reloading
+2026-06-05 01:30:31,827 -  * Restarting with stat
+2026-06-05 01:30:33,952 -  * Debugger is active!
+2026-06-05 01:30:33,956 -  * Debugger PIN: 124-603-283
+2026-06-05 01:31:16,612 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/dataService.py', reloading
+2026-06-05 01:31:17,003 -  * Restarting with stat
+2026-06-05 01:31:19,008 -  * Debugger is active!
+2026-06-05 01:31:19,011 -  * Debugger PIN: 124-603-283
+2026-06-05 01:32:30,075 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/dataRoute.py', reloading
+2026-06-05 01:32:30,486 -  * Restarting with stat
+2026-06-05 01:32:32,547 -  * Debugger is active!
+2026-06-05 01:32:32,550 -  * Debugger PIN: 124-603-283
+2026-06-05 01:33:04,057 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/app.py', reloading
+2026-06-05 01:33:04,461 -  * Restarting with stat
