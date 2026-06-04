@@ -436,3 +436,17 @@ TypeError: predict() missing 1 required positional argument: 'data'
 2026-06-04 22:14:22,467 -  * Restarting with stat
 2026-06-04 22:14:24,910 -  * Debugger is active!
 2026-06-04 22:14:24,914 -  * Debugger PIN: 124-603-283
+2026-06-04 23:10:05,082 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-04 23:10:05,082 - [33mPress CTRL+C to quit[0m
+2026-06-04 23:10:05,083 -  * Restarting with stat
+2026-06-04 23:10:07,117 -  * Debugger is active!
+2026-06-04 23:10:07,120 -  * Debugger PIN: 124-603-283
+2026-06-04 23:14:22,194 - 127.0.0.1 - - [04/Jun/2026 23:14:22] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:14:22,258 - 127.0.0.1 - - [04/Jun/2026 23:14:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-04 23:15:05,834 - 127.0.0.1 - - [04/Jun/2026 23:15:05] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-04 23:15:05,873 - Input: symptoms='chest pain, breathlessness', vitals='hr_high', age=78, duration=1 | Output: recommended=cardiology, priority=high, emergency=True
+2026-06-04 23:15:05,874 - 127.0.0.1 - - [04/Jun/2026 23:15:05] "POST /predict HTTP/1.1" 200 -
+2026-06-04 23:15:19,514 - 127.0.0.1 - - [04/Jun/2026 23:15:19] "GET /logs HTTP/1.1" 200 -
