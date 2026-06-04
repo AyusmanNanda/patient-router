@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 import joblib
 import numpy as np
 import pandas as pd 
@@ -16,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent
 LOGS_DIR = BASE_DIR / "../logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_DIR = BASE_DIR / "models" / "model.pkl"
+PREDICTIONS_LOG = LOGS_DIR / "predictions.jsonl"
 
 logging.basicConfig(
     filename=str(LOGS_DIR / "triage.log"),
@@ -163,6 +165,22 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         f"Input: symptoms={symptoms!r}, vitals={vitals!r}, age={age}, duration={duration} | "
         f"Output: recommended={recommended}, priority={priority}, emergency={is_emergency}"
     )
+    prediction_log = {
+        "timestamp": datetime.now().isoformat(),
+        "symptoms": symptoms_list,
+        "vitals": vitals_list,
+        "age": age,
+        "duration": duration,
+        "gender": gender,
+        "recommended": recommended,
+        "confidence": top_confidence,
+        "priority": priority,
+        "emergency": is_emergency,
+        "fallback_used": top_confidence < CONFIDENCE_THRESHOLD,
+        "model_version": MODEL_VERSION,
+    }
+    with open(PREDICTIONS_LOG, "a") as f:
+        f.write(json.dumps(prediction_log) + "\n")
 
     return results
 
