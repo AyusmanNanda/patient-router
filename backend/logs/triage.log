@@ -450,3 +450,55 @@ TypeError: predict() missing 1 required positional argument: 'data'
 2026-06-04 23:15:05,873 - Input: symptoms='chest pain, breathlessness', vitals='hr_high', age=78, duration=1 | Output: recommended=cardiology, priority=high, emergency=True
 2026-06-04 23:15:05,874 - 127.0.0.1 - - [04/Jun/2026 23:15:05] "POST /predict HTTP/1.1" 200 -
 2026-06-04 23:15:19,514 - 127.0.0.1 - - [04/Jun/2026 23:15:19] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:21:13,919 -  * Debugger is active!
+2026-06-04 23:21:13,922 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:06,815 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:22:08,573 -  * Debugger is active!
+2026-06-04 23:22:08,576 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:19,783 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:22:22,009 -  * Debugger is active!
+2026-06-04 23:22:22,013 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:29,147 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:22:31,744 -  * Debugger is active!
+2026-06-04 23:22:31,749 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:37,912 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:22:40,377 -  * Debugger is active!
+2026-06-04 23:22:40,381 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:47,545 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:22:49,659 -  * Debugger is active!
+2026-06-04 23:22:49,663 -  * Debugger PIN: 124-603-283
+2026-06-04 23:22:58,835 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:23:00,909 -  * Debugger is active!
+2026-06-04 23:23:00,912 -  * Debugger PIN: 124-603-283
+2026-06-04 23:23:07,038 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:23:08,920 -  * Debugger is active!
+2026-06-04 23:23:08,923 -  * Debugger PIN: 124-603-283
+2026-06-04 23:23:20,119 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:23:22,462 -  * Debugger is active!
+2026-06-04 23:23:22,465 -  * Debugger PIN: 124-603-283
+2026-06-04 23:23:47,916 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:23:50,357 -  * Debugger is active!
+2026-06-04 23:23:50,363 -  * Debugger PIN: 124-603-283
+2026-06-04 23:23:57,514 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:23:59,536 -  * Debugger is active!
+2026-06-04 23:23:59,539 -  * Debugger PIN: 124-603-283
+2026-06-04 23:24:13,808 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:24:16,263 -  * Debugger is active!
+2026-06-04 23:24:16,266 -  * Debugger PIN: 124-603-283
+2026-06-04 23:29:01,041 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/clearLogsRoute.py', reloading
+2026-06-04 23:29:03,627 -  * Debugger is active!
+2026-06-04 23:29:03,631 -  * Debugger PIN: 124-603-283
+2026-06-04 23:29:16,718 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-04 23:29:16,718 - [33mPress CTRL+C to quit[0m
+2026-06-04 23:29:16,718 -  * Restarting with stat
+2026-06-04 23:29:18,329 -  * Debugger is active!
+2026-06-04 23:29:18,333 -  * Debugger PIN: 124-603-283
+2026-06-04 23:29:20,763 - 127.0.0.1 - - [04/Jun/2026 23:29:20] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:29:24,672 - 127.0.0.1 - - [04/Jun/2026 23:29:24] "GET /logs/clear HTTP/1.1" 200 -
+2026-06-04 23:29:30,031 - 127.0.0.1 - - [04/Jun/2026 23:29:30] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:29:31,974 - 127.0.0.1 - - [04/Jun/2026 23:29:31] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:29:32,520 - 127.0.0.1 - - [04/Jun/2026 23:29:32] "GET /logs HTTP/1.1" 200 -
+2026-06-04 23:29:33,031 - 127.0.0.1 - - [04/Jun/2026 23:29:33] "GET /logs HTTP/1.1" 200 -
