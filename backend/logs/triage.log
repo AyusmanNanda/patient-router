@@ -329,3 +329,17 @@
 2026-06-05 01:32:32,550 -  * Debugger PIN: 124-603-283
 2026-06-05 01:33:04,057 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/app.py', reloading
 2026-06-05 01:33:04,461 -  * Restarting with stat
+2026-06-05 01:34:52,386 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:34:52,386 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:34:52,387 -  * Restarting with stat
+2026-06-05 01:35:04,504 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:35:04,505 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:35:04,506 -  * Restarting with stat
+2026-06-05 01:35:06,351 -  * Debugger is active!
+2026-06-05 01:35:06,354 -  * Debugger PIN: 124-603-283
