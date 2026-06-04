@@ -117,3 +117,25 @@
 2026-06-05 00:16:20,982 -  * Debugger is active!
 2026-06-05 00:16:20,985 -  * Debugger PIN: 124-603-283
 2026-06-05 00:16:25,238 - 127.0.0.1 - - [05/Jun/2026 00:16:25] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:29:16,739 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:29:17,038 -  * Restarting with stat
+2026-06-05 00:35:29,614 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:35:29,614 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:35:29,615 -  * Restarting with stat
+2026-06-05 00:35:31,599 -  * Debugger is active!
+2026-06-05 00:35:31,602 -  * Debugger PIN: 124-603-283
+2026-06-05 00:35:45,732 - 127.0.0.1 - - [05/Jun/2026 00:35:45] "GET /evaluation/report-image HTTP/1.1" 200 -
+2026-06-05 00:35:56,040 - 127.0.0.1 - - [05/Jun/2026 00:35:56] "[35m[1mGET /evaluation/confusion-matrix HTTP/1.1[0m" 500 -
+2026-06-05 00:35:56,082 - 127.0.0.1 - - [05/Jun/2026 00:35:56] "GET /evaluation/confusion-matrix?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2026-06-05 00:35:56,083 - 127.0.0.1 - - [05/Jun/2026 00:35:56] "GET /evaluation/confusion-matrix?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2026-06-05 00:35:56,158 - 127.0.0.1 - - [05/Jun/2026 00:35:56] "GET /evaluation/confusion-matrix?__debugger__=yes&cmd=resource&f=console.png&s=O4Tf83BYZgHkMyR82RRl HTTP/1.1" 200 -
+2026-06-05 00:35:56,173 - 127.0.0.1 - - [05/Jun/2026 00:35:56] "GET /evaluation/confusion-matrix?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2026-06-05 00:36:16,277 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:36:16,565 -  * Restarting with stat
+2026-06-05 00:36:18,472 -  * Debugger is active!
+2026-06-05 00:36:18,476 -  * Debugger PIN: 124-603-283
+2026-06-05 00:36:19,007 - 127.0.0.1 - - [05/Jun/2026 00:36:19] "GET /evaluation/confusion-matrix HTTP/1.1" 200 -
+2026-06-05 00:36:30,177 - 127.0.0.1 - - [05/Jun/2026 00:36:30] "GET /evaluation HTTP/1.1" 200 -

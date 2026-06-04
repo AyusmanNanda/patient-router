@@ -11,3 +11,9 @@ def get_evaluation():
         }
     with open(REPORT_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
+
+def get_confusion_matrix():
+    return REPORTS_DIR / "confusion_matrix.png"
+
+def get_report_image():
+    return REPORTS_DIR / "evaluation_report.png"
