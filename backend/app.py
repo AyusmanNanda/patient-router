@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 from routes.predictRoute import predict_bp
 from routes.feedbackRoute import feedback_bp
+from routes.logRoute import logs_bp
 from routes.homeRoute import home_bp
 from routes.healthRoute import health_bp
 
@@ -21,6 +22,7 @@ CORS(app,
 
 app.register_blueprint(predict_bp)
 app.register_blueprint(feedback_bp)
+app.register_blueprint(logs_bp)
 app.register_blueprint(home_bp)
 app.register_blueprint(health_bp)
 
