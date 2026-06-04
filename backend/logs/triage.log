@@ -380,3 +380,4 @@ TypeError: predict() missing 1 required positional argument: 'data'
 2026-06-01 22:18:56,602 -  * Restarting with stat
 2026-06-01 22:18:59,092 -  * Debugger is active!
 2026-06-01 22:18:59,097 -  * Debugger PIN: 124-603-283
+2026-06-03 23:19:22,559 - Input: symptoms='chest pain, breathlessness', vitals='bp_high, hr_high', age=65, duration=15 | Output: recommended=general, priority=high, emergency=True

@@ -1,30 +1,30 @@
 Model Evaluation Report
 =======================================================
-Synthetic test accuracy  : 98.41%
-5-Fold CV accuracy       : 98.57% (±0.08%)
-Edge-case accuracy       : 82.35%
-Generalisation gap       : 16.1pp  ← cross-dept overlap performance
+Synthetic test accuracy  : 98.70%
+5-Fold CV accuracy       : 98.79% (±0.04%)
+Edge-case accuracy       : 85.29%
+Generalisation gap       : 13.4pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
   -----------------------------------
-  cardiology        98.6%      0.962
-  gastrology        99.9%      0.988
-  general           97.1%      0.952
-  neurology         99.2%      0.977
-  orthopedics       99.9%      0.994
-  pulmonology       95.6%      0.928
+  cardiology        98.8%      0.978
+  gastrology        99.7%      0.991
+  general           97.5%      0.962
+  neurology         99.3%      0.984
+  orthopedics       99.9%      0.997
+  pulmonology       97.0%      0.952
 
 Classification Report (synthetic):
               precision    recall  f1-score   support
 
-  cardiology       0.99      0.99      0.99      1667
-  gastrology       0.99      1.00      0.99      1667
-     general       0.97      0.97      0.97      1666
-   neurology       1.00      0.99      0.99      1667
- orthopedics       1.00      1.00      1.00      1666
- pulmonology       0.97      0.96      0.96      1667
+  cardiology       0.99      0.99      0.99      5000
+  gastrology       0.99      1.00      0.99      5000
+     general       0.98      0.97      0.98      5000
+   neurology       1.00      0.99      0.99      5000
+ orthopedics       1.00      1.00      1.00      5000
+ pulmonology       0.97      0.97      0.97      5000
 
-    accuracy                           0.98     10000
-   macro avg       0.98      0.98      0.98     10000
-weighted avg       0.98      0.98      0.98     10000
+    accuracy                           0.99     30000
+   macro avg       0.99      0.99      0.99     30000
+weighted avg       0.99      0.99      0.99     30000

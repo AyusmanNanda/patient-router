@@ -1,17 +1,41 @@
 MODEL_VERSION = "1.1.0"
 
-SAMPLE_SIZE = 50000
+SAMPLE_SIZE = 150000
 
-GENDERS = ['male', 'female']
+GENDERS = ['male', 'female', 'other']
 
 SYMPTOMS_WEIGHT = {
     "chest pain": 2,
     "breathlessness": 2,
+    "confusion": 2,
+    "fatigue": 1,
+    "sweating": 1,
+    "cough": 1,
+    "fever": 1,
+    "headache": 1,
+    "dizziness": 1,
+    "blurred vision": 1,
+    "joint pain": 1,
+    "swelling": 1,
+    "stiffness": 1,
+    "limited movement": 1,
+    "abdominal pain": 1,
+    "nausea": 1,
+    "vomiting": 1,
+    "diarrhea": 1,
+    "body pain": 1,
+    "weakness": 1,
 }
 
 VITALS_WEIGHT = {
     "bp_high": 2,
-    "hr_high": 1,
+    "hr_high": 2,
+    "hr_low": 1,
+    "bp_low": 3,
+    "temp_high": 1,
+    "temp_low": 1,
+    "normal": 0,
+
 }
 
 EMERGENCY_SYMPTOMS = ["chest pain", "breathlessness", "confusion"]

@@ -17,17 +17,32 @@ for department in DEPARTMENTS.values():
 ALL_SYMPTOMS = sorted(list(all_symptoms))
 ALL_VITALS = list(OPPOSITES.keys())
 
+def add_overlap_symptom(base, dept):
+    other_depts = [d for d in DEPARTMENTS if d != dept]
+
+    overlap_dept = random.choice(other_depts)
+
+    symptom = random.choice(
+        DEPARTMENTS[overlap_dept]["symptoms"]
+    )
+
+    if symptom not in base:
+        base.append(symptom)
+
 def generate_symptoms(dept):
     symptoms_list = DEPARTMENTS[dept]["symptoms"]
-    base = random.sample(symptoms_list, k=min(2, len(symptoms_list)))
+    k = random.randint(
+        1,
+        min(4, len(symptoms_list))
+    )
+
+    base = random.sample(symptoms_list, k)
 
     if random.random() < 0.2 and len(base) > 1:
         base.pop()
 
-    if random.random() < 0.5:
-        noise = random.choice(ALL_SYMPTOMS)
-        if noise not in base:
-            base.append(noise)
+    if random.random() < 0.4:
+        add_overlap_symptom(base, dept)
 
     return base
 
