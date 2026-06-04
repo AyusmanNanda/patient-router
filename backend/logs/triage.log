@@ -381,3 +381,58 @@ TypeError: predict() missing 1 required positional argument: 'data'
 2026-06-01 22:18:59,092 -  * Debugger is active!
 2026-06-01 22:18:59,097 -  * Debugger PIN: 124-603-283
 2026-06-03 23:19:22,559 - Input: symptoms='chest pain, breathlessness', vitals='bp_high, hr_high', age=65, duration=15 | Output: recommended=general, priority=high, emergency=True
+2026-06-04 22:08:56,485 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-04 22:08:56,485 - [33mPress CTRL+C to quit[0m
+2026-06-04 22:08:56,487 -  * Restarting with stat
+2026-06-04 22:08:58,453 -  * Debugger is active!
+2026-06-04 22:08:58,476 -  * Debugger PIN: 124-603-283
+2026-06-04 22:09:34,784 - 127.0.0.1 - - [04/Jun/2026 22:09:34] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-04 22:09:34,824 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=medium, emergency=False
+2026-06-04 22:09:34,825 - 127.0.0.1 - - [04/Jun/2026 22:09:34] "POST /predict HTTP/1.1" 200 -
+2026-06-04 22:10:22,874 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:10:23,232 -  * Restarting with stat
+2026-06-04 22:10:25,670 -  * Debugger is active!
+2026-06-04 22:10:25,674 -  * Debugger PIN: 124-603-283
+2026-06-04 22:10:41,978 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:10:42,316 -  * Restarting with stat
+2026-06-04 22:10:43,938 -  * Debugger is active!
+2026-06-04 22:10:43,942 -  * Debugger PIN: 124-603-283
+2026-06-04 22:10:51,094 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:10:51,432 -  * Restarting with stat
+2026-06-04 22:10:52,960 -  * Debugger is active!
+2026-06-04 22:10:52,963 -  * Debugger PIN: 124-603-283
+2026-06-04 22:11:04,168 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:11:04,516 -  * Restarting with stat
+2026-06-04 22:11:06,779 -  * Debugger is active!
+2026-06-04 22:11:06,784 -  * Debugger PIN: 124-603-283
+2026-06-04 22:11:11,908 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:11:12,238 -  * Restarting with stat
+2026-06-04 22:11:14,009 -  * Debugger is active!
+2026-06-04 22:11:14,013 -  * Debugger PIN: 124-603-283
+2026-06-04 22:11:17,094 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:11:17,425 -  * Restarting with stat
+2026-06-04 22:11:18,847 -  * Debugger is active!
+2026-06-04 22:11:18,851 -  * Debugger PIN: 124-603-283
+2026-06-04 22:11:40,227 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:11:40,552 -  * Restarting with stat
+2026-06-04 22:11:42,040 -  * Debugger is active!
+2026-06-04 22:11:42,042 -  * Debugger PIN: 124-603-283
+2026-06-04 22:11:56,298 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:11:56,635 -  * Restarting with stat
+2026-06-04 22:11:58,193 -  * Debugger is active!
+2026-06-04 22:11:58,196 -  * Debugger PIN: 124-603-283
+2026-06-04 22:12:03,316 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:12:03,650 -  * Restarting with stat
+2026-06-04 22:12:05,291 -  * Debugger is active!
+2026-06-04 22:12:05,294 -  * Debugger PIN: 124-603-283
+2026-06-04 22:13:12,467 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:13:12,812 -  * Restarting with stat
+2026-06-04 22:13:14,914 -  * Debugger is active!
+2026-06-04 22:13:14,919 -  * Debugger PIN: 124-603-283
+2026-06-04 22:14:22,108 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/logService.py', reloading
+2026-06-04 22:14:22,467 -  * Restarting with stat
+2026-06-04 22:14:24,910 -  * Debugger is active!
+2026-06-04 22:14:24,914 -  * Debugger PIN: 124-603-283
