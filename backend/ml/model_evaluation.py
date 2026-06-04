@@ -286,6 +286,30 @@ def save_text_report(acc_syn, cv_scores, acc_rw, per_dept, y_test_syn, y_pred_sy
         f.write("\n".join(lines))
     print(f"  Text report saved → {path}")
 
+import json
+
+def save_json_report(acc_syn, cv_scores, acc_rw):
+    gap = (acc_syn - acc_rw) * 100
+
+    report = {
+        "synthetic_accuracy": round(acc_syn * 100, 2),
+        "cv_accuracy": round(cv_scores.mean() * 100, 2),
+        "cv_std": round(cv_scores.std() * 100, 2),
+        "edge_case_accuracy": round(acc_rw * 100, 2),
+        "generalization_gap": round(gap, 1),
+
+        "total_edge_cases": 34,
+        "passed_edge_cases": round(acc_rw * 34),
+        "failed_edge_cases": 34 - round(acc_rw * 34)
+    }
+
+    output_file = REPORTS_DIR / "evaluation_metrics.json"
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=4)
+
+    print(f"  JSON report saved → {output_file}")
+
 
 def evaluate():
     print("Loading data and model…")
@@ -310,6 +334,7 @@ def evaluate():
     plot_reports(y_test_syn, y_pred_syn, true_rw, pred_rw,
                  acc_syn, acc_rw, cv_scores, per_dept)
     save_text_report(acc_syn, cv_scores, acc_rw, per_dept, y_test_syn, y_pred_syn)
+    save_json_report(acc_syn, cv_scores, acc_rw)
 
 
 if __name__ == "__main__":
