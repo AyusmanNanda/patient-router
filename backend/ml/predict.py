@@ -6,7 +6,7 @@ import pandas as pd
 import json
 import logging
 import difflib
-from constants import (
+from ml.constants import (
     ALIASES, KNOWN_VITALS, KNOWN_SYMPTOMS,
     SYMPTOMS_WEIGHT, EMERGENCY_SYMPTOMS, VITALS_WEIGHT,
     EMERGENCY_VITALS, CONFIDENCE_THRESHOLD,
