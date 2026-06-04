@@ -42,3 +42,20 @@
 2026-06-04 23:52:31,924 -  * Restarting with stat
 2026-06-04 23:52:34,104 -  * Debugger is active!
 2026-06-04 23:52:34,107 -  * Debugger PIN: 124-603-283
+2026-06-04 23:56:38,230 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-04 23:56:38,230 - [33mPress CTRL+C to quit[0m
+2026-06-04 23:56:38,231 -  * Restarting with stat
+2026-06-04 23:56:40,301 -  * Debugger is active!
+2026-06-04 23:56:40,305 -  * Debugger PIN: 124-603-283
+2026-06-04 23:56:48,405 - 127.0.0.1 - - [04/Jun/2026 23:56:48] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:05:01,955 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/model_evaluation.py', reloading
+2026-06-05 00:05:02,280 -  * Restarting with stat
+2026-06-05 00:05:04,029 -  * Debugger is active!
+2026-06-05 00:05:04,032 -  * Debugger PIN: 124-603-283
+2026-06-05 00:05:17,236 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/model_evaluation.py', reloading
+2026-06-05 00:05:17,584 -  * Restarting with stat
+2026-06-05 00:05:20,027 -  * Debugger is active!
+2026-06-05 00:05:20,031 -  * Debugger PIN: 124-603-283
