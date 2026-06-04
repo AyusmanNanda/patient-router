@@ -12,6 +12,8 @@ from sklearn.preprocessing import OneHotEncoder
 import joblib
 from pathlib import Path
 
+from ml.model_evaluation import evaluate
+
 # Paths
 BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR / "models"
@@ -61,6 +63,14 @@ def train():
         print("Model saved")
     except IOError:
         print("Failed to save model")
+
+    evaluate()
+
+    return {
+        "train_accuracy": round(train_accuracy * 100, 2),
+        "test_accuracy": round(test_accuracy * 100, 2),
+        "dataset_size": len(df),
+    }
 
 if __name__ == "__main__":
     train()

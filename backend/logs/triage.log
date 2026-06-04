@@ -139,3 +139,179 @@
 2026-06-05 00:36:18,476 -  * Debugger PIN: 124-603-283
 2026-06-05 00:36:19,007 - 127.0.0.1 - - [05/Jun/2026 00:36:19] "GET /evaluation/confusion-matrix HTTP/1.1" 200 -
 2026-06-05 00:36:30,177 - 127.0.0.1 - - [05/Jun/2026 00:36:30] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:41:14,627 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 00:41:14,941 -  * Restarting with stat
+2026-06-05 00:41:16,693 -  * Debugger is active!
+2026-06-05 00:41:16,697 -  * Debugger PIN: 124-603-283
+2026-06-05 00:41:41,035 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 00:41:41,423 -  * Restarting with stat
+2026-06-05 00:41:43,406 -  * Debugger is active!
+2026-06-05 00:41:43,409 -  * Debugger PIN: 124-603-283
+2026-06-05 00:42:55,357 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/trainRoute.py', reloading
+2026-06-05 00:42:55,713 -  * Restarting with stat
+2026-06-05 00:42:57,304 -  * Debugger is active!
+2026-06-05 00:42:57,307 -  * Debugger PIN: 124-603-283
+2026-06-05 00:43:05,446 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/trainRoute.py', reloading
+2026-06-05 00:43:05,787 -  * Restarting with stat
+2026-06-05 00:43:07,697 -  * Debugger is active!
+2026-06-05 00:43:07,702 -  * Debugger PIN: 124-603-283
+2026-06-05 00:43:17,109 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:43:17,109 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:43:17,110 -  * Restarting with stat
+2026-06-05 00:43:18,659 -  * Debugger is active!
+2026-06-05 00:43:18,662 -  * Debugger PIN: 124-603-283
+2026-06-05 00:43:31,868 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-05 00:43:32,165 -  * Restarting with stat
+2026-06-05 00:43:33,904 -  * Debugger is active!
+2026-06-05 00:43:33,908 -  * Debugger PIN: 124-603-283
+2026-06-05 00:43:38,799 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:43:38,799 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:43:38,800 -  * Restarting with stat
+2026-06-05 00:43:40,242 -  * Debugger is active!
+2026-06-05 00:43:40,245 -  * Debugger PIN: 124-603-283
+2026-06-05 00:43:54,266 - 127.0.0.1 - - [05/Jun/2026 00:43:54] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:05,622 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/trainRoute.py', reloading
+2026-06-05 00:44:05,937 -  * Restarting with stat
+2026-06-05 00:44:07,954 -  * Debugger is active!
+2026-06-05 00:44:07,958 -  * Debugger PIN: 124-603-283
+2026-06-05 00:44:07,981 - 127.0.0.1 - - [05/Jun/2026 00:44:07] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:09,930 - 127.0.0.1 - - [05/Jun/2026 00:44:09] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:16,417 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:44:16,417 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:44:16,417 -  * Restarting with stat
+2026-06-05 00:44:17,886 -  * Debugger is active!
+2026-06-05 00:44:17,890 -  * Debugger PIN: 124-603-283
+2026-06-05 00:44:21,907 - 127.0.0.1 - - [05/Jun/2026 00:44:21] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:24,524 - 127.0.0.1 - - [05/Jun/2026 00:44:24] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:38,226 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/trainRoute.py', reloading
+2026-06-05 00:44:38,517 -  * Restarting with stat
+2026-06-05 00:44:40,216 -  * Debugger is active!
+2026-06-05 00:44:40,220 -  * Debugger PIN: 124-603-283
+2026-06-05 00:44:42,376 - 127.0.0.1 - - [05/Jun/2026 00:44:42] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:42,906 - 127.0.0.1 - - [05/Jun/2026 00:44:42] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:48,960 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:44:48,960 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:44:48,961 -  * Restarting with stat
+2026-06-05 00:44:50,521 -  * Debugger is active!
+2026-06-05 00:44:50,525 -  * Debugger PIN: 124-603-283
+2026-06-05 00:44:53,052 - 127.0.0.1 - - [05/Jun/2026 00:44:53] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:53,535 - 127.0.0.1 - - [05/Jun/2026 00:44:53] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:53,955 - 127.0.0.1 - - [05/Jun/2026 00:44:53] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:54,284 - 127.0.0.1 - - [05/Jun/2026 00:44:54] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:54,494 - 127.0.0.1 - - [05/Jun/2026 00:44:54] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:54,699 - 127.0.0.1 - - [05/Jun/2026 00:44:54] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:54,898 - 127.0.0.1 - - [05/Jun/2026 00:44:54] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:44:57,345 - 127.0.0.1 - - [05/Jun/2026 00:44:57] "[33mGET /train HTTP/1.1[0m" 404 -
+2026-06-05 00:45:02,355 - 127.0.0.1 - - [05/Jun/2026 00:45:02] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-06-05 00:46:14,752 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/routes/trainRoute.py', reloading
+2026-06-05 00:46:15,048 -  * Restarting with stat
+2026-06-05 00:46:19,389 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:46:19,389 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:46:19,391 -  * Restarting with stat
+2026-06-05 00:46:21,055 -  * Debugger is active!
+2026-06-05 00:46:21,057 -  * Debugger PIN: 124-603-283
+2026-06-05 00:53:39,734 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 00:53:40,076 -  * Restarting with stat
+2026-06-05 00:53:41,984 -  * Debugger is active!
+2026-06-05 00:53:41,987 -  * Debugger PIN: 124-603-283
+2026-06-05 00:59:30,458 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 00:59:30,791 -  * Restarting with stat
+2026-06-05 00:59:32,330 -  * Debugger is active!
+2026-06-05 00:59:32,334 -  * Debugger PIN: 124-603-283
+2026-06-05 00:59:58,983 - 127.0.0.1 - - [05/Jun/2026 00:59:58] "[33mPOST /train HTTP/1.1[0m" 404 -
+2026-06-05 01:00:35,229 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/app.py', reloading
+2026-06-05 01:00:35,512 -  * Restarting with stat
+2026-06-05 01:01:32,670 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:01:32,671 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:01:32,672 -  * Restarting with stat
+2026-06-05 01:01:34,253 -  * Debugger is active!
+2026-06-05 01:01:34,257 -  * Debugger PIN: 124-603-283
+2026-06-05 01:02:36,441 - 127.0.0.1 - - [05/Jun/2026 01:02:36] "POST /train HTTP/1.1" 200 -
+2026-06-05 01:03:58,804 - 127.0.0.1 - - [05/Jun/2026 01:03:58] "POST /train HTTP/1.1" 200 -
+2026-06-05 01:05:06,552 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 01:05:06,907 -  * Restarting with stat
+2026-06-05 01:05:08,551 -  * Debugger is active!
+2026-06-05 01:05:08,555 -  * Debugger PIN: 124-603-283
+2026-06-05 01:05:48,584 - 127.0.0.1 - - [05/Jun/2026 01:05:48] "[35m[1mPOST /train HTTP/1.1[0m" 500 -
+2026-06-05 01:06:17,151 - 127.0.0.1 - - [05/Jun/2026 01:06:17] "[35m[1mPOST /train HTTP/1.1[0m" 500 -
+2026-06-05 01:08:03,935 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:08:04,218 -  * Restarting with stat
+2026-06-05 01:08:05,708 -  * Debugger is active!
+2026-06-05 01:08:05,711 -  * Debugger PIN: 124-603-283
+2026-06-05 01:08:17,904 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:08:18,245 -  * Restarting with stat
+2026-06-05 01:08:20,118 -  * Debugger is active!
+2026-06-05 01:08:20,122 -  * Debugger PIN: 124-603-283
+2026-06-05 01:08:45,529 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:08:45,975 -  * Restarting with stat
+2026-06-05 01:08:47,742 -  * Debugger is active!
+2026-06-05 01:08:47,746 -  * Debugger PIN: 124-603-283
+2026-06-05 01:09:01,963 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 01:09:02,269 -  * Restarting with stat
+2026-06-05 01:10:21,533 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:10:21,534 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:10:21,535 -  * Restarting with stat
+2026-06-05 01:10:23,033 -  * Debugger is active!
+2026-06-05 01:10:23,037 -  * Debugger PIN: 124-603-283
+2026-06-05 01:10:41,527 - 127.0.0.1 - - [05/Jun/2026 01:10:41] "[35m[1mPOST /train HTTP/1.1[0m" 500 -
+2026-06-05 01:11:01,548 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 01:11:01,857 -  * Restarting with stat
+2026-06-05 01:11:03,300 -  * Debugger is active!
+2026-06-05 01:11:03,304 -  * Debugger PIN: 124-603-283
+2026-06-05 01:11:17,836 - 127.0.0.1 - - [05/Jun/2026 01:11:17] "[35m[1mPOST /train HTTP/1.1[0m" 500 -
+2026-06-05 01:11:29,342 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:11:29,342 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:11:29,343 -  * Restarting with stat
+2026-06-05 01:11:30,887 -  * Debugger is active!
+2026-06-05 01:11:30,890 -  * Debugger PIN: 124-603-283
+2026-06-05 01:11:46,780 - 127.0.0.1 - - [05/Jun/2026 01:11:46] "[35m[1mPOST /train HTTP/1.1[0m" 500 -
+2026-06-05 01:13:24,451 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/trainService.py', reloading
+2026-06-05 01:13:24,748 -  * Restarting with stat
+2026-06-05 01:13:26,235 -  * Debugger is active!
+2026-06-05 01:13:26,238 -  * Debugger PIN: 124-603-283
+2026-06-05 01:13:39,995 - 127.0.0.1 - - [05/Jun/2026 01:13:39] "POST /train HTTP/1.1" 200 -
+2026-06-05 01:15:16,730 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:15:17,074 -  * Restarting with stat
+2026-06-05 01:15:19,079 -  * Debugger is active!
+2026-06-05 01:15:19,082 -  * Debugger PIN: 124-603-283
+2026-06-05 01:16:28,133 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:16:28,536 -  * Restarting with stat
+2026-06-05 01:16:30,431 -  * Debugger is active!
+2026-06-05 01:16:30,435 -  * Debugger PIN: 124-603-283
+2026-06-05 01:16:33,525 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/train.py', reloading
+2026-06-05 01:16:33,919 -  * Restarting with stat
+2026-06-05 01:16:36,090 -  * Debugger is active!
+2026-06-05 01:16:36,094 -  * Debugger PIN: 124-603-283
+2026-06-05 01:16:49,413 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:16:49,413 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:16:49,414 -  * Restarting with stat
+2026-06-05 01:16:51,479 -  * Debugger is active!
+2026-06-05 01:16:51,481 -  * Debugger PIN: 124-603-283
+2026-06-05 01:18:25,486 - 127.0.0.1 - - [05/Jun/2026 01:18:25] "POST /train HTTP/1.1" 200 -
