@@ -59,3 +59,61 @@
 2026-06-05 00:05:17,584 -  * Restarting with stat
 2026-06-05 00:05:20,027 -  * Debugger is active!
 2026-06-05 00:05:20,031 -  * Debugger PIN: 124-603-283
+2026-06-05 00:08:43,933 - 127.0.0.1 - - [05/Jun/2026 00:08:43] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:10:04,812 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:10:05,173 -  * Restarting with stat
+2026-06-05 00:10:06,732 -  * Debugger is active!
+2026-06-05 00:10:06,735 -  * Debugger PIN: 124-603-283
+2026-06-05 00:10:26,031 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:10:26,326 -  * Restarting with stat
+2026-06-05 00:10:28,110 -  * Debugger is active!
+2026-06-05 00:10:28,113 -  * Debugger PIN: 124-603-283
+2026-06-05 00:12:35,548 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:12:35,890 -  * Restarting with stat
+2026-06-05 00:12:37,787 -  * Debugger is active!
+2026-06-05 00:12:37,791 -  * Debugger PIN: 124-603-283
+2026-06-05 00:13:11,195 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:13:11,545 -  * Restarting with stat
+2026-06-05 00:13:13,702 -  * Debugger is active!
+2026-06-05 00:13:13,705 -  * Debugger PIN: 124-603-283
+2026-06-05 00:13:16,791 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:13:17,128 -  * Restarting with stat
+2026-06-05 00:13:18,908 -  * Debugger is active!
+2026-06-05 00:13:18,911 -  * Debugger PIN: 124-603-283
+2026-06-05 00:13:28,043 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:13:28,370 -  * Restarting with stat
+2026-06-05 00:14:31,061 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 00:14:31,061 - [33mPress CTRL+C to quit[0m
+2026-06-05 00:14:31,062 -  * Restarting with stat
+2026-06-05 00:14:32,832 -  * Debugger is active!
+2026-06-05 00:14:32,835 -  * Debugger PIN: 124-603-283
+2026-06-05 00:14:32,860 - 127.0.0.1 - - [05/Jun/2026 00:14:32] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:36,411 - 127.0.0.1 - - [05/Jun/2026 00:14:36] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:37,009 - 127.0.0.1 - - [05/Jun/2026 00:14:37] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:37,386 - 127.0.0.1 - - [05/Jun/2026 00:14:37] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:37,663 - 127.0.0.1 - - [05/Jun/2026 00:14:37] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:37,894 - 127.0.0.1 - - [05/Jun/2026 00:14:37] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:38,096 - 127.0.0.1 - - [05/Jun/2026 00:14:38] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:38,296 - 127.0.0.1 - - [05/Jun/2026 00:14:38] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:38,508 - 127.0.0.1 - - [05/Jun/2026 00:14:38] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:38,730 - 127.0.0.1 - - [05/Jun/2026 00:14:38] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:38,935 - 127.0.0.1 - - [05/Jun/2026 00:14:38] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:39,154 - 127.0.0.1 - - [05/Jun/2026 00:14:39] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:39,365 - 127.0.0.1 - - [05/Jun/2026 00:14:39] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:39,587 - 127.0.0.1 - - [05/Jun/2026 00:14:39] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:39,805 - 127.0.0.1 - - [05/Jun/2026 00:14:39] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:40,002 - 127.0.0.1 - - [05/Jun/2026 00:14:40] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:40,207 - 127.0.0.1 - - [05/Jun/2026 00:14:40] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:40,413 - 127.0.0.1 - - [05/Jun/2026 00:14:40] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:40,632 - 127.0.0.1 - - [05/Jun/2026 00:14:40] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:40,848 - 127.0.0.1 - - [05/Jun/2026 00:14:40] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:41,042 - 127.0.0.1 - - [05/Jun/2026 00:14:41] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:14:41,222 - 127.0.0.1 - - [05/Jun/2026 00:14:41] "GET /evaluation HTTP/1.1" 200 -
+2026-06-05 00:16:19,028 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/evalutationService.py', reloading
+2026-06-05 00:16:19,325 -  * Restarting with stat
+2026-06-05 00:16:20,982 -  * Debugger is active!
+2026-06-05 00:16:20,985 -  * Debugger PIN: 124-603-283
+2026-06-05 00:16:25,238 - 127.0.0.1 - - [05/Jun/2026 00:16:25] "GET /evaluation HTTP/1.1" 200 -
