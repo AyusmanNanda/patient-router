@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 from pathlib import Path
-from constants import (SAMPLE_SIZE, DEPARTMENTS,
+from ml.constants import (SAMPLE_SIZE, DEPARTMENTS,
                        GENDERS, OPPOSITES,
                        SYMPTOMS_WEIGHT, VITALS_WEIGHT
                        )
