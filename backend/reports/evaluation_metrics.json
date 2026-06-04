@@ -1,0 +1,10 @@
+{
+    "synthetic_accuracy": 98.7,
+    "cv_accuracy": 98.79,
+    "cv_std": 0.04,
+    "edge_case_accuracy": 85.29,
+    "generalization_gap": 13.4,
+    "total_edge_cases": 34,
+    "passed_edge_cases": 29,
+    "failed_edge_cases": 5
+}
