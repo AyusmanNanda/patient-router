@@ -1,9 +1,8 @@
 from flask import Blueprint, jsonify
-from pathlib import Path
 from services.logService import get_logs
+from services.logService import clear_logs
 
 logs_bp = Blueprint('logs', __name__)
-LOG_FILE = Path(__file__).parent.parent / "logs" / "predictions.jsonl"
 @logs_bp.route('/logs', methods=['GET'])
 def logs():
     data = get_logs()
@@ -14,7 +13,7 @@ def logs():
         "logs": data
     })
 
-@logs_bp.route("/logs/clear", methods=["GET"])
-def clear_logs():
-    LOG_FILE.write_text("", encoding="utf-8")
-    return jsonify({"message": "Logs cleared"})
+@logs_bp.route("/logs/clear", methods=["POST"])
+def clear():
+    clear_logs()
+    return jsonify({"message" : "Logs cleared"})

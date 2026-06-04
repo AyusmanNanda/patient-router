@@ -12,3 +12,6 @@ def get_logs():
             logs.append(json.loads(line))
 
     return logs[::-1] #newest first
+
+def clear_logs():
+    LOG_FILE.write_text("", encoding="utf-8")
