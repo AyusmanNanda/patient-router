@@ -1,5 +1,5 @@
 import TagInput from "../layout/TagInput.tsx";
-import { VITALS, SYMPTOMS } from "../../constants/patientOptions.ts";
+import { VITALS, SYMPTOMS } from "../../constants/patientOptions";
 import { Send, RotateCcw } from "lucide-react";
 
 export default function PatientForm (props) {

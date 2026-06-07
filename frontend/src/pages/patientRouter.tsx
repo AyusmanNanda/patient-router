@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { AlertTriangle, ThumbsUp, ThumbsDown } from 'lucide-react'
-import Topbar from '../components/layout/Topbar.tsx'
+import Topbar from '../components/layout/Topbar'
 import api from '../api/api'
 import type { PredictResponse, PredictRequest, FeedbackRequest } from '../types/prediction'
 import { DEPTS } from "../constants/patientOptions.ts";
-import PatientForm from "../components/patient-router/patientForm.tsx";
+import PatientForm from "../components/patient-router/patientForm";
 
 export default function PatientRouter() {
     const [symptoms,  setSymptoms]  = useState<string[]>([])
