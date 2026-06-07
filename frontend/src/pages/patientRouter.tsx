@@ -1,19 +1,10 @@
 import { useState } from 'react'
-import { Send, RotateCcw, AlertTriangle, ThumbsUp, ThumbsDown } from 'lucide-react'
-import TagInput from '../components/layout/TagInput.tsx'
+import { AlertTriangle, ThumbsUp, ThumbsDown } from 'lucide-react'
 import Topbar from '../components/layout/Topbar.tsx'
 import api from '../api/api'
 import type { PredictResponse, PredictRequest, FeedbackRequest } from '../types/prediction'
-
-const SYMPTOMS = [
-    'abdominal pain', 'blurred vision', 'body pain', 'breathlessness', 'chest pain',
-    'confusion', 'cough', 'diarrhea', 'dizziness', 'fatigue', 'fever', 'headache',
-    'joint pain', 'limited movement', 'nausea', 'stiffness', 'sweating', 'swelling',
-    'vomiting', 'weakness',
-]
-
-const VITALS = ['bp_high', 'bp_low', 'hr_high', 'hr_low', 'temp_high', 'temp_low', 'normal']
-const DEPTS  = ['cardiology', 'pulmonology', 'neurology', 'orthopedics', 'gastrology', 'general']
+import { DEPTS } from "../constants/patientOptions.ts";
+import PatientForm from "../components/patient-router/patientForm.tsx";
 
 export default function PatientRouter() {
     const [symptoms,  setSymptoms]  = useState<string[]>([])
@@ -115,89 +106,22 @@ export default function PatientRouter() {
             <Topbar title="Patient Router" subtitle="Enter patient data to get department triage recommendation" />
             <div className="page-body">
                 <div className="two-col" style={{ alignItems: 'start' }}>
-
-                    {/* ── Input Form ── */}
-                    <div>
-                        <div className="card">
-                            <div className="card-title">
-                                <span>Patient Information</span>
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label">Symptoms <span className="req">*</span></label>
-                                <TagInput
-                                    options={SYMPTOMS}
-                                    value={symptoms}
-                                    onChange={setSymptoms}
-                                    placeholder="Type to search symptoms…"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label">Vital Signs</label>
-                                <TagInput
-                                    options={VITALS}
-                                    value={vitals}
-                                    onChange={setVitals}
-                                    placeholder="Type to search vitals…"
-                                />
-                            </div>
-
-                            <div className="form-row" style={{ marginBottom: 18 }}>
-                                <div className="form-group" style={{ marginBottom: 0 }}>
-                                    <label className="form-label">Age <span className="req">*</span></label>
-                                    <input
-                                        className="form-input"
-                                        type="number"
-                                        min={0}
-                                        max={120}
-                                        placeholder="e.g. 45"
-                                        value={age}
-                                        onChange={e => setAge(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group" style={{ marginBottom: 0 }}>
-                                    <label className="form-label">Gender</label>
-                                    <select className="form-select" value={gender} onChange={e => setGender(e.target.value)}>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label">Duration (days) <span className="req">*</span></label>
-                                <input
-                                    className="form-input"
-                                    type="number"
-                                    min={0}
-                                    placeholder="e.g. 3"
-                                    value={duration}
-                                    onChange={e => setDuration(e.target.value)}
-                                />
-                            </div>
-
-                            {error && <div className="error-box">⚠ {error}</div>}
-
-                            <div className="btn-group" style={{ marginTop: 6 }}>
-                                <button
-                                    className="btn btn-primary btn-lg"
-                                    onClick={predict}
-                                    disabled={loading}
-                                    style={{ flex: 1 }}
-                                >
-                                    {loading
-                                        ? <><span className="spinner" /> Analyzing…</>
-                                        : <><Send size={14} /> Predict Department</>
-                                    }
-                                </button>
-                                <button className="btn btn-ghost" onClick={reset}>
-                                    <RotateCcw size={14} /> Reset
-                                </button>
-                            </div>
-                        </div>
-
+                        <PatientForm
+                            symptoms={symptoms}
+                            setSymptoms={setSymptoms}
+                            vitals={vitals}
+                            setVitals={setVitals}
+                            age={age}
+                            setAge={setAge}
+                            duration={duration}
+                            setDuration={setDuration}
+                            gender={gender}
+                            setGender={setGender}
+                            loading={loading}
+                            error={error}
+                            predict={predict}
+                            reset={reset}
+                        />
                         {/* Feedback */}
                         {result && !fbDone && (
                             <div className="card" style={{ marginTop: 16 }}>
@@ -336,6 +260,5 @@ export default function PatientRouter() {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
