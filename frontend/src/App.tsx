@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Sidebar       from './components/layout/Sidebar.tsx'
-import PatientRouter from './pages/PatientRouter'
+import PatientRouter from './pages/patientRouter.tsx'
 
 export default function App() {
     return (

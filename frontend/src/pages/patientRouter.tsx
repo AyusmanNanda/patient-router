@@ -106,6 +106,7 @@ export default function PatientRouter() {
             <Topbar title="Patient Router" subtitle="Enter patient data to get department triage recommendation" />
             <div className="page-body">
                 <div className="two-col" style={{ alignItems: 'start' }}>
+                    <div>
                         <PatientForm
                             symptoms={symptoms}
                             setSymptoms={setSymptoms}
@@ -167,6 +168,7 @@ export default function PatientRouter() {
                             </div>
                         )}
                     </div>
+
 
                     {/* ── Result ── */}
                     <div>
@@ -258,6 +260,7 @@ export default function PatientRouter() {
                             </>
                         )}
                     </div>
+                </div>
                 </div>
             </div>
     )
