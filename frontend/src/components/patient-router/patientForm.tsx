@@ -1,9 +1,9 @@
 import TagInput from "../layout/TagInput.tsx";
 import { VITALS, SYMPTOMS } from "../../constants/patientOptions";
 import { Send, RotateCcw } from "lucide-react";
-import type { patientFormTypes } from "../../types/patientFromTypes"
+import type { PatientFormTypes } from "../../types/patientFromTypes"
 
-export default function PatientForm (props: patientFormTypes) {
+export default function PatientForm (props: PatientFormTypes) {
     return (
         <div className="card">
             <div className="card-title">

@@ -1,18 +1,20 @@
-export interface patientFormTypes {
+import React from "react";
+
+export interface PatientFormTypes {
     symptoms: string[]
-    setSymptoms: (value: string[]) => void
+    setSymptoms: React.Dispatch<React.SetStateAction<string[]>>
 
     vitals: string[]
-    setVitals: (value: string[]) => void
+    setVitals: React.Dispatch<React.SetStateAction<string[]>>
 
     age: string
-    setAge: (value: string) => void
+    setAge: React.Dispatch<React.SetStateAction<string>>
 
     duration: string
-    setDuration: (value: string) => void
+    setDuration: React.Dispatch<React.SetStateAction<string>>
 
     gender: string
-    setGender: (value: string) => void
+    setGender: React.Dispatch<React.SetStateAction<string>>
 
     loading: boolean
     error: string
