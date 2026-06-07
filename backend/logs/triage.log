@@ -343,3 +343,40 @@
 2026-06-05 01:35:04,506 -  * Restarting with stat
 2026-06-05 01:35:06,351 -  * Debugger is active!
 2026-06-05 01:35:06,354 -  * Debugger PIN: 124-603-283
+2026-06-05 01:35:46,542 - 127.0.0.1 - - [05/Jun/2026 01:35:46] "[31m[1mGET /train HTTP/1.1[0m" 405 -
+2026-06-05 01:38:26,374 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 01:38:26,374 - [33mPress CTRL+C to quit[0m
+2026-06-05 01:38:26,375 -  * Restarting with stat
+2026-06-05 01:38:28,050 -  * Debugger is active!
+2026-06-05 01:38:28,052 -  * Debugger PIN: 124-603-283
+2026-06-05 01:39:11,057 - 127.0.0.1 - - [05/Jun/2026 01:39:11] "[31m[1mPOST /data HTTP/1.1[0m" 405 -
+2026-06-05 01:40:04,245 - 127.0.0.1 - - [05/Jun/2026 01:40:04] "GET /data HTTP/1.1" 200 -
+2026-06-05 01:47:55,170 - 127.0.0.1 - - [05/Jun/2026 01:47:55] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-05 01:47:55,200 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=medium, emergency=False
+2026-06-05 01:47:55,201 - 127.0.0.1 - - [05/Jun/2026 01:47:55] "POST /predict HTTP/1.1" 200 -
+2026-06-05 01:48:15,223 - 127.0.0.1 - - [05/Jun/2026 01:48:15] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-05 01:48:15,255 - Input: symptoms='fever', vitals='temp_high', age=21, duration=2 | Output: recommended=general, priority=medium, emergency=False
+2026-06-05 01:48:15,256 - 127.0.0.1 - - [05/Jun/2026 01:48:15] "POST /predict HTTP/1.1" 200 -
+2026-06-05 22:31:00,342 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.98.85.166:5000
+2026-06-05 22:31:00,343 - [33mPress CTRL+C to quit[0m
+2026-06-05 22:31:00,345 -  * Restarting with stat
+2026-06-05 22:31:03,294 -  * Debugger is active!
+2026-06-05 22:31:03,325 -  * Debugger PIN: 124-603-283
+2026-06-05 22:31:49,300 - 127.0.0.1 - - [05/Jun/2026 22:31:49] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-05 22:31:49,348 - Input: symptoms='chest pain, breathlessness', vitals='bp_high, hr_high', age=67, duration=1 | Output: recommended=cardiology, priority=high, emergency=True
+2026-06-05 22:31:49,349 - 127.0.0.1 - - [05/Jun/2026 22:31:49] "POST /predict HTTP/1.1" 200 -
+2026-06-05 22:32:11,288 - 127.0.0.1 - - [05/Jun/2026 22:32:11] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-05 22:32:11,314 - Input: symptoms='fever', vitals='temp_high', age=20, duration=1 | Output: recommended=general, priority=medium, emergency=False
+2026-06-05 22:32:11,315 - 127.0.0.1 - - [05/Jun/2026 22:32:11] "POST /predict HTTP/1.1" 200 -
+2026-06-05 22:32:28,326 - 127.0.0.1 - - [05/Jun/2026 22:32:28] "[33mGET /report HTTP/1.1[0m" 404 -
+2026-06-05 22:32:28,386 - 127.0.0.1 - - [05/Jun/2026 22:32:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-05 22:32:40,198 - 127.0.0.1 - - [05/Jun/2026 22:32:40] "GET /logs HTTP/1.1" 200 -
+2026-06-05 22:33:16,334 - 127.0.0.1 - - [05/Jun/2026 22:33:16] "[31m[1mGET /logs/clear HTTP/1.1[0m" 405 -
+2026-06-05 22:35:50,195 - 127.0.0.1 - - [05/Jun/2026 22:35:50] "POST /train HTTP/1.1" 200 -
+2026-06-05 22:36:33,427 - 127.0.0.1 - - [05/Jun/2026 22:36:33] "GET /data HTTP/1.1" 200 -

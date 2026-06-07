@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Send, RotateCcw, AlertTriangle, ThumbsUp, ThumbsDown } from 'lucide-react'
-import TagInput from '../components/TagInput'
-import Topbar from '../components/Topbar'
+import TagInput from '../components/layout/TagInput.tsx'
+import Topbar from '../components/layout/Topbar.tsx'
 import api from '../api/api'
 import type { PredictResponse, PredictRequest, FeedbackRequest } from '../types/prediction'
 
