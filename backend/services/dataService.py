@@ -14,7 +14,7 @@ def get_data_stats():
         "priorities": df["priority"].value_counts().to_dict()
     }
 def generate_data(rows):
-    df = generate_dataset()
+    df = generate_dataset(rows)
     df.to_csv(DATA_FILE, index=False)
     return {
         "status": "success",
