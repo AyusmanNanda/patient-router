@@ -4,6 +4,7 @@ import PatientRouter from './pages/patientRouter'
 import Training from "./pages/Training"
 import Logs from "./pages/Logs"
 import Evalution from "./pages/Evalution"
+import DataManager from "./pages/DataManger";
 
 export default function App() {
     return (
@@ -15,6 +16,7 @@ export default function App() {
                     <Route path="/training" element={<Training />} />
                     <Route path="/logs" element={<Logs />} />
                     <Route path="/evaluate" element={<Evalution />} />
+                    <Route path="/data" element={<DataManager />} />
                 </Routes>
             </main>
         </div>
