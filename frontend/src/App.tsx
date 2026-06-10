@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import Sidebar       from './components/layout/Sidebar.tsx'
-import PatientRouter from './pages/patientRouter.tsx'
+import Sidebar       from './components/layout/Sidebar'
+import PatientRouter from './pages/patientRouter'
+import Training from "./pages/Training"
 
 export default function App() {
     return (
@@ -9,6 +10,7 @@ export default function App() {
             <main className="main-content">
                 <Routes>
                     <Route path="/" element={<PatientRouter />} />
+                    <Route path="/training" element={<Training />} />
                 </Routes>
             </main>
         </div>
