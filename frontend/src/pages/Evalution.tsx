@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BarChart3 } from 'lucide-react'
 import { useEvaluation } from '../hooks/useEvaluation'
 
+
 export default function Evaluation() {
     const {
         loading,
@@ -17,6 +18,8 @@ export default function Evaluation() {
         setInitialized(true)
         void loadEvaluation()
     }
+
+    const BACKEND_URL = import.meta.env.VITE_BACKEND
 
     return (
         <div className="page">
@@ -122,7 +125,7 @@ export default function Evaluation() {
                         <h2>Confusion Matrix</h2>
 
                         <img
-                            src="http://127.0.0.1:5000/evaluation/confusion-matrix"
+                            src={`${BACKEND_URL}/evaluation/confusion-matrix`}
                             alt="Confusion Matrix"
                             style={{
                                 maxWidth: '100%',
@@ -134,7 +137,7 @@ export default function Evaluation() {
                         <h2>Evaluation Report</h2>
 
                         <img
-                            src="http://127.0.0.1:5000/evaluation/report-image"
+                            src={`${BACKEND_URL}/evaluation/report-image`}
                             alt="Evaluation Report"
                             style={{
                                 maxWidth: '100%',
