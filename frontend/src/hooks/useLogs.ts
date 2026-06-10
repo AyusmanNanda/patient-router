@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import api from '../api/api'
-import type { LogsResponse } from '../types/logs'
+import type { LogsResponse } from '../types/logsTypes'
 
 export function useLogs() {
     const [loading, setLoading] = useState(false)
