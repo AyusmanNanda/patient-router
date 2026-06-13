@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
 import Sidebar       from './components/layout/Sidebar'
-import PatientRouter from './pages/patientRouter'
+import PatientRouter from './pages/PatientRouter.tsx'
 import Training from "./pages/Training"
 import Logs from "./pages/Logs"
-import Evalution from "./pages/Evalution"
+import Evalution from "./pages/Evaluation.tsx"
 import DataManager from "./pages/DataManger";
 
 export default function App() {

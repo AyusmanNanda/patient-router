@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Database, RefreshCw } from 'lucide-react'
+import Topbar from '../components/layout/Topbar'
 import { useDataManager } from '../hooks/useDataManager'
 
 export default function DataManager() {
@@ -15,185 +16,133 @@ export default function DataManager() {
     } = useDataManager()
 
     const [rows, setRows] = useState(50000)
-    const [initialized, setInitialized] =
-        useState(false)
 
-    if (!initialized) {
-        setInitialized(true)
+    useEffect(() => {
         void loadStats()
-    }
+    }, [])
 
     return (
-        <div className="page">
+        <div>
+            <Topbar title="Dataset Manager" subtitle="View dataset statistics and generate synthetic training data" />
+            <div className="page-body">
 
-            <div className="page-header">
-                <h1>Dataset Manager</h1>
-
-                <p>
-                    View dataset statistics and
-                    generate synthetic training data.
-                </p>
-            </div>
-
-            <div className="card">
-
-                <h2>Generate Dataset</h2>
-
-                <div className="generate-controls">
-
-                    <input
-                        type="number"
-                        value={rows}
-                        min={1000}
-                        step={1000}
-                        onChange={(e) =>
-                            setRows(Number(e.target.value))
-                        }
-                    />
-
-                    <button
-                        className="primary-btn"
-                        disabled={loading}
-                        onClick={() =>
-                            generateDataset(rows)
-                        }
-                    >
-                        <Database size={18} />
-                        Generate Dataset
-                    </button>
-
-                    <button
-                        className="secondary-btn"
-                        disabled={loading}
-                        onClick={loadStats}
-                    >
-                        <RefreshCw size={18} />
-                        Refresh Stats
-                    </button>
-
-                </div>
-
-            </div>
-
-            {error && (
-                <div className="card error-card">
-                    {error}
-                </div>
-            )}
-
-            {generateResult && (
                 <div className="card">
+                    <div className="card-title">Generate Dataset</div>
 
-                    <h2>Generation Result</h2>
+                    <div className="form-row" style={{ alignItems: 'flex-end' }}>
+                        <div className="form-group">
+                            <label className="form-label">Rows</label>
+                            <input
+                                type="number"
+                                className="form-input"
+                                value={rows}
+                                min={1000}
+                                step={1000}
+                                onChange={(e) => setRows(Number(e.target.value))}
+                            />
+                        </div>
 
-                    <p>
-                        Status:
-                        {' '}
-                        <strong>
-                            {generateResult.status}
-                        </strong>
-                    </p>
+                        <div className="form-group" style={{ flex: 'none' }}>
+                            <div className="btn-group">
+                                <button
+                                    className="btn btn-blue"
+                                    disabled={loading}
+                                    onClick={() => generateDataset(rows)}
+                                >
+                                    {loading ? <span className="spinner" /> : <Database size={14} />}
+                                    Generate Dataset
+                                </button>
 
-                    <p>
-                        Rows Generated:
-                        {' '}
-                        <strong>
-                            {generateResult.rows_generated.toLocaleString()}
-                        </strong>
-                    </p>
+                                <button
+                                    className="btn btn-ghost"
+                                    disabled={loading}
+                                    onClick={loadStats}
+                                >
+                                    <RefreshCw size={14} />
+                                    Refresh Stats
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
+                    {error && <div className="error-box">{error}</div>}
                 </div>
-            )}
 
-            {stats && (
-                <>
-                    <div className="stats-grid">
+                {generateResult && (
+                    <div className="priority-banner priority-low">
+                        <span className="priority-badge">{generateResult.status}</span>
+                        <div className="priority-text">
+                            <div className="dept-name">Dataset generated</div>
+                            <div className="dept-sub">
+                                {generateResult.rows_generated.toLocaleString()} rows generated
+                            </div>
+                        </div>
+                    </div>
+                )}
 
-                        <div className="stat-item">
-                            <span className="stat-label">
-                                Total Rows
-                            </span>
-
-                            <span className="stat-value">
-                                {stats.total_rows.toLocaleString()}
-                            </span>
+                {stats && (
+                    <>
+                        <div className="stat-grid">
+                            <div className="stat-card">
+                                <div className="stat-label">Total Rows</div>
+                                <div className="stat-value">{stats.total_rows.toLocaleString()}</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-label">Total Columns</div>
+                                <div className="stat-value">{stats.total_columns}</div>
+                            </div>
                         </div>
 
-                        <div className="stat-item">
-                            <span className="stat-label">
-                                Total Columns
-                            </span>
+                        <div className="two-col">
+                            <div className="card">
+                                <div className="card-title">Department Distribution</div>
+                                <div className="data-table-wrap">
+                                    <table className="data-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Department</th>
+                                            <th>Count</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {Object.entries(stats.departments).map(([dept, count]) => (
+                                            <tr key={dept}>
+                                                <td style={{ textTransform: 'capitalize' }}>
+                                                    {dept.replace(/_/g, ' ')}
+                                                </td>
+                                                <td>{count}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                            <span className="stat-value">
-                                {stats.total_columns}
-                            </span>
+                            <div className="card">
+                                <div className="card-title">Priority Distribution</div>
+                                <div className="data-table-wrap">
+                                    <table className="data-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Priority</th>
+                                            <th>Count</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {Object.entries(stats.priorities).map(([priority, count]) => (
+                                            <tr key={priority}>
+                                                <td style={{ textTransform: 'capitalize' }}>{priority}</td>
+                                                <td>{count}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-
-                    <div className="card">
-
-                        <h2>
-                            Department Distribution
-                        </h2>
-
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Department</th>
-                                <th>Count</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {Object.entries(
-                                stats.departments
-                            ).map(
-                                ([dept, count]) => (
-                                    <tr key={dept}>
-                                        <td>{dept}</td>
-                                        <td>{count}</td>
-                                    </tr>
-                                )
-                            )}
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <div className="card">
-
-                        <h2>
-                            Priority Distribution
-                        </h2>
-
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Priority</th>
-                                <th>Count</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {Object.entries(
-                                stats.priorities
-                            ).map(
-                                ([priority, count]) => (
-                                    <tr key={priority}>
-                                        <td>{priority}</td>
-                                        <td>{count}</td>
-                                    </tr>
-                                )
-                            )}
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </>
-            )}
-
+                    </>
+                )}
+            </div>
         </div>
     )
 }
