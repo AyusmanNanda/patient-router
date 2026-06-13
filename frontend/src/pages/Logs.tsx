@@ -1,127 +1,112 @@
 import { Trash2 } from 'lucide-react'
+import Topbar from '../components/layout/Topbar'
 import { useLogs } from '../hooks/useLogs'
 
+function priorityBadgeClass(priority: string) {
+    switch (priority) {
+        case 'high':
+        case 'emergency':
+            return 'badge-red'
+        case 'medium':
+            return 'badge-amber'
+        case 'low':
+            return 'badge-green'
+        default:
+            return 'badge-slate'
+    }
+}
+
 export default function Logs() {
-    const {
-        loading,
-        error,
-        data,
-        clearLogs,
-    } = useLogs()
+    const { loading, error, data, clearLogs } = useLogs()
 
     return (
-        <div className="page">
+        <div>
+            <Topbar title="System Logs" subtitle="Prediction history and usage statistics" />
+            <div className="page-body">
 
-            <div className="page-header">
-                <h1>System Logs</h1>
-                <p>
-                    Prediction history and usage statistics.
-                </p>
-            </div>
-
-            {loading && (
-                <div className="card">
-                    Loading logs...
-                </div>
-            )}
-
-            {error && (
-                <div className="card error-card">
-                    {error}
-                </div>
-            )}
-
-            {data && (
-                <>
-                    <div className="stats-grid">
-
-                        <div className="stat-item">
-                            <span>Total Predictions</span>
-                            <strong>
-                                {data.total_predictions}
-                            </strong>
-                        </div>
-
-                        <div className="stat-item">
-                            <span>Emergencies</span>
-                            <strong>
-                                {data.total_emergencies}
-                            </strong>
-                        </div>
-
-                        <div className="stat-item">
-                            <span>Fallbacks</span>
-                            <strong>
-                                {data.total_fallbacks}
-                            </strong>
-                        </div>
-
-                    </div>
-
+                {loading && (
                     <div className="card">
-
-                        <button
-                            className="danger-btn"
-                            onClick={clearLogs}
-                        >
-                            <Trash2 size={16} />
-                            Clear Logs
-                        </button>
-
+                        <div className="card-title">Loading logs...</div>
                     </div>
+                )}
 
-                    <div className="card">
+                {error && <div className="error-box">{error}</div>}
 
-                        <h2>Prediction History</h2>
+                {data && (
+                    <>
+                        <div className="stat-grid">
+                            <div className="stat-card">
+                                <div className="stat-label">Total Predictions</div>
+                                <div className="stat-value">{data.total_predictions}</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-label">Emergencies</div>
+                                <div className="stat-value">{data.total_emergencies}</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-label">Fallbacks</div>
+                                <div className="stat-value">{data.total_fallbacks}</div>
+                            </div>
+                        </div>
 
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Department</th>
-                                <th>Priority</th>
-                                <th>Emergency</th>
-                                <th>Confidence</th>
-                                <th>Age</th>
-                            </tr>
-                            </thead>
+                        <div className="card">
+                            <div className="card-title">Prediction History</div>
 
-                            <tbody>
-                            {data.logs.map(
-                                (log, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            {log.recommended}
-                                        </td>
-
-                                        <td>
-                                            {log.priority}
-                                        </td>
-
-                                        <td>
-                                            {log.emergency
-                                                ? 'Yes'
-                                                : 'No'}
-                                        </td>
-
-                                        <td>
-                                            {(
-                                                log.confidence * 100
-                                            ).toFixed(1)}
-                                            %
-                                        </td>
-
-                                        <td>
-                                            {log.age}
-                                        </td>
+                            <div className="data-table-wrap">
+                                <table className="data-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Department</th>
+                                        <th>Priority</th>
+                                        <th>Emergency</th>
+                                        <th>Confidence</th>
+                                        <th>Age</th>
                                     </tr>
-                                )
-                            )}
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                    {data.logs.map((log, index) => (
+                                        <tr key={index}>
+                                            <td style={{ textTransform: 'capitalize' }}>
+                                                {log.recommended.replace(/_/g, ' ')}
+                                            </td>
+                                            <td>
+                                                    <span className={`badge ${priorityBadgeClass(log.priority)}`}>
+                                                        {log.priority}
+                                                    </span>
+                                            </td>
+                                            <td>
+                                                {log.emergency
+                                                    ? <span className="badge badge-red">Yes</span>
+                                                    : <span className="badge badge-slate">No</span>}
+                                            </td>
+                                            <td>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                                    <div className="progress-wrap" style={{ width: 80 }}>
+                                                        <div
+                                                            className="progress-bar"
+                                                            style={{ width: `${(log.confidence * 100).toFixed(0)}%` }}
+                                                        />
+                                                    </div>
+                                                    <span className="dept-pct">{(log.confidence * 100).toFixed(1)}%</span>
+                                                </div>
+                                            </td>
+                                            <td>{log.age}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    </div>
-                </>
-            )}
+                            <div style={{ marginTop: 14 }}>
+                                <button className="btn btn-danger btn-sm" onClick={clearLogs}>
+                                    <Trash2 size={14} />
+                                    Clear Logs
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
