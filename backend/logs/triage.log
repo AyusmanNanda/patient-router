@@ -603,3 +603,31 @@
 2026-06-13 21:16:38,500 - 127.0.0.1 - - [13/Jun/2026 21:16:38] "GET /evaluation HTTP/1.1" 200 -
 2026-06-13 21:16:38,903 - 127.0.0.1 - - [13/Jun/2026 21:16:38] "GET /logs HTTP/1.1" 200 -
 2026-06-13 21:16:38,908 - 127.0.0.1 - - [13/Jun/2026 21:16:38] "GET /logs HTTP/1.1" 200 -
+2026-06-18 22:08:31,335 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.239.70.166:5000
+2026-06-18 22:08:31,335 - [33mPress CTRL+C to quit[0m
+2026-06-18 22:08:31,342 -  * Restarting with stat
+2026-06-18 22:08:33,398 -  * Debugger is active!
+2026-06-18 22:08:33,426 -  * Debugger PIN: 124-603-283
+2026-06-18 22:08:57,467 - 127.0.0.1 - - [18/Jun/2026 22:08:57] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-18 22:08:57,542 - Input: symptoms='fever', vitals='temp_high', age=21, duration=1 | Output: recommended=general, priority=medium, emergency=False
+2026-06-18 22:08:57,544 - 127.0.0.1 - - [18/Jun/2026 22:08:57] "POST /predict HTTP/1.1" 200 -
+2026-06-18 22:09:01,013 - 127.0.0.1 - - [18/Jun/2026 22:09:01] "OPTIONS /feedback HTTP/1.1" 200 -
+2026-06-18 22:09:01,021 - 127.0.0.1 - - [18/Jun/2026 22:09:01] "POST /feedback HTTP/1.1" 200 -
+2026-06-18 22:09:46,743 - 127.0.0.1 - - [18/Jun/2026 22:09:46] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-18 22:09:46,780 - Input: symptoms='fever, cough', vitals='temp_high', age=21, duration=1 | Output: recommended=general, priority=high, emergency=False
+2026-06-18 22:09:46,781 - 127.0.0.1 - - [18/Jun/2026 22:09:46] "POST /predict HTTP/1.1" 200 -
+2026-06-18 22:09:57,151 - 127.0.0.1 - - [18/Jun/2026 22:09:57] "OPTIONS /feedback HTTP/1.1" 200 -
+2026-06-18 22:09:57,158 - 127.0.0.1 - - [18/Jun/2026 22:09:57] "POST /feedback HTTP/1.1" 200 -
+2026-06-18 22:13:40,006 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/predict.py', reloading
+2026-06-18 22:13:40,507 -  * Restarting with stat
+2026-06-18 22:18:37,031 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.239.70.166:5000
+2026-06-18 22:18:37,031 - [33mPress CTRL+C to quit[0m
+2026-06-18 22:18:37,033 -  * Restarting with stat
+2026-06-18 22:18:39,929 -  * Debugger is active!
+2026-06-18 22:18:39,934 -  * Debugger PIN: 124-603-283

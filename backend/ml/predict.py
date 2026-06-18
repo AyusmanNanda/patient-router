@@ -107,10 +107,27 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     if age > 60:
         score += 1
 
-    if any(s in SYMPTOMS_WEIGHT for s in symptoms_list) and duration <= 2:
+    has_severe_symptom = False
+    for s in symptoms_list:
+        if SYMPTOMS_WEIGHT.get(s, 0) >= 2:
+            has_severe_symptom = True
+
+    if has_severe_symptom and duration <= 2:
         score += 1
 
-    if score >= 4:
+    severe_score = 0
+
+    for s in symptoms_list:
+        w = SYMPTOMS_WEIGHT.get(s, 0)
+        if w >= 2:
+            severe_score += w
+
+    for v in vitals_list:
+        w = VITALS_WEIGHT.get(v, 0)
+        if w >= 2:
+            severe_score += w
+
+    if score >= 4 and severe_score >= 2:
         priority = "high"
     elif score >= 2:
         priority = "medium"
