@@ -32,8 +32,8 @@ VITALS_WEIGHT = {
     "hr_high": 2,
     "hr_low": 1,
     "bp_low": 3,
-    "temp_high": 1,
-    "temp_low": 1,
+    "temp_high": 0,
+    "temp_low": 0,
     "normal": 0,
 
 }

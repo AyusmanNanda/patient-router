@@ -631,3 +631,22 @@
 2026-06-18 22:18:37,033 -  * Restarting with stat
 2026-06-18 22:18:39,929 -  * Debugger is active!
 2026-06-18 22:18:39,934 -  * Debugger PIN: 124-603-283
+2026-06-18 22:23:01,918 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.239.70.166:5000
+2026-06-18 22:23:01,918 - [33mPress CTRL+C to quit[0m
+2026-06-18 22:23:01,922 -  * Restarting with stat
+2026-06-18 22:23:04,439 -  * Debugger is active!
+2026-06-18 22:23:04,443 -  * Debugger PIN: 124-603-283
+2026-06-18 22:25:34,165 - 127.0.0.1 - - [18/Jun/2026 22:25:34] "POST /train HTTP/1.1" 200 -
+2026-06-18 22:26:36,350 - 127.0.0.1 - - [18/Jun/2026 22:26:36] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-18 22:26:36,377 - Input: symptoms='fever', vitals='temp_high', age=22, duration=1 | Output: recommended=general, priority=medium, emergency=False
+2026-06-18 22:26:36,378 - 127.0.0.1 - - [18/Jun/2026 22:26:36] "POST /predict HTTP/1.1" 200 -
+2026-06-18 22:31:22,382 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-18 22:31:22,844 -  * Restarting with stat
+2026-06-18 22:31:25,300 -  * Debugger is active!
+2026-06-18 22:31:25,304 -  * Debugger PIN: 124-603-283
+2026-06-18 22:32:42,950 - 127.0.0.1 - - [18/Jun/2026 22:32:42] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-18 22:32:42,985 - Input: symptoms='fever', vitals='temp_high', age=22, duration=1 | Output: recommended=general, priority=low, emergency=False
+2026-06-18 22:32:42,986 - 127.0.0.1 - - [18/Jun/2026 22:32:42] "POST /predict HTTP/1.1" 200 -

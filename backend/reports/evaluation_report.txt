@@ -1,29 +1,29 @@
 Model Evaluation Report
 =======================================================
-Synthetic test accuracy  : 98.82%
-5-Fold CV accuracy       : 98.82% (±0.09%)
+Synthetic test accuracy  : 98.86%
+5-Fold CV accuracy       : 98.74% (±0.10%)
 Edge-case accuracy       : 85.29%
-Generalisation gap       : 13.5pp  ← cross-dept overlap performance
+Generalisation gap       : 13.6pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
   -----------------------------------
-  cardiology        98.7%      0.970
-  gastrology        99.9%      0.989
-  general           97.4%      0.954
-  neurology         99.5%      0.979
-  orthopedics      100.0%      0.995
-  pulmonology       97.4%      0.943
+  cardiology        98.8%      0.973
+  gastrology       100.0%      0.986
+  general           97.5%      0.952
+  neurology         99.3%      0.977
+  orthopedics      100.0%      0.994
+  pulmonology       97.5%      0.944
 
 Classification Report (synthetic):
               precision    recall  f1-score   support
 
   cardiology       0.99      0.99      0.99      1667
-  gastrology       0.99      1.00      0.99      1667
-     general       0.98      0.97      0.98      1666
-   neurology       1.00      1.00      1.00      1667
+  gastrology       0.99      1.00      1.00      1667
+     general       0.98      0.98      0.98      1666
+   neurology       1.00      0.99      1.00      1667
  orthopedics       1.00      1.00      1.00      1666
- pulmonology       0.97      0.97      0.97      1667
+ pulmonology       0.97      0.98      0.97      1667
 
     accuracy                           0.99     10000
    macro avg       0.99      0.99      0.99     10000

@@ -35,8 +35,6 @@ export default function Sidebar() {
             </nav>
 
             <div className="sidebar-footer">
-                <span className="footer-label">Research internship</span>
-                <span className="footer-inst">IIT Delhi</span>
             </div>
         </aside>
     )
