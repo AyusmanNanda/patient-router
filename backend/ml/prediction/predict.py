@@ -13,6 +13,7 @@ from ml.constants import (
     SAFE_FALLBACK_DEPT, MODEL_VERSION
 )
 from ml.prediction.priority import calculate_priority
+from ml.prediction.emergency import detect_emergency
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "../logs"
@@ -109,9 +110,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         })
 
     priority = calculate_priority(symptoms_list, vitals_list, age, duration)
-
-    is_emergency = any(s in EMERGENCY_SYMPTOMS for s in symptoms_list) or \
-                   any(v in EMERGENCY_VITALS for v in vitals_list)
+    is_emergency = detect_emergency(symptoms_list, vitals_list)
 
     if is_emergency:
         priority = "high"
