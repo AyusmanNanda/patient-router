@@ -12,19 +12,20 @@ from ml.constants import (
     EMERGENCY_VITALS, CONFIDENCE_THRESHOLD,
     SAFE_FALLBACK_DEPT, MODEL_VERSION
 )
+from ml.prediction.priority import calculate_priority
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "../logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_DIR = BASE_DIR / "models" / "model.pkl"
 PREDICTIONS_LOG = LOGS_DIR / "predictions.jsonl"
-logger = logging.getLogger(__name__)
 
 logging.basicConfig(
     filename=str(LOGS_DIR / "triage.log"),
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(module)s:%(lineno)d | %(message)s"
 )
+logger = logging.getLogger(__name__)
 
 try:
     model = joblib.load(str(MODEL_DIR))
@@ -107,43 +108,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
             "confidence": round(float(probs[i]), 3)
         })
 
-    score = 0
-
-    for symptom in symptoms_list:
-        score += SYMPTOMS_WEIGHT.get(symptom, 0)
-
-    for vital in vitals_list:
-        score += VITALS_WEIGHT.get(vital, 0)
-
-    if age > 60:
-        score += 1
-
-    has_severe_symptom = False
-    for s in symptoms_list:
-        if SYMPTOMS_WEIGHT.get(s, 0) >= 2:
-            has_severe_symptom = True
-
-    if has_severe_symptom and duration <= 2:
-        score += 1
-
-    severe_score = 0
-
-    for s in symptoms_list:
-        w = SYMPTOMS_WEIGHT.get(s, 0)
-        if w >= 2:
-            severe_score += w
-
-    for v in vitals_list:
-        w = VITALS_WEIGHT.get(v, 0)
-        if w >= 2:
-            severe_score += w
-
-    if score >= 4 and severe_score >= 2:
-        priority = "high"
-    elif score >= 2:
-        priority = "medium"
-    else:
-        priority = "low"
+    priority = calculate_priority(symptoms_list, vitals_list, age, duration)
 
     is_emergency = any(s in EMERGENCY_SYMPTOMS for s in symptoms_list) or \
                    any(v in EMERGENCY_VITALS for v in vitals_list)
