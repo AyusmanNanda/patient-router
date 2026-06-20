@@ -35,7 +35,6 @@ VITALS_WEIGHT = {
     "temp_high": 0,
     "temp_low": 0,
     "normal": 0,
-
 }
 
 EMERGENCY_SYMPTOMS = ["chest pain", "breathlessness", "confusion"]
@@ -128,4 +127,21 @@ OPPOSITES = {
     "bp_low": "bp_high",
     "hr_low": "hr_high",
     "temp_low": "temp_high",
+}
+KNOWN_HISTORY = [
+    "pregnant",
+    "previous_heart_attack",
+    "on_blood_thinners",
+    "hiv",
+    "diabetes",
+    "hypertension",
+]
+
+HISTORY_WEIGHTS = {
+    "pregnant": 9,
+    "previous_heart_attack": 10,
+    "on_blood_thinners": 5,
+    "hiv": 9,
+    "diabetes": 4,
+    "hypertension": 4,
 }

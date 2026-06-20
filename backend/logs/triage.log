@@ -650,3 +650,31 @@
 2026-06-18 22:32:42,950 - 127.0.0.1 - - [18/Jun/2026 22:32:42] "OPTIONS /predict HTTP/1.1" 200 -
 2026-06-18 22:32:42,985 - Input: symptoms='fever', vitals='temp_high', age=22, duration=1 | Output: recommended=general, priority=low, emergency=False
 2026-06-18 22:32:42,986 - 127.0.0.1 - - [18/Jun/2026 22:32:42] "POST /predict HTTP/1.1" 200 -
+2026-06-20 22:41:07,035 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.154.0.166:5000
+2026-06-20 22:41:07,035 - [33mPress CTRL+C to quit[0m
+2026-06-20 22:41:07,036 -  * Restarting with stat
+2026-06-20 22:41:07,986 -  * Debugger is active!
+2026-06-20 22:41:08,007 -  * Debugger PIN: 124-603-283
+2026-06-20 22:44:26,251 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-20 22:44:26,428 -  * Restarting with stat
+2026-06-20 22:44:27,343 -  * Debugger is active!
+2026-06-20 22:44:27,345 -  * Debugger PIN: 124-603-283
+2026-06-20 22:44:49,496 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-20 22:44:49,737 -  * Restarting with stat
+2026-06-20 22:44:50,595 -  * Debugger is active!
+2026-06-20 22:44:50,597 -  * Debugger PIN: 124-603-283
+2026-06-20 22:45:44,939 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-20 22:45:45,137 -  * Restarting with stat
+2026-06-20 22:45:46,048 -  * Debugger is active!
+2026-06-20 22:45:46,050 -  * Debugger PIN: 124-603-283
+2026-06-20 22:47:17,628 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-20 22:47:17,845 -  * Restarting with stat
+2026-06-20 22:47:18,751 -  * Debugger is active!
+2026-06-20 22:47:18,752 -  * Debugger PIN: 124-603-283
+2026-06-20 22:49:23,540 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/ml/constants.py', reloading
+2026-06-20 22:49:23,765 -  * Restarting with stat
+2026-06-20 22:49:24,658 -  * Debugger is active!
+2026-06-20 22:49:24,660 -  * Debugger PIN: 124-603-283
