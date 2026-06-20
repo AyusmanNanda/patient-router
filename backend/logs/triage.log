@@ -678,3 +678,43 @@
 2026-06-20 22:49:23,765 -  * Restarting with stat
 2026-06-20 22:49:24,658 -  * Debugger is active!
 2026-06-20 22:49:24,660 -  * Debugger PIN: 124-603-283
+2026-06-20 22:54:13,998 - 127.0.0.1 - - [20/Jun/2026 22:54:13] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:54:13,999 - 127.0.0.1 - - [20/Jun/2026 22:54:13] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:54:14,011 - 127.0.0.1 - - [20/Jun/2026 22:54:14] "GET /evaluation/report-image HTTP/1.1" 200 -
+2026-06-20 22:54:14,011 - 127.0.0.1 - - [20/Jun/2026 22:54:14] "GET /evaluation/confusion-matrix HTTP/1.1" 200 -
+2026-06-20 22:54:14,540 - 127.0.0.1 - - [20/Jun/2026 22:54:14] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:54:14,580 - 127.0.0.1 - - [20/Jun/2026 22:54:14] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:54:21,190 - 127.0.0.1 - - [20/Jun/2026 22:54:21] "OPTIONS /data/generate HTTP/1.1" 200 -
+2026-06-20 22:54:21,224 - 127.0.0.1 - - [20/Jun/2026 22:54:21] "POST /data/generate HTTP/1.1" 200 -
+2026-06-20 22:54:21,237 - 127.0.0.1 - - [20/Jun/2026 22:54:21] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:54:40,296 - 127.0.0.1 - - [20/Jun/2026 22:54:40] "POST /train HTTP/1.1" 200 -
+2026-06-20 22:54:47,829 - 127.0.0.1 - - [20/Jun/2026 22:54:47] "GET /logs HTTP/1.1" 200 -
+2026-06-20 22:54:47,839 - 127.0.0.1 - - [20/Jun/2026 22:54:47] "GET /logs HTTP/1.1" 200 -
+2026-06-20 22:54:53,456 - 127.0.0.1 - - [20/Jun/2026 22:54:53] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:54:53,457 - 127.0.0.1 - - [20/Jun/2026 22:54:53] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:54:53,464 - 127.0.0.1 - - [20/Jun/2026 22:54:53] "[36mGET /evaluation/confusion-matrix HTTP/1.1[0m" 304 -
+2026-06-20 22:54:53,465 - 127.0.0.1 - - [20/Jun/2026 22:54:53] "GET /evaluation/report-image HTTP/1.1" 200 -
+2026-06-20 22:55:04,776 - 127.0.0.1 - - [20/Jun/2026 22:55:04] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:55:05,320 - 127.0.0.1 - - [20/Jun/2026 22:55:05] "GET /evaluation HTTP/1.1" 200 -
+2026-06-20 22:55:11,910 - 127.0.0.1 - - [20/Jun/2026 22:55:11] "GET /logs HTTP/1.1" 200 -
+2026-06-20 22:55:11,911 - 127.0.0.1 - - [20/Jun/2026 22:55:11] "GET /logs HTTP/1.1" 200 -
+2026-06-20 22:55:26,606 - 127.0.0.1 - - [20/Jun/2026 22:55:26] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:55:26,614 - 127.0.0.1 - - [20/Jun/2026 22:55:26] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:55:29,180 - 127.0.0.1 - - [20/Jun/2026 22:55:29] "OPTIONS /data/generate HTTP/1.1" 200 -
+2026-06-20 22:55:29,429 - 127.0.0.1 - - [20/Jun/2026 22:55:29] "POST /data/generate HTTP/1.1" 200 -
+2026-06-20 22:55:29,469 - 127.0.0.1 - - [20/Jun/2026 22:55:29] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:55:31,311 - 127.0.0.1 - - [20/Jun/2026 22:55:31] "GET /data HTTP/1.1" 200 -
+2026-06-20 22:56:13,468 - 127.0.0.1 - - [20/Jun/2026 22:56:13] "POST /train HTTP/1.1" 200 -
+2026-06-20 23:11:54,428 -  * Detected change in '/home/ayusman/WebstormProjects/patient-router/backend/services/predictService.py', reloading
+2026-06-20 23:11:54,701 -  * Restarting with stat
+2026-06-20 23:13:02,246 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.154.0.166:5000
+2026-06-20 23:13:02,246 - [33mPress CTRL+C to quit[0m
+2026-06-20 23:13:02,246 -  * Restarting with stat
+2026-06-20 23:13:03,132 -  * Debugger is active!
+2026-06-20 23:13:03,134 -  * Debugger PIN: 124-603-283
+2026-06-20 23:13:12,905 - 127.0.0.1 - - [20/Jun/2026 23:13:12] "OPTIONS /predict HTTP/1.1" 200 -
+2026-06-20 23:13:12,926 - Input: symptoms='fever', vitals='temp_high', age=22, duration=1 | Output: recommended=general, priority=low, emergency=False
+2026-06-20 23:13:12,927 - 127.0.0.1 - - [20/Jun/2026 23:13:12] "POST /predict HTTP/1.1" 200 -

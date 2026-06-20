@@ -1,4 +1,4 @@
-from ml.predict import predict_case
+from ml.prediction.predict import predict_case
 
 def predict(data):
     symptoms = data.get("symptoms", "").strip()
