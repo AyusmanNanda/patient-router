@@ -18,17 +18,20 @@ LOGS_DIR = BASE_DIR / "../logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_DIR = BASE_DIR / "models" / "model.pkl"
 PREDICTIONS_LOG = LOGS_DIR / "predictions.jsonl"
+logger = logging.getLogger(__name__)
 
 logging.basicConfig(
     filename=str(LOGS_DIR / "triage.log"),
     level=logging.INFO,
-    format="%(asctime)s - %(message)s"
+    format="%(asctime)s | %(levelname)s | %(module)s:%(lineno)d | %(message)s"
 )
 
 try:
     model = joblib.load(str(MODEL_DIR))
+    logger.info(f"Model loaded successfully from {MODEL_DIR}")
 except FileNotFoundError:
     print(f"Failed to load model from {MODEL_DIR}")
+    logger.error(f"Failed to load model from {MODEL_DIR}")
     exit(1)
 
 
@@ -55,7 +58,14 @@ def normalize_list(terms: list, known: list) -> list:
 
 
 def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1, gender: str = "male"):
-
+    logger.info(
+        f"Prediction request | "
+        f"symptoms={symptoms!r} "
+        f"vitals={vitals!r} "
+        f"age={age} "
+        f"duration={duration} "
+        f"gender={gender}"
+    )
     if not symptoms.strip():
         raise ValueError("Symptoms cannot be empty.")
 
@@ -64,6 +74,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         vitals = "normal"
 
     if not isinstance(age, (int, float)) or age <= 0 or age > 120:
+        logger.error(f"Invalid age received: {age}")
         raise ValueError(f"Invalid age: {age}")
 
     if not isinstance(duration, (int, float)) or duration <= 0:
@@ -164,6 +175,10 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     recommended = departments[0]["department"]
 
     if top_confidence < CONFIDENCE_THRESHOLD:
+        logger.warning(
+            f"Low confidence ({top_confidence:.3f}) "
+            f"falling back to {SAFE_FALLBACK_DEPT}"
+        )
         recommended = SAFE_FALLBACK_DEPT
         reasons.append("Low model confidence - fallback to general")
 
@@ -178,9 +193,12 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         "warning": "Vitals not provided — prediction may be less accurate. Please provide vitals for better results." if vitals_missing else None,
     }
 
-    logging.info(
-        f"Input: symptoms={symptoms!r}, vitals={vitals!r}, age={age}, duration={duration} | "
-        f"Output: recommended={recommended}, priority={priority}, emergency={is_emergency}"
+    logger.info(
+        f"Prediction completed | "
+        f"recommended={recommended} "
+        f"confidence={top_confidence:.3f} "
+        f"priority={priority} "
+        f"emergency={is_emergency}"
     )
     prediction_log = {
         "timestamp": datetime.now().isoformat(),
