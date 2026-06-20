@@ -1,9 +1,9 @@
 {
-    "synthetic_accuracy": 98.86,
-    "cv_accuracy": 98.74,
-    "cv_std": 0.1,
+    "synthetic_accuracy": 98.63,
+    "cv_accuracy": 98.54,
+    "cv_std": 0.06,
     "edge_case_accuracy": 85.29,
-    "generalization_gap": 13.6,
+    "generalization_gap": 13.3,
     "total_edge_cases": 34,
     "passed_edge_cases": 29,
     "failed_edge_cases": 5

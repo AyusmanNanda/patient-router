@@ -32,6 +32,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+triage.log
+predictions.jsonl
 
 # TypeScript
 *.tsbuildinfo
