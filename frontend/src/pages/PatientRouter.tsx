@@ -22,6 +22,8 @@ export default function PatientRouter() {
                             duration={router.duration}
                             setDuration={router.setDuration}
                             gender={router.gender}
+                            history={router.history}
+                            setHistory={router.setHistory}
                             setGender={router.setGender}
                             loading={router.loading}
                             error={router.error}

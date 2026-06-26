@@ -19,3 +19,12 @@ export const DEPTS  = [
     'gastrology',
     'general'
 ]
+
+export const HISTORY = [
+    "pregnant",
+    "previous_heart_attack",
+    "on_blood_thinners",
+    "hiv",
+    "diabetes",
+    "hypertension",
+]

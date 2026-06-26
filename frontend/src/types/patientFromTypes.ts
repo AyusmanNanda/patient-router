@@ -16,6 +16,9 @@ export interface PatientFormTypes {
     gender: string
     setGender: React.Dispatch<React.SetStateAction<string>>
 
+    history: string[]
+    setHistory: React.Dispatch<React.SetStateAction<string[]>>
+
     loading: boolean
     error: string
 

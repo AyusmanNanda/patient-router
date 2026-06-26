@@ -1,5 +1,5 @@
 import TagInput from "../layout/TagInput.tsx";
-import { VITALS, SYMPTOMS } from "../../constants/patientOptions";
+import { VITALS, SYMPTOMS, HISTORY } from "../../constants/patientOptions";
 import { Send, RotateCcw } from "lucide-react";
 import type { PatientFormTypes } from "../../types/patientFromTypes"
 
@@ -27,6 +27,15 @@ export default function PatientForm (props: PatientFormTypes) {
                     value={props.vitals}
                     onChange={props.setVitals}
                     placeholder="Type to search vitals…"
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Medical History</label>
+                <TagInput
+                    options={HISTORY}
+                    value={props.history}
+                    onChange={props.setHistory}
+                    placeholder="Type to search history…"
                 />
             </div>
 

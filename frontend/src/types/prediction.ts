@@ -11,6 +11,8 @@ export interface PredictResponse {
     model_version: string;
     departments: DepartmentScore[];
     reasons: string[];
+    history?: string[]
+    history_score?: number
     warning?: string;
 }
 
@@ -20,6 +22,7 @@ export interface PredictRequest {
     age: number;
     duration: number;
     gender: string;
+    history?: string
 }
 
 export interface FeedbackRequest {
