@@ -14,6 +14,7 @@ from ml.constants import (
 )
 from ml.prediction.priority import calculate_priority
 from ml.prediction.emergency import detect_emergency
+from ml.prediction.history import analyze_history
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "../logs"
@@ -59,14 +60,15 @@ def normalize_list(terms: list, known: list) -> list:
     return [normalize_term(t, known) for t in terms]
 
 
-def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1, gender: str = "male"):
+def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int = 1, gender: str = "male", history: str = ""):
     logger.info(
         f"Prediction request | "
         f"symptoms={symptoms!r} "
         f"vitals={vitals!r} "
         f"age={age} "
         f"duration={duration} "
-        f"gender={gender}"
+        f"gender={gender} "
+        f"history={history!r}"
     )
     if not symptoms.strip():
         raise ValueError("Symptoms cannot be empty.")
@@ -87,6 +89,8 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
 
     symptoms_list = [s.strip().lower() for s in symptoms.split(",") if s.strip()]
     vitals_list = [v.strip().lower() for v in vitals.split(",") if v.strip()]
+    history_list = [h.strip().lower().replace(" ", "_") for h in history.split(",") if h.strip()]
+    history_score, is_high_risk = analyze_history(history_list)
 
     if not symptoms_list:
         raise ValueError("No valid symptoms found after parsing.")
@@ -112,7 +116,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     priority = calculate_priority(symptoms_list, vitals_list, age, duration)
     is_emergency = detect_emergency(symptoms_list, vitals_list)
 
-    if is_emergency:
+    if is_emergency or is_high_risk:
         priority = "high"
 
     reasons = []
@@ -126,6 +130,9 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         if vital in VITALS_WEIGHT or vital in EMERGENCY_VITALS:
             if vital not in reasons:
                 reasons.append(vital)
+
+    for condition in history_list:
+        reasons.append(f"History: {condition}")
 
     if age > 60:
         reasons.append(f"Age risk ({age} years)")
@@ -153,6 +160,8 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         "emergency": is_emergency,
         "confidence": top_confidence,
         "reasons": reasons,
+        "history": history_list,
+        "history_score": history_score,
         "model_version": MODEL_VERSION,
         "warning": "Vitals not provided — prediction may be less accurate. Please provide vitals for better results." if vitals_missing else None,
     }
@@ -168,6 +177,8 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         "timestamp": datetime.now().isoformat(),
         "symptoms": symptoms_list,
         "vitals": vitals_list,
+        "history": history_list,
+        "history_score": history_score,
         "age": age,
         "duration": duration,
         "gender": gender,
