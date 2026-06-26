@@ -8,6 +8,7 @@ export function usePatientRouter() {
     const [age,       setAge]       = useState('')
     const [duration,  setDuration]  = useState('')
     const [gender,    setGender]    = useState('male')
+    const [history, setHistory] = useState<string[]>([])
     const [loading,   setLoading]   = useState(false)
     const [error,     setError]     = useState('')
     const [result,    setResult]    = useState<PredictResponse | null>(null)
@@ -19,6 +20,7 @@ export function usePatientRouter() {
     const reset = () => {
         setSymptoms([]); setVitals([]); setAge(''); setDuration('')
         setGender('male'); setError(''); setResult(null)
+        setHistory([])
         setFbState('idle'); setFbDone(false)
     }
 
@@ -43,6 +45,7 @@ export function usePatientRouter() {
                 age:      a,
                 duration: d,
                 gender,
+                history: history.join(', '),
             }
 
             const { data } = await api.post<PredictResponse>('/predict', payload)
@@ -119,5 +122,7 @@ export function usePatientRouter() {
         predict,
         submitFeedback,
         priorityClass,
+        history,
+        setHistory,
     }
 }
