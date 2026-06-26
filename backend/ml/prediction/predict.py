@@ -67,7 +67,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
         f"vitals={vitals!r} "
         f"age={age} "
         f"duration={duration} "
-        f"gender={gender}"
+        f"gender={gender} "
         f"history={history!r}"
     )
     if not symptoms.strip():
