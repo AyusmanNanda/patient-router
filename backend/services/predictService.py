@@ -6,6 +6,7 @@ def predict(data):
     age      = data.get("age")
     duration = data.get("duration")
     gender = data.get("gender", "male")
+    history = data.get("history", "")
 
     if not symptoms:
         raise ValueError("Symptoms is required")
@@ -18,5 +19,7 @@ def predict(data):
             vitals=vitals,
             age=int(age),
             duration=int(duration),
-            gender=gender
+            gender=gender,
+            history=history,
+
     )
