@@ -145,3 +145,12 @@ HISTORY_WEIGHTS = {
     "diabetes": 4,
     "hypertension": 4,
 }
+
+DEPT_HISTORY_BIAS = {
+    "cardiology":   ["previous_heart_attack", "hypertension", "on_blood_thinners"],
+    "neurology":    ["hypertension", "diabetes"],
+    "general":      ["diabetes"],
+    "pulmonology":  ["hiv"],
+    "gastrology":   ["diabetes"],
+    "orthopedics":  [],
+}
