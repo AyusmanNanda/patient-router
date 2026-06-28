@@ -7,6 +7,7 @@ import matplotlib.gridspec as gridspec
 import seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from ml.constants import DEPARTMENTS 
 
 BASE_DIR    = Path(__file__).resolve().parent
 DATA_PATH   = BASE_DIR / "../data/data.csv"

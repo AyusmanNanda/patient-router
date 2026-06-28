@@ -11,7 +11,6 @@ from sklearn.preprocessing import OneHotEncoder
 
 import joblib
 from pathlib import Path
-
 from ml.model_evaluation import evaluate
 
 # Paths
@@ -27,8 +26,9 @@ def train():
     except FileNotFoundError:
         print(f"Failed to load data.csv from {DATA_DIR}")
         exit(1)
+    df["history"] = df["history"].fillna("")
+    df["text"] = df["symptoms"] + " " + df["vitals"] + " " + df["history"]
 
-    df["text"] = df["symptoms"] + " " + df["vitals"]
 
     X = df[["text", "age", "duration", "gender"]]
     y = df["department"]
