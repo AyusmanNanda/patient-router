@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 from ml.constants import (SAMPLE_SIZE, DEPARTMENTS,
                        GENDERS, OPPOSITES,
-                       SYMPTOMS_WEIGHT, VITALS_WEIGHT
+                       SYMPTOMS_WEIGHT, VITALS_WEIGHT, DEPT_HISTORY_BIAS, KNOWN_HISTORY
                        )
 
 output_path = Path(__file__).resolve().parent.parent / "data" / "data.csv"
@@ -69,6 +69,28 @@ def generate_vitals(dept):
 
     return base
 
+def generate_history(dept):
+    history = []
+    biased = DEPT_HISTORY_BIAS.get(dept, [])
+
+    for condition in KNOWN_HISTORY:
+        prob = 0.35 if condition in biased else 0.08
+        if random.random() < prob:
+            history.append(condition)
+
+    if random.random() < 0.15 and history:
+        unrelated = [c for c in KNOWN_HISTORY if c not in biased]
+        if unrelated:
+            extra = random.choice(unrelated)
+            if extra not in history:
+                history.append(extra)
+    if random.random() < 0.10 and len(history) > 1:
+        history.pop(random.randint(0, len(history) - 1))
+
+    if random.random() < 0.20:
+        return []
+
+    return history
 
 def compute_priority(symptoms, vitals, age, duration):
     score = 0
@@ -102,12 +124,14 @@ def generate_row(department):
 
     symptoms = generate_symptoms(department)
     vitals = generate_vitals(department)
+    history = generate_history(department)
 
     return {
         "age": age,
         "duration": duration,
         "symptoms": ", ".join(symptoms),
         "vitals": ", ".join(vitals),
+        "history": ", ".join(history),
         "gender": gender,
         "priority": compute_priority(symptoms, vitals, age, duration),
         "department": department

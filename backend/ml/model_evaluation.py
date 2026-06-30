@@ -7,6 +7,7 @@ import matplotlib.gridspec as gridspec
 import seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from ml.constants import DEPARTMENTS
 
 BASE_DIR    = Path(__file__).resolve().parent
 DATA_PATH   = BASE_DIR / "../data/data.csv"
@@ -24,56 +25,57 @@ RANDOM_STATE  = 42
 # Format: (symptoms_str, vitals_str, age, duration_days, gender, true_department)
 REAL_WORLD_CASES = [
     # ── Typical clean presentations ──
-    ("chest pain, breathlessness",              "bp_high, hr_high", 62, 2,  "male",   "cardiology"),
-    ("chest pain, sweating, fatigue",           "bp_high",          70, 1,  "female", "cardiology"),
-    ("breathlessness, fatigue",                 "hr_high",          55, 3,  "male",   "cardiology"),
-    ("cough, fever, breathlessness",            "temp_high",        35, 7,  "female", "pulmonology"),
-    ("cough, fatigue",                          "temp_high, hr_high",28, 10, "male",   "pulmonology"),
-    ("headache, dizziness, blurred vision",     "bp_low",           45, 3,  "female", "neurology"),
-    ("headache, confusion",                     "bp_high",          60, 2,  "male",   "neurology"),
-    ("joint pain, swelling, stiffness",         "normal",           55, 30, "male",   "orthopedics"),
-    ("joint pain, limited movement",            "normal",           63, 45, "female", "orthopedics"),
-    ("abdominal pain, nausea, vomiting",        "normal",           30, 1,  "female", "gastrology"),
-    ("abdominal pain, diarrhea",                "normal",           25, 2,  "male",   "gastrology"),
-    ("fever, body pain, weakness",              "temp_high",        22, 3,  "male",   "general"),
-    ("fever, fatigue",                          "temp_high",        19, 2,  "female", "general"),
+    # Format: (symptoms_str, vitals_str, age, duration_days, gender, true_department, history)
+    ("chest pain, breathlessness",          "bp_high, hr_high",  62, 2,  "male",   "cardiology",  "previous_heart_attack, hypertension"),
+    ("chest pain, sweating, fatigue",       "bp_high",           70, 1,  "female", "cardiology",  "hypertension, on_blood_thinners"),
+    ("breathlessness, fatigue",             "hr_high",           55, 3,  "male",   "cardiology",  ""),
+    ("cough, fever, breathlessness",        "temp_high",         35, 7,  "female", "pulmonology", ""),
+    ("cough, fatigue",                      "temp_high, hr_high",28, 10, "male",   "pulmonology", "hiv"),
+    ("headache, dizziness, blurred vision", "bp_low",            45, 3,  "female", "neurology",   "hypertension"),
+    ("headache, confusion",                 "bp_high",           60, 2,  "male",   "neurology",   ""),
+    ("joint pain, swelling, stiffness",     "normal",            55, 30, "male",   "orthopedics", ""),
+    ("joint pain, limited movement",        "normal",            63, 45, "female", "orthopedics", "diabetes"),
+    ("abdominal pain, nausea, vomiting",    "normal",            30, 1,  "female", "gastrology",  "diabetes"),
+    ("abdominal pain, diarrhea",            "normal",            25, 2,  "male",   "gastrology",  ""),
+    ("fever, body pain, weakness",          "temp_high",         22, 3,  "male",   "general",     ""),
+    ("fever, fatigue",                      "temp_high",         19, 2,  "female", "general",     ""),
 
     # ── Edge: single symptom only ──
-    ("fatigue",                                 "",                 35, 5,  "male",   "general"),
-    ("chest pain",                              "",                 58, 1,  "male",   "cardiology"),
-    ("headache",                                "",                 40, 2,  "female", "neurology"),
-    ("cough",                                   "",                 30, 7,  "male",   "pulmonology"),
+    ("fatigue",    "",        35, 5,  "male",   "general",    ""),
+    ("chest pain", "",        58, 1,  "male",   "cardiology", "previous_heart_attack"),
+    ("headache",   "",        40, 2,  "female", "neurology",  ""),
+    ("cough",      "",        30, 7,  "male",   "pulmonology",""),
 
     # ── Edge: old patients with minimal symptoms ──
-    ("fatigue, dizziness",                      "bp_low",           75, 4,  "female", "neurology"),
-    ("chest pain",                              "bp_high",          72, 1,  "male",   "cardiology"),
-    ("weakness, fatigue",                       "normal",           68, 7,  "female", "general"),
+    ("fatigue, dizziness", "bp_low",  75, 4,  "female", "neurology",  "hypertension, diabetes"),
+    ("chest pain",         "bp_high", 72, 1,  "male",   "cardiology", "previous_heart_attack"),
+    ("weakness, fatigue",  "normal",  68, 7,  "female", "general",    "diabetes"),
 
     # ── Edge: young patients ──
-    ("joint pain, swelling",                    "normal",           22, 14, "male",   "orthopedics"),
-    ("abdominal pain, vomiting, nausea",        "normal",           18, 1,  "female", "gastrology"),
+    ("joint pain, swelling",             "normal", 22, 14, "male",   "orthopedics", ""),
+    ("abdominal pain, vomiting, nausea", "normal", 18, 1,  "female", "gastrology",  ""),
 
     # ── Hard: cross-department symptom overlap ──
     # breathlessness appears in both cardiology and pulmonology
-    ("breathlessness, cough, fever",            "temp_high",        40, 7,  "male",   "pulmonology"),
-    ("breathlessness, chest pain",              "hr_high",          55, 1,  "female", "cardiology"),
+    ("breathlessness, cough, fever", "temp_high", 40, 7,  "male",   "pulmonology", ""),
+    ("breathlessness, chest pain",   "hr_high",   55, 1,  "female", "cardiology",  "on_blood_thinners"),
     # fatigue appears in cardiology, pulmonology, general
-    ("fatigue, cough",                          "temp_high",        33, 5,  "male",   "pulmonology"),
-    ("fatigue, chest pain",                     "bp_high",          60, 3,  "male",   "cardiology"),
-    ("fatigue, fever, body pain",               "temp_high",        27, 3,  "female", "general"),
+    ("fatigue, cough",           "temp_high", 33, 5,  "male",   "pulmonology", "hiv"),
+    ("fatigue, chest pain",      "bp_high",   60, 3,  "male",   "cardiology",  "hypertension"),
+    ("fatigue, fever, body pain","temp_high", 27, 3,  "female", "general",     ""),
     # nausea appears in gastrology and neurology
-    ("nausea, headache, dizziness",             "bp_low",           42, 2,  "female", "neurology"),
-    ("nausea, abdominal pain, vomiting",        "normal",           31, 1,  "male",   "gastrology"),
+    ("nausea, headache, dizziness",      "bp_low", 42, 2,  "female", "neurology",  ""),
+    ("nausea, abdominal pain, vomiting", "normal", 31, 1,  "male",   "gastrology", "diabetes"),
     # dizziness + bp_low could be neurology or cardiology
-    ("dizziness, fatigue",                      "bp_low",           50, 3,  "male",   "neurology"),
+    ("dizziness, fatigue", "bp_low", 50, 3,  "male",   "neurology",  "hypertension"),
 
     # ── Hard: chronic vs acute same symptoms ──
-    ("joint pain, stiffness",                   "normal",           58, 90, "female", "orthopedics"),
-    ("chest pain, breathlessness",              "normal",           45, 1,  "male",   "cardiology"),
+    ("joint pain, stiffness",      "normal", 58, 90, "female", "orthopedics", ""),
+    ("chest pain, breathlessness", "normal", 45, 1,  "male",   "cardiology",  ""),
 
     # ── Hard: vitals contradict symptoms ──
-    ("chest pain, sweating",                    "normal",           65, 2,  "male",   "cardiology"),
-    ("cough, breathlessness",                   "normal",           38, 14, "female", "pulmonology"),
+    ("chest pain, sweating", "normal", 65, 2,  "male",   "cardiology",  "previous_heart_attack"),
+    ("cough, breathlessness","normal", 38, 14, "female", "pulmonology", ""),
 ]
 
 
@@ -83,7 +85,8 @@ def load_data():
     except FileNotFoundError:
         print(f"[ERROR] data.csv not found at {DATA_PATH}")
         exit(1)
-    df["text"] = df["symptoms"] + " " + df["vitals"]
+    df["history"] = df["history"].fillna("")
+    df["text"] = df["symptoms"] + " " + df["vitals"] + " " + df["history"]
     return df
 
 
@@ -112,7 +115,7 @@ def evaluate_synthetic(model, df):
     print(classification_report(y_test, y_pred, zero_division=0))
 
     print("  Per-Department Confidence:")
-    labels = sorted(y.unique())
+    labels = sorted(DEPARTMENTS.keys())
     per_dept = {}
     for dept in labels:
         mask      = np.array(y_test == dept)
@@ -134,8 +137,8 @@ def evaluate_real_world(model):
     Tests realistic age/duration combinations and cross-department overlaps.
     """
     rows, true = [], []
-    for (sym, vit, age, dur, gen, dept) in REAL_WORLD_CASES:
-        text = (sym + " " + vit).strip()
+    for (sym, vit, age, dur, gen, dept, hist) in REAL_WORLD_CASES:
+        text = (sym + " " + vit + " " + hist).strip()
         rows.append({"text": text, "age": age, "duration": dur, "gender": gen})
         true.append(dept)
 
@@ -154,7 +157,7 @@ def evaluate_real_world(model):
     print(f"  {'Symptoms (truncated)':<35} {'True':<14} {'Predicted':<14} {'Conf':>6}  OK?")
     print("  " + "-"*76)
     wrong_cases = []
-    for i, ((sym, vit, age, dur, gen, true_dept), pred) in enumerate(zip(REAL_WORLD_CASES, y_pred)):
+    for i, ((sym, vit, age, dur, gen, true_dept, hist), pred) in enumerate(zip(REAL_WORLD_CASES, y_pred)):
         dept_idx = classes.index(pred)
         conf     = y_proba[i, dept_idx]
         ok       = "✓" if pred == true_dept else "✗"
@@ -291,6 +294,7 @@ import json
 def save_json_report(acc_syn, cv_scores, acc_rw):
     gap = (acc_syn - acc_rw) * 100
 
+    total = len(REAL_WORLD_CASES)
     report = {
         "synthetic_accuracy": round(acc_syn * 100, 2),
         "cv_accuracy": round(cv_scores.mean() * 100, 2),
@@ -298,9 +302,9 @@ def save_json_report(acc_syn, cv_scores, acc_rw):
         "edge_case_accuracy": round(acc_rw * 100, 2),
         "generalization_gap": round(gap, 1),
 
-        "total_edge_cases": 34,
-        "passed_edge_cases": round(acc_rw * 34),
-        "failed_edge_cases": 34 - round(acc_rw * 34)
+        "total_edge_cases": total,
+        "passed_edge_cases": round(acc_rw * total),
+        "failed_edge_cases": total - round(acc_rw * total)
     }
 
     output_file = REPORTS_DIR / "evaluation_metrics.json"

@@ -98,7 +98,7 @@ def predict_case(symptoms: str, vitals: str = "", age: int = 30, duration: int =
     symptoms_list = normalize_list(symptoms_list, KNOWN_SYMPTOMS)
     vitals_list = normalize_list(vitals_list, KNOWN_VITALS)
 
-    text = " ".join(symptoms_list) + " " + " ".join(vitals_list)
+    text = " ".join(symptoms_list) + " " + " ".join(vitals_list) + " " + " ".join(history_list)
     input_df = pd.DataFrame([{"text": text, "age": age, "duration": duration, "gender": gender}])
     probs = model.predict_proba(input_df)[0]
 
