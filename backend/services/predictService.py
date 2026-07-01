@@ -1,25 +1,19 @@
-from ml.prediction.predict import predict_case
+from ml.engine import predict as predict_engine
 
-def predict(data):
+
+def predict_case(data: dict):
     symptoms = data.get("symptoms", "").strip()
-    vitals   = data.get("vitals", "").strip()
-    age      = data.get("age")
+    age = data.get("age")
     duration = data.get("duration")
-    gender = data.get("gender", "male")
-    history = data.get("history", "")
+    method = data.get("method", "patient_router")
 
     if not symptoms:
-        raise ValueError("Symptoms is required")
+        raise ValueError("Symptoms are required")
 
-    if age is None or duration is None:
-        raise ValueError("Age and duration are required")
+    if age is None:
+        raise ValueError("Age is required")
 
-    return predict_case(
-            symptoms=symptoms,
-            vitals=vitals,
-            age=int(age),
-            duration=int(duration),
-            gender=gender,
-            history=history,
+    if duration is None:
+        raise ValueError("Duration is required")
 
-    )
+    return predict_engine(data, method)
