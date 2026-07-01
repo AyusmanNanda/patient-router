@@ -9,7 +9,7 @@ from ml.constants import (
     ALIASES, KNOWN_VITALS, KNOWN_SYMPTOMS,
     SYMPTOMS_WEIGHT, EMERGENCY_SYMPTOMS, VITALS_WEIGHT,
     EMERGENCY_VITALS, CONFIDENCE_THRESHOLD,
-    SAFE_FALLBACK_DEPT, MODEL_VERSION
+    SAFE_FALLBACK_DEPT, MODEL_VERSION, CONFIDENCE_LEVEL_MAP
 )
 from ml.rules.priority import calculate_priority
 from ml.rules.emergency import detect_emergency
@@ -172,6 +172,13 @@ def predict_patient_router(data: dict) -> dict:
         f"priority={priority} "
         f"emergency={is_emergency}"
     )
+    confidence_level = "low"
+
+    if top_confidence >= CONFIDENCE_LEVEL_MAP["high"]:
+        confidence_level = "high"
+    elif top_confidence >= CONFIDENCE_LEVEL_MAP["medium"]:
+        confidence_level = "medium"
+
     prediction_log = {
         "timestamp": datetime.now().isoformat(),
         "symptoms": symptoms_list,
@@ -186,7 +193,7 @@ def predict_patient_router(data: dict) -> dict:
         "priority": priority,
         "emergency": is_emergency,
         "fallback_used": top_confidence < CONFIDENCE_THRESHOLD,
-        "model_version": MODEL_VERSION,
+        "model": f"patient-router-{MODEL_VERSION}",
     }
     with open(PREDICTIONS_LOG, "a") as f:
         f.write(json.dumps(prediction_log) + "\n")

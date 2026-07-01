@@ -154,3 +154,9 @@ DEPT_HISTORY_BIAS = {
     "gastrology":   ["diabetes"],
     "orthopedics":  [],
 }
+
+CONFIDENCE_LEVEL_MAP = {
+    "low": 0.4,
+    "medium": 0.65,
+    "high": 0.85,
+}

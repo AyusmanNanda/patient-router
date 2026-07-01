@@ -7,7 +7,7 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-from ml.constants import MODEL_VERSION
+from ml.constants import MODEL_VERSION, DEPARTMENTS, SAFE_FALLBACK_DEPT, CONFIDENCE_LEVEL_MAP
 from ml.rules.history import analyze_history
 from utils.logger import logger
 
@@ -23,16 +23,7 @@ client = genai.Client(api_key=api_key)
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "../logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
-LLM_PREDICTIONS_LOG = LOGS_DIR / "llm_predictions.jsonl"
-
-VALID_DEPARTMENTS = {
-    "cardiology",
-    "pulmonology",
-    "neurology",
-    "orthopedics",
-    "gastrology",
-    "general",
-}
+PREDICTIONS_LOG = LOGS_DIR / "predictions.jsonl"
 
 VALID_PRIORITIES = {"low", "medium", "high"}
 
@@ -40,11 +31,7 @@ VALID_CONFIDENCE_LEVELS = {"low", "medium", "high"}
 
 # We don't trust the LLM to produce a calibrated numeric probability, so we
 # ask it for a coarse confidence level and map that to a fixed number ourselves.
-CONFIDENCE_LEVEL_MAP = {
-    "low": 0.4,
-    "medium": 0.65,
-    "high": 0.85,
-}
+
 
 
 def build_prompt(symptoms: str, vitals: str, age, gender: str, duration, history: str) -> str:
@@ -144,10 +131,10 @@ def predict_llm(data: dict) -> dict:
         logger.exception("Gemini returned invalid JSON.")
         raise ValueError("Gemini returned an invalid response.") from e
 
-    recommended = parsed.get("recommended", "general")
-    if recommended not in VALID_DEPARTMENTS:
+    recommended = parsed.get("recommended", SAFE_FALLBACK_DEPT)
+    if recommended not in DEPARTMENTS:
         logger.warning(f"Gemini returned unknown department: {recommended!r}, falling back to general")
-        recommended = "general"
+        recommended = SAFE_FALLBACK_DEPT
 
     confidence_level = parsed.get("confidence_level", "low")
     if confidence_level not in VALID_CONFIDENCE_LEVELS:
@@ -189,15 +176,11 @@ def predict_llm(data: dict) -> dict:
         "departments": [{"department": recommended, "confidence": round(confidence, 3)}],
         "priority": priority,
         "emergency": is_emergency,
-        "confidence": round(confidence, 3),
-        "confidence_level": confidence_level,
+        "confidence": confidence,
         "reasons": reasons,
         "history": history_list,
         "history_score": history_score,
-        "engine": "llm",
-        "provider": "gemini",
-        "model": "gemini-2.5-flash",
-        "backend_version": MODEL_VERSION,
+        "model_version": "gemini-2.5-flash",
         "warning": "Vitals not provided — rules may be less accurate. Please provide vitals for better results." if vitals_missing else None,
     }
 
@@ -212,16 +195,13 @@ def predict_llm(data: dict) -> dict:
         "gender": gender,
         "recommended": recommended,
         "confidence": confidence,
-        "confidence_level": confidence_level,
         "priority": priority,
         "emergency": is_emergency,
-        "engine": "llm",
-        "provider": "gemini",
+        "fallback_used": False,
         "model": "gemini-2.5-flash",
-        "backend_version": MODEL_VERSION,
     }
 
-    with open(LLM_PREDICTIONS_LOG, "a") as f:
+    with open(PREDICTIONS_LOG, "a") as f:
         f.write(json.dumps(prediction_log) + "\n")
 
     logger.info(f"LLM prediction | recommended={recommended} confidence={confidence:.3f} priority={priority}")
