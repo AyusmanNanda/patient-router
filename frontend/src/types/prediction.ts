@@ -22,7 +22,8 @@ export interface PredictRequest {
     age: number;
     duration: number;
     gender: string;
-    history?: string
+    history?: string;
+    method: "patient_router" | "llm";
 }
 
 export interface FeedbackRequest {
