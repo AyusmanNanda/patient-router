@@ -4,7 +4,6 @@ import joblib
 import numpy as np
 import pandas as pd 
 import json
-import logging
 import difflib
 from ml.constants import (
     ALIASES, KNOWN_VITALS, KNOWN_SYMPTOMS,
@@ -15,19 +14,13 @@ from ml.constants import (
 from ml.rules.priority import calculate_priority
 from ml.rules.emergency import detect_emergency
 from ml.rules.history import analyze_history
+from utils.logger import logger
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "../logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_DIR = BASE_DIR / "models" / "model.pkl"
 PREDICTIONS_LOG = LOGS_DIR / "predictions.jsonl"
-
-logging.basicConfig(
-    filename=str(LOGS_DIR / "triage.log"),
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(module)s:%(lineno)d | %(message)s"
-)
-logger = logging.getLogger(__name__)
 
 try:
     model = joblib.load(str(MODEL_DIR))
