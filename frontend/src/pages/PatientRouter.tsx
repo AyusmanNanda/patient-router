@@ -8,9 +8,31 @@ export default function PatientRouter() {
     const router = usePatientRouter();
     return (
         <div>
-            <Topbar title="Patient Router" subtitle="Enter patient data to get department triage recommendation" />
+            <Topbar
+                title="Patient Router"
+                subtitle="Enter patient data to get department triage recommendation"
+            />
+
             <div className="page-body">
-                <div className="two-col" style={{ alignItems: 'start' }}>
+
+                <div className="card" style={{ marginBottom: 16 }}>
+                    <label className="form-label">Prediction Engine</label>
+
+                    <select
+                        className="form-select"
+                        value={router.method}
+                        onChange={(e) =>
+                            router.setMethod(
+                                e.target.value as "patient_router" | "llm"
+                            )
+                        }
+                    >
+                        <option value="patient_router">Patient Router (Local ML)</option>
+                        <option value="llm">Gemini 2.5 Flash (LLM)</option>
+                    </select>
+                </div>
+
+                <div className="two-col" style={{ alignItems: "start" }}>
                     <div>
                         <PatientForm
                             symptoms={router.symptoms}
@@ -25,6 +47,8 @@ export default function PatientRouter() {
                             history={router.history}
                             setHistory={router.setHistory}
                             setGender={router.setGender}
+                            method={router.method}
+                            setMethod={router.setMethod}
                             loading={router.loading}
                             error={router.error}
                             predict={router.predict}

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.predictService import predict as predictService
+from services.predictService import predict_case
 
 predict_bp = Blueprint("predict", __name__)
 
@@ -9,7 +9,7 @@ def predict():
     if not data:
         return jsonify({"error": "Request body is required"}), 400
     try:
-        result = predictService(data)
+        result = predict_case(data)
         return jsonify(result), 200
 
     except ValueError as e:

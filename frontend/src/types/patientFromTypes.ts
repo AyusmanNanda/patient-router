@@ -19,6 +19,11 @@ export interface PatientFormTypes {
     history: string[]
     setHistory: React.Dispatch<React.SetStateAction<string[]>>
 
+    method: "patient_router" | "llm";
+    setMethod: React.Dispatch<
+        React.SetStateAction<"patient_router" | "llm">
+    >;
+
     loading: boolean
     error: string
 

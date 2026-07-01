@@ -16,6 +16,7 @@ export function usePatientRouter() {
     const [fbState,     setFbState]     = useState<'idle' | 'correction'>('idle')
     const [correctDept, setCorrectDept] = useState('cardiology')
     const [fbDone,      setFbDone]      = useState(false)
+    const [method, setMethod] = useState<'patient_router' | 'llm'>('patient_router')
 
     const reset = () => {
         setSymptoms([]); setVitals([]); setAge(''); setDuration('')
@@ -46,6 +47,7 @@ export function usePatientRouter() {
                 duration: d,
                 gender,
                 history: history.join(', '),
+                method,
             }
 
             const { data } = await api.post<PredictResponse>('/predict', payload)
@@ -124,5 +126,7 @@ export function usePatientRouter() {
         priorityClass,
         history,
         setHistory,
+        method,
+        setMethod,
     }
 }
