@@ -16,7 +16,7 @@ export function usePatientRouter() {
     const [fbState,     setFbState]     = useState<'idle' | 'correction'>('idle')
     const [correctDept, setCorrectDept] = useState('cardiology')
     const [fbDone,      setFbDone]      = useState(false)
-    const [method, setMethod] = useState<'patient_router' | 'llm'>('patient_router')
+    const [method, setMethod] = useState<'patient_router' | 'llm' | 'hybrid'>('patient_router')
 
     const reset = () => {
         setSymptoms([]); setVitals([]); setAge(''); setDuration('')

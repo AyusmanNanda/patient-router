@@ -23,7 +23,7 @@ export interface PredictRequest {
     duration: number;
     gender: string;
     history?: string;
-    method: "patient_router" | "llm";
+    method: "patient_router" | "llm" | "hybrid";
 }
 
 export interface FeedbackRequest {
