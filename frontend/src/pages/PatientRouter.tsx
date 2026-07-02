@@ -23,12 +23,13 @@ export default function PatientRouter() {
                         value={router.method}
                         onChange={(e) =>
                             router.setMethod(
-                                e.target.value as "patient_router" | "llm"
+                                e.target.value as "patient_router" | "llm" | "hybrid"
                             )
                         }
                     >
                         <option value="patient_router">Patient Router (Local ML)</option>
                         <option value="llm">Gemini 2.5 Flash (LLM)</option>
+                        <option value="hybrid">Patient Router + Gemini 2.5 Flash (Hybrid)</option>
                     </select>
                 </div>
 
