@@ -34,7 +34,7 @@
 
 ## Overview
 
-In hospital emergency departments, patients are often routed to the wrong department initially — wasting critical time. Patient Router automates this initial triage decision using a Random Forest classifier trained on structured patient data, combined with a rule-based priority and emergency-detection layer, and a feedback loop that feeds corrections straight back into the training set.
+In hospital emergency departments, patients are often routed to the wrong department initially, wasting critical time. Patient Router automates this initial triage decision using a Random Forest classifier trained on structured patient data, combined with a rule-based priority and emergency-detection layer, and a feedback loop that feeds corrections back into the training set.
 
 The project has three parts:
 
@@ -44,33 +44,33 @@ The project has three parts:
 | Flask API | `backend/app.py`, `routes/`, `services/` | Exposes the ML pipeline over HTTP |
 | React dashboard | `frontend/` | Patient intake form, feedback collection, dataset manager, training runner, evaluation viewer, logs |
 
-For the full pipeline, scoring logic, and normalization rules, see **[docs/architecture.md](docs/architecture.md)**.
-For full request/response examples, see **[docs/api.md](docs/api.md)**.
+For the full pipeline, API contract, environment setup, and everything else, see the table below.
+
+---
+
+## Documentation
+
+| Doc | Covers |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | ML pipeline, the three prediction methods, priority scoring, emergency detection, normalization, evaluation, feedback loop |
+| [docs/api.md](docs/api.md) | Full request/response examples for every route |
+| [docs/setup.md](docs/setup.md) | Environment variables, local setup, troubleshooting |
+| [docs/frontend.md](docs/frontend.md) | React dashboard structure — pages, hooks, shared components |
+| [docs/data-schema.md](docs/data-schema.md) | Symptom/vital/history vocabulary and weight tables |
+| [docs/deployment.md](docs/deployment.md) | Vercel frontend, backend hosting requirements, desktop builds |
 
 ---
 
 ## System Flow
 
 ```mermaid
-flowchart TD
-    A[Patient Input\nsymptoms, vitals, age, duration, gender, history] --> B[Input Validation]
-    B --> C[Normalize Input\nlowercase, alias mapping, fuzzy match]
-    C --> D[Vectorize Text\nCountVectorizer + OneHotEncoder for gender]
-    D --> E[Random Forest Model]
-    E --> F[Top 3 Department Predictions\nwith confidence scores]
-    F --> G{Confidence >= 0.60?}
-    G -- No --> H[Fallback to General]
-    G -- Yes --> I[Recommended Department]
-    H --> J[Priority Scoring]
-    I --> J
-    J --> K{Emergency or High-Risk History?}
-    K -- Yes --> L[Priority = High]
-    K -- No --> M[Priority = high / medium / low]
-    L --> N[Final Prediction + Logged to predictions.jsonl]
-    M --> N
+flowchart LR
+    A[Patient Input] --> B[ML Pipeline\nRandom Forest / LLM / Hybrid]
+    B --> C[Priority & Emergency Rules]
+    C --> D[Recommendation + Logged Prediction]
 ```
 
-*Full breakdown of each stage — the ML pipeline, priority scoring, emergency detection, and input normalization — lives in [docs/architecture.md](docs/architecture.md).*
+Full breakdown of each stage — normalization, the three prediction methods, priority scoring, and emergency detection — lives in `docs/architecture.md`.
 
 ---
 
@@ -97,70 +97,31 @@ flowchart TD
 
 ## API
 
-Full request/response examples: **[docs/api.md](docs/api.md)**
+**Core:** `GET /`, `GET /health`
+**Prediction & Feedback:** `POST /predict`, `POST /feedback`
+**Dataset:** `GET /data`, `POST /data/generate`
+**Training & Evaluation:** `POST /train`, `GET /evaluation`, `GET /evaluation/confusion-matrix`, `GET /evaluation/report-image`
+**Logs:** `GET /logs`, `POST /logs/clear`
 
-### Core
-| Method | Route | Description |
-|---|---|---|
-| `GET` | `/` | Service info |
-| `GET` | `/health` | Health check |
-
-### Prediction & Feedback
-| Method | Route | Description |
-|---|---|---|
-| `POST` | `/predict` | Run triage prediction |
-| `POST` | `/feedback` | Submit correction, appended to `data.csv` |
-
-### Dataset
-| Method | Route | Description |
-|---|---|---|
-| `GET` | `/data` | Dataset stats (row/column counts, department & priority distribution) |
-| `POST` | `/data/generate` | Regenerate synthetic dataset (`{ "rows": 50000 }`) |
-
-### Training & Evaluation
-| Method | Route | Description |
-|---|---|---|
-| `POST` | `/train` | Retrain the model on current `data.csv` |
-| `GET` | `/evaluation` | Evaluation metrics JSON |
-| `GET` | `/evaluation/confusion-matrix` | Confusion matrix image |
-| `GET` | `/evaluation/report-image` | Evaluation report image |
-
-### Logs
-| Method | Route | Description |
-|---|---|---|
-| `GET` | `/logs` | Prediction history + emergency/fallback counts |
-| `POST` | `/logs/clear` | Clear prediction log |
+Full request/response examples for every route: `docs/api.md`
 
 ---
 
 ## Running Locally
 
-### Backend
-
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
+# backend
+cd backend && python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-
-# generate dataset
-python -m ml.generate_data
-
-# train model + run evaluation
-python -m ml.train
-
-# start API
+python -m ml.generate_data && python -m ml.train
 python app.py
+
+# frontend
+cd frontend && npm install
+echo "VITE_BACKEND=http://localhost:5000" > .env && npm run dev
 ```
 
-### Frontend
-
-```bash
-cd frontend
-npm install
-echo "VITE_BACKEND=http://localhost:5000" > .env
-npm run dev
-```
+Environment variables, config, and troubleshooting: `docs/setup.md`
 
 ---
 
@@ -171,7 +132,7 @@ npm run dev
 - CountVectorizer treats multi-word symptoms as separate tokens
 - Only 6 departments — real hospitals have many more, with finer sub-specialties
 - The synthetic data labeling logic (`generate_data.py`) and the live priority logic (`priority.py`) aren't perfectly aligned, which can introduce label/inference drift
-- Feedback corrections are written straight into the training CSV with minimal validation — bad input could degrade future retraining
+- Feedback corrections have a confirmed CSV column-misalignment bug: `feedbackService.py` writes 7 values against `data.csv`'s 8-column header and drops `history` entirely, which shifts every subsequent column — see `docs/api.md` for the details
 - No authentication on training/data-regeneration endpoints
 
 ---
@@ -181,104 +142,3 @@ npm run dev
 **Backend:** Python, Flask, scikit-learn, pandas, numpy, joblib
 **Frontend:** React, TypeScript, Vite, lucide-react
 **ML:** RandomForestClassifier, CountVectorizer, OneHotEncoder
-
----
-
-## Project Structure
-
-<details>
-<summary>Click to expand</summary>
-
-```
-patient-router/
-├── backend/
-│   ├── app.py                      # Flask app entrypoint
-│   ├── requirements.txt
-│   ├── routes/
-│   │   ├── homeRoute.py
-│   │   ├── healthRoute.py
-│   │   ├── predictRoute.py
-│   │   ├── feedbackRoute.py
-│   │   ├── dataRoute.py
-│   │   ├── trainRoute.py
-│   │   ├── evaluationRoute.py
-│   │   └── logRoute.py
-│   ├── services/
-│   │   ├── predictService.py
-│   │   ├── feedbackService.py
-│   │   ├── dataService.py
-│   │   ├── trainService.py
-│   │   ├── evalutationService.py
-│   │   └── logService.py
-│   ├── ml/
-│   │   ├── constants.py            # symptom/vital weights, departments, aliases
-│   │   ├── generate_data.py        # synthetic dataset generation
-│   │   ├── train.py                # model training
-│   │   ├── model_evaluation.py     # accuracy, CV, confusion matrix
-│   │   ├── prediction/
-│   │   │   ├── predict.py          # inference entrypoint (predict_case)
-│   │   │   ├── priority.py         # priority scoring
-│   │   │   ├── emergency.py        # emergency detection
-│   │   │   └── history.py          # medical history risk scoring
-│   │   └── models/
-│   │       └── model.pkl
-│   ├── data/
-│   │   └── data.csv                # synthetic + feedback training data
-│   ├── logs/
-│   │   ├── predictions.jsonl
-│   │   └── triage.log
-│   └── reports/
-│       ├── evaluation_metrics.json
-│       ├── evaluation_report.txt
-│       ├── confusion_matrix.png
-│       └── evaluation_report.png
-├── frontend/
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.ts
-│   ├── vercel.json
-│   ├── public/
-│   │   ├── favicon.svg
-│   │   └── icons.svg
-│   └── src/
-│       ├── App.tsx
-│       ├── main.tsx
-│       ├── api/
-│       │   └── api.ts
-│       ├── components/
-│       │   ├── layout/
-│       │   │   ├── Sidebar.tsx
-│       │   │   ├── Topbar.tsx
-│       │   │   └── TagInput.tsx
-│       │   └── patient-router/
-│       │       └── patientForm.tsx
-│       ├── pages/
-│       │   ├── PatientRouter.tsx   # intake form + prediction + feedback
-│       │   ├── DataManger.tsx      # dataset stats + generation
-│       │   ├── Training.tsx        # trigger retraining, view accuracy
-│       │   ├── Evaluation.tsx      # metrics, confusion matrix, report
-│       │   └── Logs.tsx            # prediction history + stats
-│       ├── hooks/
-│       │   ├── usePatientRouter.ts
-│       │   ├── useDataManager.ts
-│       │   ├── useTraining.ts
-│       │   ├── useEvaluation.ts
-│       │   └── useLogs.ts
-│       ├── types/
-│       │   ├── prediction.ts
-│       │   ├── dataTypes.ts
-│       │   ├── trainingTypes.ts
-│       │   ├── evaluationType.ts
-│       │   ├── logsTypes.ts
-│       │   └── patientFromTypes.ts
-│       └── constants/
-│           └── patientOptions.ts   # symptom/vital/history/department options
-├── docs/
-│   ├── api.md
-│   ├── architecture.md
-│   └── assets/screenshots/
-├── LICENSE
-└── README.md
-```
-
-</details>
