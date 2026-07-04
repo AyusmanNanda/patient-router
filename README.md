@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/public/favicon.svg" width="72" alt="Patient Router logo" />
+  <img src="docs/assets/icons/favicon.svg" width="72" alt="Patient Router logo" />
 </p>
 
 <h1 align="center">Patient Router</h1>
@@ -12,7 +12,7 @@
     <img src="https://github.com/AyusmanNanda/patient-router/actions/workflows/frontend-ci.yml/badge.svg" alt="Frontend CI status" />
   </a>
   <a href="https://patient-router.vercel.app">
-    <img src="https://img.shields.io/badge/demo-live-2C7873" alt="Live demo" />
+    <img src="https://img.shields.io/badge/demo-live-2E4374" alt="Live demo" />
   </a>
   <img src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white" alt="Python" />
   <img src="https://img.shields.io/badge/Flask-black?logo=flask&logoColor=white" alt="Flask" />
