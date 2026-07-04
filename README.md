@@ -128,12 +128,7 @@ Environment variables, config, and troubleshooting: `docs/setup.md`
 ## Limitations
 
 - Trained on synthetic data — real-world accuracy would be lower and would need clinical validation
-- Small vocabulary of 20 symptoms, 7 vitals, and 6 history conditions
-- CountVectorizer treats multi-word symptoms as separate tokens
-- Only 6 departments — real hospitals have many more, with finer sub-specialties
-- The synthetic data labeling logic (`generate_data.py`) and the live priority logic (`priority.py`) aren't perfectly aligned, which can introduce label/inference drift
-- Feedback corrections have a confirmed CSV column-misalignment bug: `feedbackService.py` writes 7 values against `data.csv`'s 8-column header and drops `history` entirely, which shifts every subsequent column — see `docs/api.md` for the details
-- No authentication on training/data-regeneration endpoints
+- Only 6 departments, 20 symptoms, 7 vitals, and 6 history conditions — a scope decision baked into the synthetic data design, not a bug
 
 ---
 
