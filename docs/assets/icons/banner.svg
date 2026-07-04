@@ -1,8 +1,8 @@
 <svg viewBox="0 0 1280 340" xmlns="http://www.w3.org/2000/svg">
-  <!-- soft tinted background instead of stark white: less glare, still open and honest -->
-  <rect width="1280" height="640" fill="#F4F7FA"/>
+  <!-- soft tinted background instead of stark white -->
+  <rect width="1280" height="340" fill="#F4F7FA"/>
 
-  <!-- oversized watermark of the product's own mark, very low opacity: a quiet signature, not a claim -->
+  <!-- oversized watermark -->
   <g transform="translate(860,60) scale(8)" opacity="0.07">
     <circle cx="16" cy="9" r="3" fill="#1E5F8C"/>
     <path d="M16 12 L16 15 L23 23" stroke="#1E5F8C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -11,7 +11,7 @@
     <circle cx="9" cy="24" r="2.4" stroke="#1E5F8C" stroke-width="0.8" fill="none"/>
   </g>
 
-  <!-- logo + eyebrow -->
+  <!-- logo -->
   <g transform="translate(80,64)">
     <rect width="34" height="34" rx="8" fill="#1E5F8C"/>
     <circle cx="17" cy="11" r="3" fill="#ffffff"/>
@@ -20,17 +20,25 @@
     <path d="M17 17 L10 25" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none"/>
     <circle cx="10" cy="25" r="2.2" stroke="#ffffff" stroke-width="1.3" fill="none"/>
   </g>
-  <text x="128" y="86" font-size="14" letter-spacing="3" fill="#48566A" font-family="Helvetica, Arial, sans-serif">PATIENT ROUTER</text>
+
+  <!-- eyebrow -->
+  <text x="128" y="86" font-size="14" letter-spacing="3" fill="#48566A" font-family="Helvetica, Arial, sans-serif">
+    PATIENT ROUTER
+  </text>
 
   <!-- title -->
-  <text x="78" y="210" font-size="60" font-weight="700" fill="#101820" font-family="Helvetica, Arial, sans-serif">Patient Router</text>
+  <text x="78" y="210" font-size="60" font-weight="700" fill="#101820" font-family="Helvetica, Arial, sans-serif">
+    Patient Router
+  </text>
 
-  <!-- short tagline, honest about being a suggestion, not a guarantee -->
-  <text x="80" y="252" font-size="20" fill="#33404E" font-family="Helvetica, Arial, sans-serif">Suggests which department a patient should go to</text>
+  <!-- tagline -->
+  <text x="80" y="252" font-size="20" fill="#33404E" font-family="Helvetica, Arial, sans-serif">
+    A machine learning prototype for hospital department recommendation
+  </text>
 
-  <!-- quiet divider -->
+  <!-- accent -->
   <rect x="80" y="292" width="64" height="4" rx="2" fill="#1E5F8C"/>
 
-  <!-- bottom hairline, quiet close -->
+  <!-- bottom line -->
   <rect x="0" y="336" width="1280" height="4" fill="#DCE5EC"/>
 </svg>
