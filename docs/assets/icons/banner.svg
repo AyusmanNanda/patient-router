@@ -1,75 +1,36 @@
-<svg viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" font-family="'Space Grotesk','IBM Plex Sans',sans-serif">
-  <defs>
-    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-      <circle cx="1" cy="1" r="1" fill="#E4E5E7"/>
-    </pattern>
-  </defs>
+<svg viewBox="0 0 1280 340" xmlns="http://www.w3.org/2000/svg">
+  <!-- soft tinted background instead of stark white: less glare, still open and honest -->
+  <rect width="1280" height="340" fill="#F4F7FA"/>
 
-  <!-- base -->
-  <rect width="1280" height="640" fill="#F5F6F7"/>
-
-  <!-- left panel: mirrors the app's dark sidebar -->
-  <rect x="0" y="0" width="500" height="640" fill="#101012"/>
-
-  <!-- right panel texture -->
-  <rect x="500" y="0" width="780" height="640" fill="url(#grid)"/>
-
-  <!-- logo + wordmark -->
-  <g transform="translate(80,72) scale(1.375)">
-    <rect width="32" height="32" rx="7" fill="#2E4374"/>
-    <circle cx="16" cy="9" r="3" fill="#ffffff"/>
-    <path d="M16 12 L16 15 L23 23" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    <circle cx="23" cy="24" r="2.6" fill="#ffffff"/>
-    <path d="M16 15 L9 23" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-    <circle cx="9" cy="24" r="2.4" stroke="#ffffff" stroke-width="1.4" fill="none"/>
-  </g>
-  <text x="138" y="101" font-size="15" letter-spacing="4" fill="#8A8A93" font-family="'IBM Plex Mono',monospace">PATIENT ROUTER</text>
-
-  <text x="76" y="200" font-size="58" font-weight="700" fill="#FFFFFF">Patient Router</text>
-  <text x="80" y="240" font-size="21" fill="#B4B4BC">ML triage · confidence scores and reasons, not a black box.</text>
-
-  <!-- audit trail strip -->
-  <rect x="80" y="290" width="360" height="128" rx="8" fill="#19191C" stroke="#2A2A2E" stroke-width="1.5"/>
-  <text x="104" y="319" font-size="13" font-family="'IBM Plex Mono',monospace" fill="#5A76A6">POST /predict  chest pain, breathlessness</text>
-  <text x="104" y="344" font-size="13" font-family="'IBM Plex Mono',monospace" fill="#D6D6DA">→ cardiology 0.97 · pulmonology 0.02 · general 0.01</text>
-  <text x="104" y="369" font-size="13" font-family="'IBM Plex Mono',monospace" fill="#D6D6DA">→ priority: high · emergency: true</text>
-  <text x="104" y="394" font-size="13" font-family="'IBM Plex Mono',monospace" fill="#D6D6DA">→ reasons: chest pain, bp_high, hr_high...</text>
-
-  <text x="80" y="460" font-size="13" letter-spacing="2" fill="#5A76A6" font-family="'IBM Plex Mono',monospace">RANDOM FOREST · FLASK · REACT</text>
-
-  <!-- right diagram -->
-  <circle cx="700" cy="320" r="34" fill="#101012"/>
-  <path d="M686,320 h28 M700,306 v28" stroke="#F5F6F7" stroke-width="4"/>
-  <text x="700" y="376" font-size="14" text-anchor="middle" font-family="'IBM Plex Mono',monospace" fill="#8A8A93">PATIENT</text>
-
-  <!-- decision node -->
-  <circle cx="840" cy="320" r="8" fill="#2E4374"/>
-  <path d="M734,320 L832,320" stroke="#B9BAC0" stroke-width="2.5" fill="none"/>
-
-  <!-- three branches -->
-  <path d="M840,320 C 900,320 900,180 960,180" stroke="#B9BAC0" stroke-width="2.5" fill="none"/>
-  <path d="M840,320 L 960,320" stroke="#B9BAC0" stroke-width="2.5" fill="none"/>
-  <path d="M840,320 C 900,320 900,460 960,460" stroke="#B9BAC0" stroke-width="2.5" fill="none"/>
-
-  <!-- destination cards -->
-  <g>
-    <rect x="960" y="150" width="190" height="60" rx="10" fill="#FFFFFF" stroke="#2E4374" stroke-width="2"/>
-    <text x="982" y="177" font-size="16" fill="#101012" font-weight="600">Cardiology</text>
-    <text x="982" y="197" font-size="12" font-family="'IBM Plex Mono',monospace" fill="#2E4374">confidence 0.97</text>
-    <circle cx="1128" cy="180" r="9" fill="#2E4374"/>
-    <path d="M1124,180 l3,4 l6,-8" stroke="#FFFFFF" stroke-width="2" fill="none"/>
-  </g>
-  <g>
-    <rect x="960" y="290" width="190" height="60" rx="10" fill="#FFFFFF" stroke="#E1E2E5" stroke-width="1.5"/>
-    <text x="982" y="317" font-size="16" fill="#101012" font-weight="600">Pulmonology</text>
-    <text x="982" y="337" font-size="12" font-family="'IBM Plex Mono',monospace" fill="#9A9AA2">confidence 0.02</text>
-  </g>
-  <g>
-    <rect x="960" y="430" width="190" height="60" rx="10" fill="#FFFFFF" stroke="#E1E2E5" stroke-width="1.5"/>
-    <text x="982" y="457" font-size="16" fill="#101012" font-weight="600">General</text>
-    <text x="982" y="477" font-size="12" font-family="'IBM Plex Mono',monospace" fill="#9A9AA2">confidence 0.01</text>
+  <!-- oversized watermark of the product's own mark, very low opacity: a quiet signature, not a claim -->
+  <g transform="translate(860,60) scale(8)" opacity="0.07">
+    <circle cx="16" cy="9" r="3" fill="#1E5F8C"/>
+    <path d="M16 12 L16 15 L23 23" stroke="#1E5F8C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="23" cy="24" r="2.6" fill="#1E5F8C"/>
+    <path d="M16 15 L9 23" stroke="#1E5F8C" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+    <circle cx="9" cy="24" r="2.4" stroke="#1E5F8C" stroke-width="0.8" fill="none"/>
   </g>
 
-  <!-- bottom hairline -->
-  <rect x="0" y="628" width="1280" height="12" fill="#2E4374"/>
+  <!-- logo + eyebrow -->
+  <g transform="translate(80,64)">
+    <rect width="34" height="34" rx="8" fill="#1E5F8C"/>
+    <circle cx="17" cy="11" r="3" fill="#ffffff"/>
+    <path d="M17 14 L17 17 L24 24" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="24" cy="25" r="2.4" fill="#ffffff"/>
+    <path d="M17 17 L10 25" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <circle cx="10" cy="25" r="2.2" stroke="#ffffff" stroke-width="1.3" fill="none"/>
+  </g>
+  <text x="128" y="86" font-size="14" letter-spacing="3" fill="#48566A" font-family="Helvetica, Arial, sans-serif">PATIENT ROUTER</text>
+
+  <!-- title -->
+  <text x="78" y="210" font-size="60" font-weight="700" fill="#101820" font-family="Helvetica, Arial, sans-serif">Patient Router</text>
+
+  <!-- short tagline, honest about being a suggestion, not a guarantee -->
+  <text x="80" y="252" font-size="20" fill="#33404E" font-family="Helvetica, Arial, sans-serif">Suggests which department a patient should go to</text>
+
+  <!-- quiet divider -->
+  <rect x="80" y="292" width="64" height="4" rx="2" fill="#1E5F8C"/>
+
+  <!-- bottom hairline, quiet close -->
+  <rect x="0" y="336" width="1280" height="4" fill="#DCE5EC"/>
 </svg>
