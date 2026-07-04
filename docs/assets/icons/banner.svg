@@ -1,6 +1,6 @@
 <svg viewBox="0 0 1280 340" xmlns="http://www.w3.org/2000/svg">
   <!-- soft tinted background instead of stark white: less glare, still open and honest -->
-  <rect width="1280" height="340" fill="#F4F7FA"/>
+  <rect width="1280" height="640" fill="#F4F7FA"/>
 
   <!-- oversized watermark of the product's own mark, very low opacity: a quiet signature, not a claim -->
   <g transform="translate(860,60) scale(8)" opacity="0.07">
