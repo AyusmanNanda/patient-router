@@ -28,13 +28,15 @@
   <b><a href="https://patient-router.vercel.app">Live Demo →</a></b>
 </p>
 
-> ML-based hospital triage routing system that automatically assigns patients to the most appropriate department based on symptoms, vitals, age, gender, duration, and medical history — with a full React dashboard for prediction, feedback, retraining, and monitoring.
+> This is a student research prototype, not a validated clinical tool. It has not been tested on real patients, so please don't use it to make actual triage decisions.
 
 ---
 
 ## Overview
 
-In hospital emergency departments, patients are often routed to the wrong department initially, wasting critical time. Patient Router automates this initial triage decision using a Random Forest classifier trained on structured patient data, combined with a rule-based priority and emergency-detection layer, and a feedback loop that feeds corrections back into the training set.
+In hospital emergency departments, patients are often sent to the wrong department at first, and that wastes time that matters. For this project I tried to see if a simple ML model could help with that first triage step: a Random Forest trained on structured patient data, plus some rule-based logic on top for priority and emergency cases, and a feedback loop so corrections go back into the training data.
+
+It's trained only on synthetic data I generated myself, so please treat the predictions as a proof of concept, not something clinically reliable.
 
 The project has three parts:
 
@@ -55,7 +57,7 @@ For the full pipeline, API contract, environment setup, and everything else, see
 | [docs/architecture.md](docs/architecture.md) | ML pipeline, the three prediction methods, priority scoring, emergency detection, normalization, evaluation, feedback loop |
 | [docs/api.md](docs/api.md) | Full request/response examples for every route |
 | [docs/setup.md](docs/setup.md) | Environment variables, local setup, troubleshooting |
-| [docs/frontend.md](docs/frontend.md) | React dashboard structure — pages, hooks, shared components |
+| [docs/frontend.md](docs/frontend.md) | React dashboard structure: pages, hooks, shared components |
 | [docs/data-schema.md](docs/data-schema.md) | Symptom/vital/history vocabulary and weight tables |
 | [docs/deployment.md](docs/deployment.md) | Vercel frontend, backend hosting requirements, desktop builds |
 
@@ -70,7 +72,7 @@ flowchart LR
     C --> D[Recommendation + Logged Prediction]
 ```
 
-Full breakdown of each stage — normalization, the three prediction methods, priority scoring, and emergency detection — lives in `docs/architecture.md`.
+Full breakdown of each stage (normalization, the three prediction methods, priority scoring, and emergency detection) lives in `docs/architecture.md`.
 
 ---
 
@@ -127,8 +129,8 @@ Environment variables, config, and troubleshooting: `docs/setup.md`
 
 ## Limitations
 
-- Trained on synthetic data — real-world accuracy would be lower and would need clinical validation
-- Only 6 departments, 20 symptoms, 7 vitals, and 6 history conditions — a scope decision baked into the synthetic data design, not a bug
+- Everything is trained on synthetic data I generated, not real patient records, so I can't say how it would actually perform in a hospital
+- Only 6 departments, 20 symptoms, 7 vitals, and 6 history conditions: this was a scope decision to keep the project manageable, not something I ran out of time to add
 
 ---
 
