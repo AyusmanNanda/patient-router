@@ -55,17 +55,19 @@ Runs a prediction using one of three methods. See [architecture.md](architecture
 }
 ```
 
-| Field | Required | Notes |
-|---|---|---|
-| `symptoms` | Yes | Comma-separated free text |
-| `age` | Yes | 1–120 |
-| `duration` | Yes | Days, > 0 |
-| `vitals` | No | Defaults to `"normal"` |
-| `gender` | No | Defaults to `"male"` |
-| `history` | No | Comma-separated free text; defaults to none |
-| `method` | No | `"patient_router"` (default), `"llm"`, or `"hybrid"` |
+| Field      | Required | Notes                                                |
+| ---------- | -------- | ---------------------------------------------------- |
+| `symptoms` | Yes      | Comma-separated text                                 |
+| `age`      | Yes      | Passed to the selected predictor                     |
+| `duration` | Yes      | Passed to the selected predictor                     |
+| `vitals`   | No       | Defaults to `"normal"` in the predictors             |
+| `gender`   | No       | Defaults to `"male"` in the predictors               |
+| `history`  | No       | Comma-separated text; defaults to none               |
+| `method`   | No       | `"patient_router"` (default), `"llm"`, or `"hybrid"` |
 
-**Response — `patient_router`, or `hybrid` using the local model**
+The API checks that `symptoms` is not empty and that `age` and `duration` are present. It does not currently enforce numeric ranges for age or duration.
+
+**Response: `patient_router`, or `hybrid` using the local model**
 
 ```json
 {
@@ -94,9 +96,9 @@ Runs a prediction using one of three methods. See [architecture.md](architecture
 }
 ```
 
-**Response — `method: "llm"`, or `hybrid` using Gemini**
+**Response: `llm`, or `hybrid` using Gemini**
 
-The response has the same shape, except `departments` contains a single entry because the Gemini method does not return ranked alternatives. `model_version` contains the model name instead of the Patient Router version.
+The response has the same shape, except `departments` contains one entry because the Gemini method does not return ranked alternatives. `model_version` contains the Gemini model name instead of the Patient Router version.
 
 ```json
 {
@@ -117,25 +119,27 @@ The response has the same shape, except `departments` contains a single entry be
 
 **Field reference**
 
-| Field | Description |
-|---|---|
-| `recommended` | Recommended department. The local Patient Router method falls back to `general` below the configured confidence threshold |
-| `departments` | Top 3 candidates for `patient_router`; 1 entry for `llm` |
-| `priority` | `high` / `medium` / `low` |
-| `emergency` | Emergency status returned by the selected prediction method |
-| `reasons` | Reasons that contributed to the priority or emergency decision |
-| `history_score` | Cumulative risk score from the reported medical history |
-| `model_version` | Patient Router version for the local model or model name for the Gemini method |
-| `warning` | Set if `vitals` was omitted from the request |
+| Field           | Description                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------- |
+| `recommended`   | Recommended department. The local method falls back to `general` below the configured confidence threshold |
+| `departments`   | Top 3 candidates for `patient_router`; 1 entry for `llm`                                                   |
+| `priority`      | `high`, `medium`, or `low`                                                                                 |
+| `emergency`     | Emergency status returned by the selected prediction method                                                |
+| `confidence`    | Top local model confidence or fixed confidence mapped from the Gemini confidence level                     |
+| `reasons`       | Reasons returned by the selected prediction method                                                         |
+| `history`       | Parsed medical history values                                                                              |
+| `history_score` | Cumulative risk score from the reported medical history                                                    |
+| `model_version` | Patient Router version for the local model or Gemini model name                                            |
+| `warning`       | Set when vitals are omitted from the request                                                               |
 
 For more details about the differences between the prediction methods, see [architecture.md](architecture.md#prediction-methods).
 
 **Errors**
 
-| Status | Condition |
-|---|---|
-| `400` | Missing or invalid `symptoms`, `age`, or `duration`; empty request body |
-| `500` | Unexpected prediction failure |
+| Status | Condition                                                                                                             |
+| ------ | --------------------------------------------------------------------------------------------------------------------- |
+| `400`  | Empty request body, missing symptoms, missing age, missing duration, or another `ValueError` raised during prediction |
+| `500`  | Other prediction failures, including errors raised while calling Gemini                                               |
 
 Error body:
 
@@ -151,7 +155,7 @@ Error body:
 
 ### `POST /feedback`
 
-Submits a correction for a previous prediction and appends it to `data.csv`.
+Submits a correction and appends it as a new row to `data.csv`.
 
 **Request**
 
@@ -168,16 +172,22 @@ Submits a correction for a previous prediction and appends it to `data.csv`.
 }
 ```
 
-| Field | Required | Notes |
-|---|---|---|
-| `correct_department` | Yes | Correct department selected by the user |
-| `symptoms` | No | Passed through from the original prediction |
-| `vitals` | No | Defaults to `"normal"` |
-| `age` | No | Passed through from the original prediction |
-| `duration` | No | Passed through from the original prediction |
-| `gender` | No | Defaults to `"male"` |
-| `history` | No | Saved with the feedback row |
-| `priority` | No | Defaults to `"low"` |
+| Field                | Required | Notes                                   |
+| -------------------- | -------- | --------------------------------------- |
+| `correct_department` | Yes      | Department saved as the corrected label |
+| `age`                | Yes      | Saved with the feedback row             |
+| `duration`           | Yes      | Saved with the feedback row             |
+| `symptoms`           | No       | Defaults to an empty string             |
+| `vitals`             | No       | Defaults to `"normal"`                  |
+| `gender`             | No       | Defaults to `"male"`                    |
+| `history`            | No       | Defaults to an empty string             |
+| `priority`           | No       | Defaults to `"low"`                     |
+
+The feedback row is appended to `backend/data/data.csv` in this order:
+
+```text
+age, duration, symptoms, vitals, history, gender, priority, department
+```
 
 **Response**
 
@@ -189,10 +199,18 @@ Submits a correction for a previous prediction and appends it to `data.csv`.
 
 **Errors**
 
-| Status | Condition |
-|---|---|
-| `400` | `correct_department` missing or empty request body |
-| `500` | Failed to save feedback |
+| Status | Condition                                                                              |
+| ------ | -------------------------------------------------------------------------------------- |
+| `400`  | Empty request body, missing `correct_department`, missing `age`, or missing `duration` |
+| `500`  | Failed to write the feedback row                                                       |
+
+Error body:
+
+```json
+{
+  "error": "..."
+}
+```
 
 ---
 
@@ -224,7 +242,7 @@ Returns basic statistics about the current dataset.
 }
 ```
 
-The exact department and priority counts can change when the synthetic dataset is regenerated.
+The exact row count, department counts, and priority counts depend on the current contents of `data.csv`.
 
 ### `POST /data/generate`
 
@@ -249,17 +267,19 @@ Regenerates the synthetic dataset and overwrites `data.csv`.
 }
 ```
 
+The route does not currently add its own validation or error handling for the `rows` value.
+
 ---
 
 ## Training & Evaluation
 
 ### `POST /train`
 
-Retrains the Gradient Boosting model on the current `data.csv` and runs the evaluation pipeline.
+Retrains the Gradient Boosting model on the current `data.csv`.
 
-The trained model is saved to `backend/ml/models/model.pkl`. Evaluation reports are also regenerated as part of the training process.
+Training saves the pipeline to `backend/ml/models/model.pkl` and automatically runs the evaluation pipeline before the request finishes.
 
-For more details about training and evaluation, see [architecture.md](architecture.md#model-evaluation).
+For more details, see [architecture.md](architecture.md#model-evaluation).
 
 **Response**
 
@@ -271,6 +291,8 @@ For more details about training and evaluation, see [architecture.md](architectu
   "training_time_insec": 12.44
 }
 ```
+
+`training_time_insec` measures the complete `train()` call, including the automatic evaluation run.
 
 ### `GET /evaluation`
 
@@ -291,7 +313,7 @@ Returns the contents of `evaluation_metrics.json` from the latest evaluation run
 }
 ```
 
-If the evaluation report is not available:
+If the report does not exist, the endpoint returns:
 
 ```json
 {
@@ -299,29 +321,37 @@ If the evaluation report is not available:
 }
 ```
 
-### `GET /evaluation/confusion-matrix`
-
-Returns `confusion_matrix.png` as an image response.
+The missing-report response currently uses HTTP `200`.
 
 ### `GET /evaluation/report-image`
 
-Returns `evaluation_report.png` as an image response.
+Returns `evaluation_report.png` with the `image/png` MIME type.
+
+If the image does not exist, the route does not define its own missing-file response and leaves the error to Flask's `send_file()` handling.
+
+### `GET /evaluation/confusion-matrix`
+
+Attempts to return `confusion_matrix.png` with the `image/png` MIME type.
+
+The current evaluation pipeline does not generate this file. Confusion matrices are included in `evaluation_report.png`, so this endpoint does not match the current generated artifacts.
 
 ### `GET /evaluation/comparison`
 
-Returns the latest model comparison results from the generated JSON report.
+Returns the contents of `model_comparison.json` from the latest model comparison run.
 
-The comparison currently includes:
+The comparison can include:
 
-- Decision Tree
-- Random Forest
-- Gradient Boosting
-- Logistic Regression
-- K-Nearest Neighbors
-- SVM with RBF kernel
-- XGBoost
+* Decision Tree
+* Random Forest
+* Gradient Boosting
+* Logistic Regression
+* K-Nearest Neighbors
+* SVM with RBF kernel
+* XGBoost
 
-Each model is compared using test accuracy, Macro F1 score, 5-fold cross-validation, cross-validation standard deviation, edge-case accuracy, generalisation gap, and training time.
+XGBoost is skipped when its package is not installed.
+
+Each model is compared using test accuracy, Macro F1, 5-fold cross-validation accuracy, CV standard deviation, edge-case accuracy, generalisation gap, and training time.
 
 **Response**
 
@@ -340,11 +370,23 @@ Each model is compared using test accuracy, Macro F1 score, 5-fold cross-validat
 ]
 ```
 
-The endpoint returns results for all models included in the comparison.
+The endpoint returns all models stored in the comparison report.
+
+If the report does not exist:
+
+```json
+{
+  "error": "Comparison report not found"
+}
+```
+
+The missing-report response currently uses HTTP `200`.
 
 ### `GET /evaluation/comparison-image`
 
-Returns `model_comparison.png` as an image response.
+Returns `model_comparison.png` with the `image/png` MIME type.
+
+If the image does not exist, the route does not define its own missing-file response and leaves the error to Flask's `send_file()` handling.
 
 ---
 
@@ -352,9 +394,9 @@ Returns `model_comparison.png` as an image response.
 
 ### `GET /logs`
 
-Returns the prediction history, newest first, along with emergency and fallback counts.
+Returns all prediction logs, newest first, along with emergency and fallback counts.
 
-All logged predictions are returned. There is currently no server-side limit or pagination.
+There is currently no server-side limit or pagination.
 
 **Response**
 
@@ -384,11 +426,17 @@ All logged predictions are returned. There is currently no server-side limit or 
 }
 ```
 
+`total_emergencies` and `total_fallbacks` are calculated from all returned log entries.
+
 `model` contains the Patient Router version or Gemini model name used for the prediction.
+
+If `predictions.jsonl` does not exist, the endpoint returns empty counts and an empty `logs` array.
+
+The log reader does not currently skip or handle malformed JSON lines.
 
 ### `POST /logs/clear`
 
-Clears the prediction log.
+Clears `predictions.jsonl`.
 
 **Response**
 
@@ -397,3 +445,5 @@ Clears the prediction log.
   "message": "Logs cleared"
 }
 ```
+
+If the log file does not exist, it is created as an empty file.
