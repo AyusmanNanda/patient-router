@@ -186,6 +186,10 @@ def save_outputs(df):
     df.to_csv(csv_path, index=False)
     print(f"  CSV saved  → {csv_path}")
 
+    json_path = REPORTS_DIR / "model_comparison.json"
+    df.to_json(json_path, orient="records", indent=4)
+    print(f"  JSON saved → {json_path}")
+
     md_path = REPORTS_DIR / "model_comparison.md"
     try:
         table_md = df.to_markdown(index=False)
