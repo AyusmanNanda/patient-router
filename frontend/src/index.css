@@ -610,3 +610,67 @@ details summary:hover { color: var(--blue); }
   .main-content { margin-left: 0; }
   .sidebar { display: none; }
 }
+
+/* ── Backend Unavailable Modal ─────────────────────────── */
+.backend-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(13, 17, 23, .45);
+  backdrop-filter: blur(5px);
+}
+
+.backend-modal {
+  width: 100%;
+  max-width: 380px;
+
+  padding: 28px;
+
+  text-align: center;
+
+  background: var(--surface);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--r-lg);
+
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .15);
+}
+
+.backend-modal-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 18px;
+
+  color: var(--red);
+  background: var(--red-light);
+  border-radius: 50%;
+}
+
+.backend-modal-title {
+  margin-bottom: 6px;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: var(--text-primary);
+}
+
+.backend-modal-text {
+  margin-bottom: 22px;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: var(--text-secondary);
+}
