@@ -11,7 +11,8 @@ def save_feedback(data):
     duration = data.get("duration")
     correct_dept = data.get("correct_department")
     priority = data.get("priority", "low")
-    gender=data.get("gender", "male")
+    gender = data.get("gender", "male")
+    history = data.get("history", "").strip()
 
     if not correct_dept:
         raise ValueError("Correct department is required")
@@ -19,7 +20,7 @@ def save_feedback(data):
     try:
         with open(data_path, mode="a", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow([age, duration, symptoms, vitals, gender, priority, correct_dept])
+            writer.writerow([age, duration, symptoms, vitals, history, gender, priority, correct_dept])
 
         return {
             "message": "Feedback successfully saved to training data."

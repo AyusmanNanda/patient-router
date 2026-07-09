@@ -86,6 +86,7 @@ export function usePatientRouter() {
             gender,
             age:      Number(age),
             duration: Number(duration),
+            history:  history.join(', '),
             priority: result?.priority ?? 'low',
             correct_department: correctDept,
         }

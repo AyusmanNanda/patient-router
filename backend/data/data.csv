@@ -49999,3 +49999,5 @@ age,duration,symptoms,vitals,history,gender,priority,department
 38,4,"abdominal pain, nausea",normal,,female,medium,gastrology
 53,5,"sweating, chest pain","bp_high, hr_high",hypertension,other,high,cardiology
 29,4,"breathlessness, fever","temp_high, hr_high",,other,high,pulmonology
+79,1,"chest pain, breathlessness","bp_high, hr_high",male,high,cardiology
+67,1,"breathlessness, chest pain","bp_high, hr_high",previous_heart_attack,male,high,cardiology
