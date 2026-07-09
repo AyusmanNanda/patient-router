@@ -6,7 +6,7 @@ data_path = BASE_DIR / "data" / "data.csv"
 
 def save_feedback(data):
     symptoms = data.get("symptoms", "").strip()
-    vitals = data.get("vitals", "normal").strip()
+    vitals = (data.get("vitals") or "normal").strip()
     age = data.get("age")
     duration = data.get("duration")
     correct_dept = data.get("correct_department")
