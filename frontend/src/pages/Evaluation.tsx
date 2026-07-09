@@ -9,6 +9,7 @@ export default function Evaluation() {
         error,
         result,
         loadEvaluation,
+        comparison,
     } = useEvaluation()
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function Evaluation() {
                     <>
                         <div className="stat-grid">
                             <div className="stat-card">
-                                <div className="stat-label">Synthetic Accuracy</div>
+                                <div className="stat-label">Test Accuracy</div>
                                 <div className="stat-value">{result.synthetic_accuracy}%</div>
                             </div>
                             <div className="stat-card">
@@ -52,7 +53,52 @@ export default function Evaluation() {
                             </div>
                             <div className="stat-card">
                                 <div className="stat-label">Generalization Gap</div>
-                                <div className="stat-value">{result.generalization_gap}</div>
+                                <div className="stat-value">{result.generalization_gap} pp</div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-title">Model Comparison</div>
+                            <img
+                                src={`${BACKEND_URL}/evaluation/comparison-image`}
+                                alt="Model Comparison"
+                                style={{ maxWidth: '100%', borderRadius: 'var(--r-md)' }}
+                            />
+                        </div>
+
+                        <div className="card">
+                            <div className="card-title">Comparison Results</div>
+
+                            <div style={{ overflowX: 'auto' }}>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Test Accuracy</th>
+                                        <th>Macro F1</th>
+                                        <th>5-Fold CV</th>
+                                        <th>CV Std</th>
+                                        <th>Edge Cases</th>
+                                        <th>Gap</th>
+                                        <th>Train Time</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {comparison.map((model) => (
+                                        <tr key={model.Model}>
+                                            <td>{model.Model}</td>
+                                            <td>{model['Test Accuracy (%)']}%</td>
+                                            <td>{model['Macro F1 (%)']}%</td>
+                                            <td>{model['5-Fold CV (%)']}%</td>
+                                            <td>±{model['CV Std (±%)']}%</td>
+                                            <td>{model['Edge-Case Acc (%)']}%</td>
+                                            <td>{model['Generalisation Gap']} pp</td>
+                                            <td>{model['Train Time (s)']}s</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 

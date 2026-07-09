@@ -30,6 +30,7 @@ export interface FeedbackRequest {
     symptoms: string;
     vitals: string;
     age: number;
+    history: string;
     duration: number;
     gender: string;
     priority: string;

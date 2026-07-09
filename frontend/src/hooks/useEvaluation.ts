@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import api from '../api/api'
-import type { EvaluationResponse } from '../types/evaluationType'
+import type { EvaluationResponse, ModelComparison } from '../types/evaluationType'
 
 interface ApiError {
     response?: {
@@ -16,18 +16,22 @@ export function useEvaluation() {
 
     const [result, setResult] =
         useState<EvaluationResponse | null>(null)
+    const [comparison, setComparison] =
+        useState<ModelComparison[]>([])
 
     const loadEvaluation = async () => {
         setLoading(true)
         setError('')
 
         try {
-            const { data } =
-                await api.get<EvaluationResponse>(
-                    '/evaluation'
-                )
+            const [evaluationResponse, comparisonResponse] =
+                await Promise.all([
+                    api.get<EvaluationResponse>('/evaluation'),
+                    api.get<ModelComparison[]>('/evaluation/comparison'),
+                ])
 
-            setResult(data)
+            setResult(evaluationResponse.data)
+            setComparison(comparisonResponse.data)
 
         } catch (e: unknown) {
             const err = e as ApiError
@@ -48,6 +52,7 @@ export function useEvaluation() {
         loading,
         error,
         result,
+        comparison,
         loadEvaluation,
     }
 }
