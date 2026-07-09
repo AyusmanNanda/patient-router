@@ -2,7 +2,7 @@
   "name": "patient-router",
   "desktopName": "patient-router.desktop",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "electron/main.ts",
   "description": "Machine learning-based hospital triage routing system",
