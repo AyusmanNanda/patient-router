@@ -34,19 +34,23 @@
 
 ## Overview
 
-In hospital emergency departments, patients are often sent to the wrong department at first, and that wastes time that matters. For this project I tried to see if a simple ML model could help with that first triage step: a Random Forest trained on structured patient data, plus some rule-based logic on top for priority and emergency cases, and a feedback loop so corrections go back into the training data.
+In hospital emergency departments, patients are often sent to the wrong department at first, and that wastes time that matters. For this project I tried to see if a simple ML model could help with that first triage step: a Gradient Boosting classifier trained on structured patient data, plus some rule-based logic on top for priority and emergency cases, and a feedback loop so corrections go back into the training data.
+
+I also added Gemini API and Hybrid prediction methods to experiment with other approaches while keeping the locally trained model as the main part of the project.
 
 It's trained only on synthetic data I generated myself, so please treat the predictions as a proof of concept, not something clinically reliable.
+
+Patient Router is available as a web application and as an Electron desktop application for Windows and Linux.
 
 The project has three parts:
 
 | Part | Location | Responsibility |
 |---|---|---|
-| ML core | `backend/ml/` | Synthetic data generation, training, evaluation, inference |
-| Flask API | `backend/app.py`, `routes/`, `services/` | Exposes the ML pipeline over HTTP |
-| React dashboard | `frontend/` | Patient intake form, feedback collection, dataset manager, training runner, evaluation viewer, logs |
+| ML core | `backend/ml/` | Synthetic data generation, model comparison, training, evaluation, inference |
+| Flask API | `backend/app.py`, `routes/`, `services/` | Exposes the prediction pipeline and other backend functionality over HTTP |
+| React dashboard | `frontend/` | Patient intake, prediction, feedback collection, dataset management, training, evaluation, and logs |
 
-For the full pipeline, API contract, environment setup, and everything else, see the table below.
+For the full pipeline, API contract, environment setup, and everything else, see the documentation below.
 
 ---
 
@@ -67,12 +71,18 @@ For the full pipeline, API contract, environment setup, and everything else, see
 
 ```mermaid
 flowchart LR
-    A[Patient Input] --> B[ML Pipeline\nRandom Forest / LLM / Hybrid]
-    B --> C[Priority & Emergency Rules]
-    C --> D[Recommendation + Logged Prediction]
+    A[Patient Input] --> B{Prediction Method}
+    B --> C[Patient Router]
+    B --> D[Gemini API]
+    B --> E[Hybrid]
+    C --> F[Priority & Emergency Rules]
+    D --> G[Prediction Result]
+    E --> G
+    F --> G
+    G --> H[Recommendation + Logged Prediction]
 ```
 
-Full breakdown of each stage (normalization, the three prediction methods, priority scoring, and emergency detection) lives in `docs/architecture.md`.
+For the full breakdown of each stage, see [docs/architecture.md](docs/architecture.md).
 
 ---
 
@@ -99,13 +109,9 @@ Full breakdown of each stage (normalization, the three prediction methods, prior
 
 ## API
 
-**Core:** `GET /`, `GET /health`
-**Prediction & Feedback:** `POST /predict`, `POST /feedback`
-**Dataset:** `GET /data`, `POST /data/generate`
-**Training & Evaluation:** `POST /train`, `GET /evaluation`, `GET /evaluation/confusion-matrix`, `GET /evaluation/report-image`
-**Logs:** `GET /logs`, `POST /logs/clear`
+Patient Router exposes REST API endpoints for prediction, feedback, dataset management, model training, evaluation, model comparison, and logs.
 
-Full request/response examples for every route: `docs/api.md`
+For the complete API reference with request and response examples, see [docs/api.md](docs/api.md).
 
 ---
 
@@ -113,17 +119,23 @@ Full request/response examples for every route: `docs/api.md`
 
 ```bash
 # backend
-cd backend && python -m venv venv && source venv/bin/activate
+cd backend
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-python -m ml.generate_data && python -m ml.train
+cp .env.example .env
+python -m ml.generate_data
+python -m ml.train
 python app.py
 
 # frontend
-cd frontend && npm install
-echo "VITE_BACKEND=http://localhost:5000" > .env && npm run dev
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-Environment variables, config, and troubleshooting: `docs/setup.md`
+For environment variables, config, and troubleshooting, see [docs/setup.md](docs/setup.md).
 
 ---
 
@@ -136,6 +148,8 @@ Environment variables, config, and troubleshooting: `docs/setup.md`
 
 ## Tech Stack
 
-**Backend:** Python, Flask, scikit-learn, pandas, numpy, joblib
-**Frontend:** React, TypeScript, Vite, lucide-react
-**ML:** RandomForestClassifier, CountVectorizer, OneHotEncoder
+**Backend:** Python, Flask, scikit-learn, pandas, numpy, joblib  
+**Frontend:** React, TypeScript, Vite, lucide-react  
+**Desktop:** Electron, electron-builder  
+**ML:** GradientBoostingClassifier, CountVectorizer, OneHotEncoder  
+**External API:** Gemini 2.5 Flash
