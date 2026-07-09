@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.compose import make_column_transformer
@@ -25,6 +25,12 @@ def train():
         print(f"Failed to load data.csv from {DATA_DIR}")
         exit(1)
     df["history"] = df["history"].fillna("")
+    before = len(df)
+    df = df.dropna(subset=["department", "symptoms", "vitals", "age", "duration", "gender"])
+    dropped = before - len(df)
+    if dropped:
+        print(f"Warning: dropped {dropped} row(s) with missing required fields (check data.csv for corruption)")
+
     df["text"] = df["symptoms"] + " " + df["vitals"] + " " + df["history"]
 
 
@@ -42,7 +48,7 @@ def train():
 
     )
 
-    model = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
+    model = make_pipeline(preprocessor, GradientBoostingClassifier(random_state=42))
     model.fit(X_train, y_train)
 
     train_accuracy = model.score(X_train, y_train)
