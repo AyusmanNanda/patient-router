@@ -1,37 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
-import api from '../api/api'
 
 export function useBackendStatus() {
-    const [isOffline, setIsOffline] = useState(false)
-    const [checking, setChecking] = useState(false)
+    const [isOffline, setIsOffline] = useState(() => !navigator.onLine)
 
-    const checkConnection = useCallback(async () => {
-        setChecking(true)
-
-        try {
-            await api.get('/health')
-            setIsOffline(false)
-        } catch {
-            setIsOffline(true)
-        } finally {
-            setChecking(false)
-        }
+    const checkConnection = useCallback(() => {
+        setIsOffline(!navigator.onLine)
     }, [])
 
     useEffect(() => {
-        const initialCheck = async () => {
-            try {
-                await api.get('/health')
-                setIsOffline(false)
-            } catch {
-                setIsOffline(true)
-            }
-        }
-
-        void initialCheck()
-
         const handleOnline = () => {
-            void checkConnection()
+            setIsOffline(false)
         }
 
         const handleOffline = () => {
@@ -45,11 +23,11 @@ export function useBackendStatus() {
             window.removeEventListener('online', handleOnline)
             window.removeEventListener('offline', handleOffline)
         }
-    }, [checkConnection])
+    }, [])
 
     return {
         isOffline,
-        checking,
+        checking: false,
         checkConnection,
     }
 }
