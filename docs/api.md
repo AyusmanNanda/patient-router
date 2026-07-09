@@ -1,6 +1,6 @@
 # API Reference
 
-Request/response reference for every route. For the one-line route table, see the [README](../README.md#api). For how a prediction is computed, see [architecture.md](architecture.md).
+Request/response reference for every route. For a short project overview, see the [README](../README.md). For how the prediction pipeline works, see [architecture.md](architecture.md).
 
 Base URL (local): `http://localhost:5000`
 
@@ -13,6 +13,7 @@ Base URL (local): `http://localhost:5000`
 Service info.
 
 **Response**
+
 ```json
 {
   "service": "Patient Router API",
@@ -25,6 +26,7 @@ Service info.
 Health check.
 
 **Response**
+
 ```json
 {
   "status": "ok"
@@ -37,9 +39,10 @@ Health check.
 
 ### `POST /predict`
 
-Runs a triage prediction using one of three methods. See [architecture.md](architecture.md#prediction-methods) for method details.
+Runs a prediction using one of three methods. See [architecture.md](architecture.md#prediction-methods) for how each method works.
 
 **Request**
+
 ```json
 {
   "symptoms": "chest pain, breathlessness",
@@ -62,7 +65,8 @@ Runs a triage prediction using one of three methods. See [architecture.md](archi
 | `history` | No | Comma-separated free text; defaults to none |
 | `method` | No | `"patient_router"` (default), `"llm"`, or `"hybrid"` |
 
-**Response — `patient_router`, or `hybrid` falling back to the RF model**
+**Response — `patient_router`, or `hybrid` using the local model**
+
 ```json
 {
   "recommended": "cardiology",
@@ -90,9 +94,9 @@ Runs a triage prediction using one of three methods. See [architecture.md](archi
 }
 ```
 
-**Response — `method: "llm"`, or `hybrid` falling through to Gemini**
+**Response — `method: "llm"`, or `hybrid` using Gemini**
 
-Same shape, except `departments` contains a single entry (the LLM does not return ranked alternatives), and `model_version` is the model name rather than the app version.
+The response has the same shape, except `departments` contains a single entry because the Gemini method does not return ranked alternatives. `model_version` contains the model name instead of the Patient Router version.
 
 ```json
 {
@@ -115,23 +119,31 @@ Same shape, except `departments` contains a single entry (the LLM does not retur
 
 | Field | Description |
 |---|---|
-| `recommended` | Top department. For `patient_router`, falls back to `general` below a 0.60 confidence threshold ([architecture.md](architecture.md#ml-pipeline)) |
+| `recommended` | Recommended department. The local Patient Router method falls back to `general` below the configured confidence threshold |
 | `departments` | Top 3 candidates for `patient_router`; 1 entry for `llm` |
 | `priority` | `high` / `medium` / `low` |
-| `emergency` | `patient_router`: rule-based detection. `llm`: Gemini's self-reported value. Not computed the same way between methods — see [architecture.md](architecture.md#prediction-methods) |
-| `reasons` | Everything that contributed to the priority/emergency decision |
-| `history_score` | Cumulative risk score from reported medical history; same logic for both methods |
-| `model_version` | App version (e.g. `"1.1.0"`) for `patient_router`; model name (e.g. `"gemini-2.5-flash"`) for `llm` |
+| `emergency` | Emergency status returned by the selected prediction method |
+| `reasons` | Reasons that contributed to the priority or emergency decision |
+| `history_score` | Cumulative risk score from the reported medical history |
+| `model_version` | Patient Router version for the local model or model name for the Gemini method |
 | `warning` | Set if `vitals` was omitted from the request |
+
+For more details about the differences between the prediction methods, see [architecture.md](architecture.md#prediction-methods).
 
 **Errors**
 
 | Status | Condition |
 |---|---|
-| `400` | Missing/invalid `symptoms`, `age`, or `duration`; empty request body |
-| `500` | Unexpected failure (e.g. Gemini API error on `method: "llm"`) |
+| `400` | Missing or invalid `symptoms`, `age`, or `duration`; empty request body |
+| `500` | Unexpected prediction failure |
 
-Error body: `{"error": "..."}`
+Error body:
+
+```json
+{
+  "error": "..."
+}
+```
 
 ---
 
@@ -139,9 +151,10 @@ Error body: `{"error": "..."}`
 
 ### `POST /feedback`
 
-Submits a correction for a previous prediction. Appended to `data.csv`.
+Submits a correction for a previous prediction and appends it to `data.csv`.
 
 **Request**
+
 ```json
 {
   "symptoms": "chest pain, breathlessness",
@@ -157,12 +170,17 @@ Submits a correction for a previous prediction. Appended to `data.csv`.
 
 | Field | Required | Notes |
 |---|---|---|
-| `correct_department` | Yes | |
-| `symptoms`, `vitals`, `age`, `duration`, `gender` | No | Passed through as-is; `vitals` defaults to `"normal"`, `gender` to `"male"` |
+| `correct_department` | Yes | Correct department selected by the user |
+| `symptoms` | No | Passed through from the original prediction |
+| `vitals` | No | Defaults to `"normal"` |
+| `age` | No | Passed through from the original prediction |
+| `duration` | No | Passed through from the original prediction |
+| `gender` | No | Defaults to `"male"` |
+| `history` | No | Saved with the feedback row |
 | `priority` | No | Defaults to `"low"` |
-| `history` | No | Accepted but not currently saved (see Known Issues) |
 
 **Response**
+
 ```json
 {
   "message": "Feedback successfully saved to training data."
@@ -173,26 +191,8 @@ Submits a correction for a previous prediction. Appended to `data.csv`.
 
 | Status | Condition |
 |---|---|
-| `400` | `correct_department` missing (`"Correct department is required"`); empty body (`"Request body is required"`) |
-| `500` | Write failure |
-
-**Known issues**
-
-Feedback rows are written with misaligned columns. `data.csv`'s header is:
-
-```
-age, duration, symptoms, vitals, history, gender, priority, department
-```
-
-The feedback writer outputs 7 values in this order, omitting `history`:
-
-```
-age, duration, symptoms, vitals, gender, priority, correct_dept
-```
-
-Effect: `gender` is stored under the `history` column, `priority` under `gender`, `correct_department` under `priority`, and `department` is left empty. This corrupts feedback-sourced rows before they reach training.
-
-**Fix location:** `feedbackService.py`. Should be resolved before the feedback loop is used for retraining.
+| `400` | `correct_department` missing or empty request body |
+| `500` | Failed to save feedback |
 
 ---
 
@@ -200,20 +200,21 @@ Effect: `gender` is stored under the `history` column, `priority` under `gender`
 
 ### `GET /data`
 
-Dataset stats.
+Returns basic statistics about the current dataset.
 
 **Response**
+
 ```json
 {
   "total_rows": 50000,
   "total_columns": 8,
   "departments": {
-    "cardiology": 8333,
-    "pulmonology": 8333,
+    "cardiology": 8334,
+    "pulmonology": 8334,
     "neurology": 8333,
-    "orthopedics": 8334,
+    "orthopedics": 8333,
     "gastrology": 8333,
-    "general": 8334
+    "general": 8333
   },
   "priorities": {
     "high": 12500,
@@ -223,18 +224,24 @@ Dataset stats.
 }
 ```
 
+The exact department and priority counts can change when the synthetic dataset is regenerated.
+
 ### `POST /data/generate`
 
 Regenerates the synthetic dataset and overwrites `data.csv`.
 
 **Request**
+
 ```json
-{ "rows": 50000 }
+{
+  "rows": 50000
+}
 ```
 
-`rows` — optional, defaults to `50000`.
+`rows` is optional and defaults to `50000`.
 
 **Response**
+
 ```json
 {
   "status": "success",
@@ -248,39 +255,49 @@ Regenerates the synthetic dataset and overwrites `data.csv`.
 
 ### `POST /train`
 
-Retrains the model on the current `data.csv` and triggers a full evaluation run. `evaluation_metrics.json`, `evaluation_report.txt`, and `evaluation_report.png` are regenerated as part of this call, not just `model.pkl`. See [architecture.md](architecture.md#model-evaluation).
+Retrains the Gradient Boosting model on the current `data.csv` and runs the evaluation pipeline.
+
+The trained model is saved to `backend/ml/models/model.pkl`. Evaluation reports are also regenerated as part of the training process.
+
+For more details about training and evaluation, see [architecture.md](architecture.md#model-evaluation).
 
 **Response**
+
 ```json
 {
-  "train_accuracy": 99.87,
-  "test_accuracy": 94.32,
+  "train_accuracy": 99.26,
+  "test_accuracy": 98.84,
   "dataset_size": 50000,
   "training_time_insec": 12.44
 }
 ```
 
-The response does not include `model_version` or `model_path`. The model artifact is always written to `backend/ml/models/model.pkl`.
-
 ### `GET /evaluation`
 
-Contents of `evaluation_metrics.json` from the last `/train` run, including the synthetic-vs-real-world generalization gap (see [architecture.md](architecture.md#model-evaluation)).
+Returns the contents of `evaluation_metrics.json` from the latest evaluation run.
 
 **Response**
+
 ```json
 {
-  "synthetic_accuracy": 94.32,
-  "cv_accuracy": 93.8,
-  "cv_std": 0.6,
-  "edge_case_accuracy": 78.12,
-  "generalization_gap": 16.2,
-  "total_edge_cases": 32,
-  "passed_edge_cases": 25,
-  "failed_edge_cases": 7
+  "synthetic_accuracy": 98.84,
+  "cv_accuracy": 99.04,
+  "cv_std": 0.07,
+  "edge_case_accuracy": 91.18,
+  "generalization_gap": 7.7,
+  "total_edge_cases": 34,
+  "passed_edge_cases": 31,
+  "failed_edge_cases": 3
 }
 ```
 
-If `/train` has not been run: `{"error": "Evaluation report not found"}`
+If the evaluation report is not available:
+
+```json
+{
+  "error": "Evaluation report not found"
+}
+```
 
 ### `GET /evaluation/confusion-matrix`
 
@@ -288,7 +305,46 @@ Returns `confusion_matrix.png` as an image response.
 
 ### `GET /evaluation/report-image`
 
-Returns `evaluation_report.png` (6-panel chart, see [architecture.md](architecture.md#model-evaluation)) as an image response.
+Returns `evaluation_report.png` as an image response.
+
+### `GET /evaluation/comparison`
+
+Returns the latest model comparison results from the generated JSON report.
+
+The comparison currently includes:
+
+- Decision Tree
+- Random Forest
+- Gradient Boosting
+- Logistic Regression
+- K-Nearest Neighbors
+- SVM with RBF kernel
+- XGBoost
+
+Each model is compared using test accuracy, Macro F1 score, 5-fold cross-validation, cross-validation standard deviation, edge-case accuracy, generalisation gap, and training time.
+
+**Response**
+
+```json
+[
+  {
+    "Model": "Gradient Boosting",
+    "Test Accuracy (%)": 98.84,
+    "Macro F1 (%)": 98.84,
+    "5-Fold CV (%)": 99.04,
+    "CV Std (±%)": 0.07,
+    "Edge-Case Acc (%)": 91.18,
+    "Generalisation Gap": 7.7,
+    "Train Time (s)": 12.14
+  }
+]
+```
+
+The endpoint returns results for all models included in the comparison.
+
+### `GET /evaluation/comparison-image`
+
+Returns `model_comparison.png` as an image response.
 
 ---
 
@@ -296,9 +352,12 @@ Returns `evaluation_report.png` (6-panel chart, see [architecture.md](architectu
 
 ### `GET /logs`
 
-Full prediction history, newest first, with emergency/fallback counts. All logged predictions are returned; there is no server-side limit or pagination.
+Returns the prediction history, newest first, along with emergency and fallback counts.
+
+All logged predictions are returned. There is currently no server-side limit or pagination.
 
 **Response**
+
 ```json
 {
   "total_predictions": 1204,
@@ -325,13 +384,14 @@ Full prediction history, newest first, with emergency/fallback counts. All logge
 }
 ```
 
-`model` — `"patient-router-{MODEL_VERSION}"` or `"gemini-2.5-flash"`, matching the `method` used at prediction time.
+`model` contains the Patient Router version or Gemini model name used for the prediction.
 
 ### `POST /logs/clear`
 
 Clears the prediction log.
 
 **Response**
+
 ```json
 {
   "message": "Logs cleared"
