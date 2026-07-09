@@ -3,7 +3,7 @@ import api from '../api/api'
 
 export function useBackendStatus() {
     const [isOffline, setIsOffline] = useState(false)
-    const [checking, setChecking] = useState(true)
+    const [checking, setChecking] = useState(false)
 
     const checkConnection = useCallback(async () => {
         setChecking(true)
@@ -19,7 +19,16 @@ export function useBackendStatus() {
     }, [])
 
     useEffect(() => {
-        void checkConnection()
+        const initialCheck = async () => {
+            try {
+                await api.get('/health')
+                setIsOffline(false)
+            } catch {
+                setIsOffline(true)
+            }
+        }
+
+        void initialCheck()
 
         const handleOnline = () => {
             void checkConnection()
