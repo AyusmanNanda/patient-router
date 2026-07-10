@@ -38,7 +38,7 @@ In hospital emergency departments, patients are often sent to the wrong departme
 
 I also added Gemini API and Hybrid prediction methods to experiment with other approaches while keeping the locally trained model as the main part of the project.
 
-It's trained only on synthetic data I generated myself, so please treat the predictions as a proof of concept, not something clinically reliable.
+The local model is trained only on synthetic data I generated myself, so please treat the predictions as a proof of concept, not something clinically reliable.
 
 Patient Router is available as a web application and as an Electron desktop application for Windows and Linux.
 

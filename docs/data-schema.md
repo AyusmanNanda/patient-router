@@ -55,7 +55,7 @@ For how these values are used during training and prediction, see [architecture.
 
 `generate_data.py` uses this map to occasionally replace a vital with its opposite:
 
-```text id="p2u4af"
+```text
 bp_high ↔ bp_low
 hr_high ↔ hr_low
 temp_high ↔ temp_low

@@ -73,15 +73,19 @@ flowchart TD
 
     C --> F[Gradient Boosting prediction]
     F --> G{Confidence >= 0.60?}
-    G -- Yes --> H[Return local model result]
+    G -- Yes --> H[Keep predicted department]
     G -- No --> I[Set recommended to general]
+    H --> J[Return local model result]
+    I --> J
 
-    D --> J[Gemini 2.5 Flash prediction]
+    D --> K[Gemini 2.5 Flash prediction]
+    K --> L[Return Gemini result]
 
-    E --> K[Run predict_patient_router]
-    K --> L{Confidence >= 0.60?}
-    L -- Yes --> M[Return local model result]
-    L -- No --> N[Run predict_llm]
+    E --> M[Run predict_patient_router]
+    M --> N{Confidence >= 0.60?}
+    N -- Yes --> O[Return local model result]
+    N -- No --> P[Run predict_llm]
+    P --> Q[Return Gemini result]
 ```
 
 ### `patient_router` - Gradient Boosting
@@ -160,7 +164,7 @@ During prediction, the acute-duration point is added only when at least one symp
 
 During synthetic data generation, the acute-duration point is added when any generated symptom exists in `SYMPTOMS_WEIGHT`, and HIGH priority only checks whether the total score is at least 4.
 
-This means the priority labels in the synthetic dataset and the rules used during prediction are not completely identical. See [Limitations](../README.md#limitations).
+This means the priority labels in the synthetic dataset and the rules used during prediction are not completely identical.
 
 ---
 
@@ -172,16 +176,23 @@ Either check can force priority to HIGH. Emergency detection is only used by `pa
 
 ```mermaid
 flowchart TD
-    A[Check Risk] --> B{Any emergency symptom?\nchest pain, breathlessness, confusion}
-    B -- Yes --> D[is_emergency = True]
-    B -- No --> C{Any emergency vital?\nbp_low, hr_high}
-    C -- Yes --> D
-    C -- No --> E[is_emergency = False]
-    A --> F{History score >= 10\nor any single condition >= 9?\ne.g. previous_heart_attack, hiv, pregnant}
-    F -- Yes --> G[is_high_risk = True]
-    D --> H[Force priority = HIGH]
-    G --> H
-    E --> I[Keep computed priority]
+    A[Check Emergency Risk] --> B{Any emergency symptom?\nchest pain, breathlessness, confusion}
+    B -- Yes --> C[is_emergency = True]
+    B -- No --> D{Any emergency vital?\nbp_low, hr_high}
+    D -- Yes --> C
+    D -- No --> E[is_emergency = False]
+
+    F[Check History Risk] --> G{History score >= 10\nor any single condition >= 9?\ne.g. previous_heart_attack, hiv, pregnant}
+    G -- Yes --> H[is_high_risk = True]
+    G -- No --> I[is_high_risk = False]
+
+    C --> J{Emergency or high history risk?}
+    E --> J
+    H --> J
+    I --> J
+
+    J -- Yes --> K[Force priority = HIGH]
+    J -- No --> L[Keep computed priority]
 ```
 
 ---

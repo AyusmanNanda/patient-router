@@ -10,7 +10,7 @@ Detailed environment, configuration, and troubleshooting notes for running Patie
 | ------- | ----------------- | ------------------------------------------------------------------------------------------------------------ |
 | Python  | 3.11              | Matches the README badge. Not enforced by a lockfile; stick to 3.11 to avoid scikit-learn/numpy build issues |
 | Node.js | 20.19+ or 22.12+  | Required by the current Vite 8 tooling                                                                       |
-| npm     | bundled with Node | —                                                                                                            |
+| npm     | bundled with Node | None                                                                                                         |
 
 ---
 
