@@ -6,11 +6,11 @@ Detailed environment, configuration, and troubleshooting notes for running Patie
 
 ## Prerequisites
 
-| Tool | Version | Notes |
-|---|---|---|
-| Python | 3.11 | Matches the README badge. Not enforced by a lockfile; stick to 3.11 to avoid scikit-learn/numpy build issues |
-| Node.js | 18+ recommended | Not pinned in `package.json`, but required by Vite 8 / React 19 tooling |
-| npm | bundled with Node | — |
+| Tool    | Version           | Notes                                                                                                        |
+| ------- | ----------------- | ------------------------------------------------------------------------------------------------------------ |
+| Python  | 3.11              | Matches the README badge. Not enforced by a lockfile; stick to 3.11 to avoid scikit-learn/numpy build issues |
+| Node.js | 20.19+ or 22.12+  | Required by the current Vite 8 tooling                                                                       |
+| npm     | bundled with Node | —                                                                                                            |
 
 ---
 
@@ -44,25 +44,29 @@ PRODUCTION_FRONTEND_URL=
 GEMINI_API_KEY=
 ```
 
-Copy it and fill in real values:
+Copy it and fill in the required values:
 
 ```bash
 cp .env.example .env
 ```
 
-| Variable | Required | Default | Purpose |
-|---|---|---|---|
-| `FRONTEND_URL` | Yes | — (app fails to boot) | Sole allowed CORS origin, passed to `flask-cors` |
-| `FLASK_DEBUG` | No | `false` | Enables Flask debug mode/reloader when `"true"` |
-| `PRODUCTION_FRONTEND_URL` | Listed, but unused | — | Present in `.env.example` and referenced in the startup error message, but `app.py` never reads it. See [deployment.md](deployment.md#backend) for the known gap this creates |
-| `GEMINI_API_KEY` | Required if the `llm`/`hybrid` predictor is used | — | Consumed by `backend/ml/predictors/llm.py`. See [architecture.md](architecture.md#llm--gemini-25-flash) |
+| Variable                  | Required                                                 | Default                 | Purpose                                                                                                                                                    |
+| ------------------------- | -------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FRONTEND_URL`            | Yes                                                      | None, app fails to boot | Allowed CORS origin, passed to `flask-cors`                                                                                                                |
+| `FLASK_DEBUG`             | No                                                       | `false`                 | Enables Flask debug mode and reloader when `"true"`                                                                                                        |
+| `PRODUCTION_FRONTEND_URL` | Listed, but unused                                       | None                    | Present in `.env.example` and referenced in the startup error message, but `app.py` does not currently read it. See [deployment.md](deployment.md#backend) |
+| `GEMINI_API_KEY`          | Required for the `llm` and low-confidence `hybrid` paths | None                    | Used by the Gemini predictor. See [architecture.md](architecture.md#llm---gemini-25-flash)                                                                 |
 
 ### 3. Generate data and train
 
 ```bash
-python -m ml.generate_data   # writes backend/data/data.csv (SAMPLE_SIZE = 50000, see ml/constants.py)
-python -m ml.train           # writes backend/ml/models/model.pkl + reports/
+python -m ml.generate_data   # writes backend/data/data.csv
+python -m ml.train           # trains the model and runs evaluation
 ```
+
+The generated dataset size is controlled by `SAMPLE_SIZE` in `ml/constants.py`, currently `50000`.
+
+Training saves the Gradient Boosting pipeline to `backend/ml/models/model.pkl` and automatically runs model evaluation. See [architecture.md](architecture.md#model-evaluation) for the evaluation workflow and generated reports.
 
 ### 4. Run the API
 
@@ -70,18 +74,18 @@ python -m ml.train           # writes backend/ml/models/model.pkl + reports/
 python app.py
 ```
 
-Runs on `0.0.0.0:5000` by default (hardcoded in `app.py`).
+Runs on `0.0.0.0:5000` by default.
 
 ### Dependencies
 
-`requirements.txt` includes packages beyond the core RF pipeline:
+`requirements.txt` includes packages beyond the local ML pipeline:
 
-| Package | Role |
-|---|---|
-| `google-genai` | Gemini client for the `llm`/`hybrid` predictors — see [architecture.md](architecture.md#prediction-methods) |
-| `matplotlib`, `seaborn` | Evaluation report images (`confusion_matrix.png`, `evaluation_report.png`) |
-| `gunicorn` | Production WSGI server; not used by the local dev server (`app.py` runs its own on port 5000) — see [deployment.md](deployment.md#backend) |
-| `beautifulsoup4`, `websockets` | No corresponding code path identified |
+| Package                 | Role                                                                                                                   |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `google-genai`          | Gemini client for the `llm` and `hybrid` prediction methods. See [architecture.md](architecture.md#prediction-methods) |
+| `matplotlib`, `seaborn` | Evaluation and model comparison report images                                                                          |
+| `xgboost`               | Optional XGBoost model used by the model comparison script                                                             |
+| `gunicorn`              | Production WSGI server; not used by the local development server. See [deployment.md](deployment.md#backend)           |
 
 ---
 
@@ -92,39 +96,48 @@ Runs on `0.0.0.0:5000` by default (hardcoded in `app.py`).
 ```bash
 cd frontend
 npm install
-echo "VITE_BACKEND=http://localhost:5000" > .env
+cp .env.example .env
 npm run dev
 ```
 
-`vite.config.ts` uses `base: "./"` (relative asset paths). This matters if the built `dist/` output is ever served from a non-root path, and is why the same build also works for the Electron shell below.
+`vite.config.ts` uses `base: "./"` for relative asset paths. The same frontend build can therefore be loaded by the Electron application.
 
-| Script | Command | Purpose |
-|---|---|---|
-| `npm run dev` | `vite` | Local dev server |
-| `npm run build` | `tsc -b && vite build` | Type-check + production build |
-| `npm run lint` | `eslint .` | Lint |
-| `npm run preview` | `vite preview` | Preview a production build locally |
+| Script            | Command                | Purpose                            |
+| ----------------- | ---------------------- | ---------------------------------- |
+| `npm run dev`     | `vite`                 | Local development server           |
+| `npm run build`   | `tsc -b && vite build` | Type-check and production build    |
+| `npm run lint`    | `eslint .`             | Lint                               |
+| `npm run preview` | `vite preview`         | Preview a production build locally |
 
 ### Desktop (Electron)
 
-`package.json` defines `main: electron/main.ts` and a full `electron-builder` config; the project also ships as a desktop app, separate from the Vercel-hosted web demo.
+`package.json` defines `electron/main.ts` as the Electron entrypoint and uses `electron-builder` for Windows and Linux builds.
 
 ```bash
-npm run electron       # run the Electron shell against the current build
-npm run dist           # build installers for the current OS
-npm run dist:win       # Windows installer (nsis)
+npm run build          # build the frontend first
+npm run electron       # run the Electron shell against dist/
+npm run dist           # build an installer for the current OS
+npm run dist:win       # Windows NSIS installer
 npm run dist:linux     # Linux AppImage
 ```
 
-Build output goes to `release/installers/`. The Windows build expects an icon at `electron/icon.ico`. See [deployment.md](deployment.md#desktop-electron).
+`npm run electron` does not build the frontend automatically. Run `npm run build` first so that `dist/index.html` exists.
+
+The `dist`, `dist:win`, and `dist:linux` scripts run the frontend build automatically before starting `electron-builder`.
+
+Installer output goes to `release/installers/`. Windows builds use `electron/icon.ico`, while Linux builds use `electron/icon.png`.
+
+See [deployment.md](deployment.md#desktop-electron) for deployment and release details.
 
 ---
 
 ## Troubleshooting
 
-| Symptom | Likely Cause |
-|---|---|
-| `RuntimeError: FRONTEND_URL and PRODUCTION_FRONTEND_URL must be set` on boot | Missing `backend/.env` or missing `FRONTEND_URL` key in it |
-| Frontend requests fail with a CORS error | `FRONTEND_URL` in `backend/.env` doesn't match the origin the frontend is actually served from |
-| `python -m ml.train` fails with a missing-file error | Run `python -m ml.generate_data` first — `train.py` expects `backend/data/data.csv` to already exist |
-| Frontend can't reach the API | `frontend/.env`'s `VITE_BACKEND` doesn't match where `app.py` is actually running (default `http://localhost:5000`) |
+| Symptom                                                                      | Likely Cause                                                                                                   |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `RuntimeError: FRONTEND_URL and PRODUCTION_FRONTEND_URL must be set` on boot | Missing `backend/.env` or missing `FRONTEND_URL` key in it                                                     |
+| Frontend requests fail with a CORS error                                     | `FRONTEND_URL` in `backend/.env` does not match the origin the frontend is served from                         |
+| `python -m ml.train` prints `Failed to load data.csv` and exits              | Run `python -m ml.generate_data` first. Training expects `backend/data/data.csv` to already exist              |
+| Frontend cannot reach the API                                                | The frontend backend URL does not match where `app.py` is running, which is `http://localhost:5000` by default |
+| `npm run electron` fails to load the application                             | Run `npm run build` first. The Electron development path expects `frontend/dist/index.html` to exist           |
+| `llm` or low-confidence `hybrid` prediction fails                            | Check that `GEMINI_API_KEY` is configured in `backend/.env`                                                    |
