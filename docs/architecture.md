@@ -1,49 +1,52 @@
 # Architecture
 
-Internals referenced from the main [README](../README.md): the ML training pipeline, the three prediction methods, priority scoring, emergency detection, input normalization, model evaluation, and the feedback loop. For setup instructions or the API contract, see [README.md](../README.md), [setup.md](setup.md), and [api.md](api.md).
+Internals referenced from the main [README](../README.md): the ML training pipeline, the three prediction methods, priority scoring, emergency detection, input normalization, model evaluation, model comparison, and the feedback loop. For setup instructions or the API contract, see [README.md](../README.md), [setup.md](setup.md), and [api.md](api.md).
 
 ---
 
 ## ML Pipeline
 
-How the Random Forest model is built, from synthetic data to a trained artifact.
+How the Gradient Boosting model is built, from synthetic data to a trained artifact.
 
 ```mermaid
 flowchart LR
     A[generate_data.py\nsynthetic rows] --> B[data.csv]
-    B --> C[train.py\nRandom Forest + CountVectorizer + OneHotEncoder]
+    B --> C[train.py\nGradient Boosting + preprocessing]
     C --> D[model.pkl]
     D --> E[engine.py\nroutes to a predictor]
-    C --> F[model_evaluation.py\nauto-run at end of train.py]
-    G[User Feedback] --> B
+    C --> F[model_evaluation.py\nauto-run after training]
 ```
 
-`train.py` calls `model_evaluation.evaluate()` automatically once training finishes. Evaluation is not a separate manual step; it runs after every `/train` call. See [Model Evaluation](#model-evaluation).
+`train.py` combines symptoms, vitals, and history into one text field. `CountVectorizer` processes this text, while age and duration are passed directly and gender is one-hot encoded. The final pipeline uses `GradientBoostingClassifier` and is saved as `model.pkl`.
+
+Missing history values are filled with an empty string. Rows with missing department, symptoms, vitals, age, duration, or gender are dropped before training.
+
+`train.py` calls `model_evaluation.evaluate()` automatically once training finishes. Model comparison is separate and has to be run manually. See [Model Evaluation](#model-evaluation) and [Model Comparison](#model-comparison).
 
 ### Dataset
 
 Generated synthetically by `generate_data.py`, with configurable size (`SAMPLE_SIZE` in `constants.py`, default `50000`).
 
-| Property | Detail |
-|---|---|
-| Departments | 6 (cardiology, pulmonology, neurology, orthopedics, gastrology, general) |
-| Distribution | Evenly split across departments, then shuffled |
-| Symptoms | 20, grouped by department with cross-department overlap noise |
-| Vitals | bp_high, bp_low, hr_high, hr_low, temp_high, temp_low, normal |
-| History | pregnant, previous_heart_attack, on_blood_thinners, hiv, diabetes, hypertension |
+| Property     | Detail                                                                          |
+| ------------ | ------------------------------------------------------------------------------- |
+| Departments  | 6 (cardiology, pulmonology, neurology, orthopedics, gastrology, general)        |
+| Distribution | Evenly split across departments, then shuffled                                  |
+| Symptoms     | 20, grouped by department with cross-department overlap noise                   |
+| Vitals       | bp_high, bp_low, hr_high, hr_low, temp_high, temp_low, normal                   |
+| History      | pregnant, previous_heart_attack, on_blood_thinners, hiv, diabetes, hypertension |
 
 **Noise applied during generation**, to keep the synthetic data from being trivially separable:
 
-| Noise Type | Probability |
-|---|---|
-| Cross-department symptom added | 40% |
-| Symptom dropout (drop one if >1) | 20% |
-| Vital measurement flipped to opposite | 15% |
-| Extra unrelated vital added | 30% |
-| Vitals reported as "normal" only | 10% |
-| Unrelated history condition added | 15% (if history non-empty) |
-| History condition dropped | 10% (if >1 present) |
-| History cleared entirely | 20% |
+| Noise Type                            | Probability                |
+| ------------------------------------- | -------------------------- |
+| Cross-department symptom added        | 40%                        |
+| Symptom dropout (drop one if >1)      | 20%                        |
+| Vital measurement flipped to opposite | 15%                        |
+| Extra unrelated vital added           | 30%                        |
+| Vitals reported as "normal" only      | 10%                        |
+| Unrelated history condition added     | 15% (if history non-empty) |
+| History condition dropped             | 10% (if >1 present)        |
+| History cleared entirely              | 20%                        |
 
 ---
 
@@ -59,48 +62,82 @@ PREDICTORS = {
 }
 ```
 
-The method defaults to `"patient_router"` and can be overridden per-request via a `method` field in the request payload (`data.get("method", method)`).
+The method defaults to `"patient_router"` and can be changed per request using the `method` field.
 
 ```mermaid
 flowchart TD
-    A[POST /predict] --> B{method field?}
-    B -- patient_router / omitted --> C[predict_patient_router\nRandom Forest]
-    B -- llm --> D[predict_llm\nGemini 2.5 Flash]
+    A[POST /predict] --> B{method}
+    B -- patient_router / omitted --> C[predict_patient_router]
+    B -- llm --> D[predict_llm]
     B -- hybrid --> E[predict_hybrid]
-    E --> C
-    C --> F{RF confidence >= 0.60?}
-    F -- Yes --> G[Return RF result]
-    F -- No --> D
+
+    C --> F[Gradient Boosting prediction]
+    F --> G{Confidence >= 0.60?}
+    G -- Yes --> H[Keep predicted department]
+    G -- No --> I[Set recommended to general]
+    H --> J[Return local model result]
+    I --> J
+
+    D --> K[Gemini 2.5 Flash prediction]
+    K --> L[Return Gemini result]
+
+    E --> M[Run predict_patient_router]
+    M --> N{Confidence >= 0.60?}
+    N -- Yes --> O[Return local model result]
+    N -- No --> P[Run predict_llm]
+    P --> Q[Return Gemini result]
 ```
 
-### `patient_router` — Random Forest
+### `patient_router` - Gradient Boosting
 
-Input normalization → CountVectorizer/OneHotEncoder → RandomForestClassifier → top-3 department confidences → priority scoring → rule-based emergency detection. Detail in the sections below.
+Input normalization → preprocessing pipeline → `GradientBoostingClassifier` → top-three department predictions → priority scoring → emergency detection.
 
-### `llm` — Gemini 2.5 Flash
+Symptoms, vitals, and history are combined into the text passed to the model. Age and duration are passed directly, while gender is one-hot encoded.
 
-`ml/predictors/llm.py` sends patient data directly to `gemini-2.5-flash` with a prompt constraining it to the same 6 departments, requesting a JSON object: `recommended`, `confidence_level` (`low`/`medium`/`high`), `priority`, `emergency` (boolean), and `clinical_reasoning` (list of strings).
+The predictor returns the three departments with the highest confidence scores. If the top confidence is below `CONFIDENCE_THRESHOLD` (`0.60`), the recommended department falls back to `general`.
 
-`confidence_level` is mapped to a fixed numeric confidence via `CONFIDENCE_LEVEL_MAP` (`low=0.4, medium=0.65, high=0.85`), rather than using a raw probability from the model, since an LLM's self-reported confidence isn't treated as calibrated.
+Only `recommended` is changed by this fallback. The original top-three predictions and top confidence are still returned, and a fallback reason is added.
 
-Two behaviors differ from the `patient_router` path:
+### `llm` - Gemini 2.5 Flash
 
-- **No input normalization.** Raw symptom/vital text is passed directly into the prompt — no alias mapping, no fuzzy matching against the known vocabulary (see [Input Normalization Flow](#input-normalization-flow)). The two predictors do not operate on identically-cleaned input.
-- **No rule-based emergency detection.** `emergency.py`'s `detect_emergency()` is not called on this path. The `emergency` flag is Gemini's self-reported value. History-based risk (`analyze_history`) is applied identically to both paths and can still force `priority` to `"high"`.
+`ml/predictors/llm.py` sends the patient data to `gemini-2.5-flash` with a prompt that restricts the result to the same 6 departments.
 
-Predictions are logged to the same `predictions.jsonl` as the RF path, tagged `"model": "gemini-2.5-flash"` instead of `"model": "patient-router-{MODEL_VERSION}"`.
+Gemini is asked to return `recommended`, `confidence_level`, `priority`, `emergency`, and `clinical_reasoning`.
 
-### `hybrid` — Random Forest with LLM fallback
+`confidence_level` is converted to a fixed numeric confidence using `CONFIDENCE_LEVEL_MAP`:
 
-`ml/predictors/hybrid.py` runs `predict_patient_router`, then calls `predict_llm` only if the RF's top-department confidence is below `CONFIDENCE_THRESHOLD` (0.60) — the same threshold used for the RF's own general-department fallback.
+| Level  | Confidence |
+| ------ | ---------- |
+| low    | 0.40       |
+| medium | 0.65       |
+| high   | 0.85       |
 
-When hybrid falls through to the LLM, it passes the original, unnormalized request data, not the RF path's normalized symptom/vital lists, since `predict_llm(data)` re-parses from scratch.
+I used fixed values here because the LLM's self-reported confidence is not treated as a calibrated model probability.
+
+Two parts of this path are different from `patient_router`:
+
+* **No input normalization.** Raw symptom and vital text is sent directly to Gemini. Alias mapping and fuzzy matching are not used.
+* **No rule-based emergency detection.** The `emergency` value comes from Gemini. History risk is still checked locally and can force priority to `high`.
+
+If Gemini returns an unknown department, the recommendation falls back to `general`.
+
+Predictions are written to the same `predictions.jsonl` file as local model predictions, with `"model": "gemini-2.5-flash"`.
+
+### `hybrid` - Local model with LLM fallback
+
+`ml/predictors/hybrid.py` first runs `predict_patient_router`.
+
+If the local model confidence is at least `0.60`, its result is returned. If confidence is lower, the original request data is passed to `predict_llm`.
+
+The LLM gets the original input, not the normalized symptoms and vitals from the local model path.
+
+One side effect of the current implementation is that a low-confidence hybrid request creates two prediction log entries. The local prediction is logged first, then the Gemini result is logged when the fallback runs.
 
 ---
 
 ## Priority Scoring Logic
 
-Runs after a department is chosen, in `ml/rules/priority.py`. Applies fully to the `patient_router` path. The `llm` path does not call this function; Gemini self-reports its own `priority`, which is then only overridden upward — never downgraded — by the same history-risk check described below.
+Priority scoring is handled by `ml/rules/priority.py` for the `patient_router` path. The `llm` path uses Gemini's priority result, which can still be changed to `high` by the history-risk check.
 
 ```mermaid
 flowchart TD
@@ -109,7 +146,7 @@ flowchart TD
     C --> D{Age > 60?}
     D -- Yes --> E[score + 1]
     D -- No --> F[Continue]
-    E --> G{Severe symptom\n+ duration <= 2?}
+    E --> G{Symptom weight >= 2\nAND duration <= 2?}
     F --> G
     G -- Yes --> H[score + 1]
     G -- No --> I[Continue]
@@ -121,33 +158,50 @@ flowchart TD
     L -- No --> N[Priority: LOW]
 ```
 
-**Known discrepancy:** `priority.py` requires both an overall score and a minimum "severe" symptom/vital contribution to reach HIGH. `generate_data.py`'s `compute_priority()`, used to label synthetic training data, only checks the overall score and has no separate severe-score gate. This mismatch is a source of label/inference drift for the `patient_router` predictor. See [Limitations](../README.md#limitations).
+**Known discrepancy:** `priority.py` and `generate_data.py` do not calculate priority in exactly the same way.
+
+During prediction, the acute-duration point is added only when at least one symptom has a weight of 2 or more. HIGH priority also requires a `severe_score` of at least 2.
+
+During synthetic data generation, the acute-duration point is added when any generated symptom exists in `SYMPTOMS_WEIGHT`, and HIGH priority only checks whether the total score is at least 4.
+
+This means the priority labels in the synthetic dataset and the rules used during prediction are not completely identical.
 
 ---
 
 ## Emergency & History Risk Detection
 
-Runs in parallel with priority scoring, in `ml/rules/emergency.py` and `ml/rules/history.py`. Either can force priority to HIGH regardless of the score above. `emergency.py` is invoked only by the `patient_router` predictor (see [Prediction Methods](#prediction-methods)). `history.py`'s `analyze_history()` is shared by both predictors.
+Emergency and history risk checks are handled by `ml/rules/emergency.py` and `ml/rules/history.py`.
+
+Either check can force priority to HIGH. Emergency detection is only used by `patient_router`, while history risk is checked by both `patient_router` and `llm`.
 
 ```mermaid
 flowchart TD
-    A[Check Risk] --> B{Any emergency symptom?\nchest pain, breathlessness, confusion}
-    B -- Yes --> D[is_emergency = True]
-    B -- No --> C{Any emergency vital?\nbp_low, hr_high}
-    C -- Yes --> D
-    C -- No --> E[is_emergency = False]
-    A --> F{History score >= 10\nor any single condition >= 9?\ne.g. previous_heart_attack, hiv, pregnant}
-    F -- Yes --> G[is_high_risk = True]
-    D --> H[Force priority = HIGH]
-    G --> H
-    E --> I[Keep computed priority]
+    A[Check Emergency Risk] --> B{Any emergency symptom?\nchest pain, breathlessness, confusion}
+    B -- Yes --> C[is_emergency = True]
+    B -- No --> D{Any emergency vital?\nbp_low, hr_high}
+    D -- Yes --> C
+    D -- No --> E[is_emergency = False]
+
+    F[Check History Risk] --> G{History score >= 10\nor any single condition >= 9?\ne.g. previous_heart_attack, hiv, pregnant}
+    G -- Yes --> H[is_high_risk = True]
+    G -- No --> I[is_high_risk = False]
+
+    C --> J{Emergency or high history risk?}
+    E --> J
+    H --> J
+    I --> J
+
+    J -- Yes --> K[Force priority = HIGH]
+    J -- No --> L[Keep computed priority]
 ```
 
 ---
 
 ## Input Normalization Flow
 
-Before symptoms/vitals reach the vectorizer, free-text input is normalized against the known vocabulary in `ml/predictors/patient_router.py`. This step runs only for the `patient_router` predictor; the `llm` predictor sends raw text directly to Gemini, unnormalized (see [Prediction Methods](#prediction-methods)).
+Before symptoms and vitals reach the local model, they are normalized against the known vocabulary in `ml/predictors/patient_router.py`.
+
+This only runs for `patient_router`. The `llm` predictor sends raw text directly to Gemini.
 
 ```mermaid
 flowchart TD
@@ -163,42 +217,109 @@ flowchart TD
     I -- No --> K[Pass through as-is]
 ```
 
-**Scope:** `frontend/src/components/layout/TagInput.tsx` restricts dashboard input to a dropdown of exact matches against `constants/patientOptions.ts`, which mirrors `KNOWN_SYMPTOMS`/`KNOWN_VITALS`/`KNOWN_HISTORY` exactly. There is no way to submit arbitrary free text through that component, so dashboard requests already arrive pre-normalized and this logic has nothing to correct in that path. It applies to `/predict` as a public API: a direct caller (curl, a third-party integration) can send free text such as `"sob"` or `"bp high"`, and this is the logic that normalizes it.
+History does not use the same normalization flow. History values are split by commas, converted to lowercase, and spaces are replaced with underscores.
+
+Unknown symptom and vital terms that cannot be normalized are passed through unchanged. If they are not part of the vocabulary learned by `CountVectorizer`, they may not add useful features to the local model.
+
+**Scope:** `frontend/src/components/layout/TagInput.tsx` only accepts values from the frontend option lists. The current options match the backend symptom, vital, and history lists, so dashboard requests already use the configured values.
+
+The normalization flow is mainly useful for direct `/predict` API requests, where callers can send text such as `"sob"` or `"bp high"`.
 
 ---
 
 ## Model Evaluation
 
-`ml/model_evaluation.py` runs automatically at the end of every `train.py` run. It performs two separate evaluations:
+`ml/model_evaluation.py` runs automatically after training. It performs two evaluations:
 
-1. **Synthetic held-out test set** — a standard 80/20 split of `data.csv`, plus 5-fold cross-validation. Reports overall accuracy, per-fold CV scores, a classification report, and per-department accuracy/average-confidence.
-2. **Hand-crafted "real-world" edge cases** — 32 manually written patient cases (`REAL_WORLD_CASES`) covering single-symptom presentations, elderly/young-patient edge cases, cross-department symptom overlap (e.g. "breathlessness" appearing in both cardiology and pulmonology profiles), and cases where vitals contradict symptoms. These are harder than the evenly-distributed synthetic data and closer to real intake data.
+1. **Synthetic held-out test set:** an 80/20 stratified split of `data.csv`, plus 5-fold cross-validation.
+2. **Hand-written edge cases:** 34 manually written cases covering single symptoms, different age groups, overlapping symptoms, acute and chronic cases, and cases where vitals contradict symptoms.
 
-The difference between the two accuracy numbers (synthetic accuracy − edge-case accuracy) is reported as a **generalization gap**. Guidance encoded in the script: a gap over 20 points indicates normalization work is needed, 10–20 indicates alias/fuzzy-match expansion would help, and under 10 is considered reasonable generalization.
+The difference between synthetic test accuracy and edge-case accuracy is reported as the **generalisation gap**.
 
-Output artifacts (saved under `backend/reports/`):
+The script also prints simple project-defined messages based on the gap:
 
-| File | Contents |
-|---|---|
-| `evaluation_report.png` | 6-panel chart: both confusion matrices, synthetic-vs-edge-case accuracy bar, per-department accuracy, per-department confidence, CV fold stability |
-| `evaluation_report.txt` | Plain-text summary: both accuracies, generalization gap, per-department breakdown, classification report |
-| `evaluation_metrics.json` | Machine-readable: synthetic accuracy, CV mean/std, edge-case accuracy, generalization gap, edge-case pass/fail counts |
+* above 20 percentage points: large gap
+* above 10 percentage points: moderate gap
+* otherwise: small gap
 
-This evaluation applies only to the `patient_router` (Random Forest) model. The `llm` and `hybrid` predictors are not covered — there is no equivalent held-out set or generalization-gap concept defined for a prompted model.
+These are only diagnostics used by the project, not standard or clinical evaluation thresholds.
+
+Output artifacts are saved under `backend/reports/`:
+
+| File                      | Contents                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| `evaluation_report.png`   | Confusion matrices, accuracy comparison, per-department results, confidence, and CV stability |
+| `evaluation_report.txt`   | Accuracy, generalisation gap, per-department results, and classification report               |
+| `evaluation_metrics.json` | Synthetic accuracy, CV results, edge-case accuracy, generalisation gap, and edge-case counts  |
+
+This evaluation only covers the locally trained Gradient Boosting model. The `llm` and `hybrid` methods are not independently evaluated by this script.
+
+Everything here is evaluated using synthetic data and hand-written edge cases, not real patient records. The results should not be treated as evidence of clinical performance.
+
+---
+
+## Model Comparison
+
+I added `ml/compare_models.py` to compare the locally trained model with other classification algorithms using the same dataset and edge cases.
+
+The models are:
+
+* Decision Tree
+* Random Forest
+* Gradient Boosting
+* Logistic Regression
+* K-Nearest Neighbors
+* SVM with RBF kernel
+* XGBoost
+
+XGBoost is skipped if the `xgboost` package is not installed.
+
+Each model uses the same preprocessing structure, 80/20 stratified split, 5-fold cross-validation, and 34 hand-written edge cases.
+
+The comparison measures test accuracy, Macro F1, 5-fold CV accuracy, CV standard deviation, edge-case accuracy, generalisation gap, and training time.
+
+The current Gradient Boosting results are:
+
+| Metric                   | Result                |
+| ------------------------ | --------------------- |
+| Test Accuracy            | 98.84%                |
+| Macro F1                 | 98.84%                |
+| 5-Fold CV Accuracy       | 99.04%                |
+| CV Standard Deviation    | ±0.07%                |
+| Edge-Case Accuracy       | 91.18%                |
+| Generalisation Gap       | 7.7 percentage points |
+| Comparison Training Time | 12.14 seconds         |
+
+After comparing the models, I changed the locally trained model from Random Forest to Gradient Boosting.
+
+These results only come from the synthetic dataset and 34 hand-written edge cases used in the project. They do not show how the model would perform with real patients or hospital data.
+
+The comparison generates four files under `backend/reports/`:
+
+| File                    | Contents                          |
+| ----------------------- | --------------------------------- |
+| `model_comparison.csv`  | Comparison results in CSV format  |
+| `model_comparison.json` | Comparison results in JSON format |
+| `model_comparison.md`   | Markdown comparison table         |
+| `model_comparison.png`  | Accuracy and training-time charts |
+
+Model comparison does not run automatically after training. It has to be run separately through `compare_models.py`.
 
 ---
 
 ## Feedback Loop
 
-How a correction made in the dashboard makes it back into the model.
+The project also has a feedback flow where prediction corrections can be added back to the dataset before retraining.
 
 ```mermaid
 flowchart LR
     A[Prediction Made] --> B[User confirms or corrects department]
-    B --> C[Appended directly to data.csv]
-    C --> D[Dataset Manager / Training page]
+    B --> C[Feedback Handling]
+    C --> D[Training Dataset]
     D --> E[Retrain model on demand]
     E --> F[New model.pkl saved + evaluation re-run]
 ```
 
-Feedback is appended directly into the same `data.csv` used for training. A row with the corrected department becomes part of the next training run once `/train` is called, which in turn triggers the full evaluation described above. There is no validation on these rows beyond what the API layer enforces (see [Limitations](../README.md#limitations)). This loop feeds only the `patient_router` model; it has no effect on the `llm` predictor, which is not trained on local data.
+The exact feedback validation and dataset update behaviour is handled outside the ML files covered here. See [api.md](api.md) for the API contract.
+
+The feedback flow affects the locally trained `patient_router` model. It does not train or update the Gemini model used by the `llm` predictor.
