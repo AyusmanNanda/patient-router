@@ -44,11 +44,11 @@ Patient Router is available as a web application and as an Electron desktop appl
 
 The project has three parts:
 
-| Part | Location | Responsibility |
-|---|---|---|
-| ML core | `backend/ml/` | Synthetic data generation, model comparison, training, evaluation, inference |
-| Flask API | `backend/app.py`, `routes/`, `services/` | Exposes the prediction pipeline and other backend functionality over HTTP |
-| React dashboard | `frontend/` | Patient intake, prediction, feedback collection, dataset management, training, evaluation, and logs |
+| Part            | Location                                 | Responsibility                                                                                      |
+| --------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| ML core         | `backend/ml/`                            | Synthetic data generation, model comparison, training, evaluation, inference                        |
+| Flask API       | `backend/app.py`, `routes/`, `services/` | Exposes the prediction pipeline and other backend functionality over HTTP                           |
+| React dashboard | `frontend/`                              | Patient intake, prediction, feedback collection, dataset management, training, evaluation, and logs |
 
 For the full pipeline, API contract, environment setup, and everything else, see the documentation below.
 
@@ -56,14 +56,14 @@ For the full pipeline, API contract, environment setup, and everything else, see
 
 ## Documentation
 
-| Doc | Covers |
-|---|---|
-| [docs/architecture.md](docs/architecture.md) | ML pipeline, the three prediction methods, priority scoring, emergency detection, normalization, evaluation, feedback loop |
-| [docs/api.md](docs/api.md) | Full request/response examples for every route |
-| [docs/setup.md](docs/setup.md) | Environment variables, local setup, troubleshooting |
-| [docs/frontend.md](docs/frontend.md) | React dashboard structure: pages, hooks, shared components |
-| [docs/data-schema.md](docs/data-schema.md) | Symptom/vital/history vocabulary and weight tables |
-| [docs/deployment.md](docs/deployment.md) | Vercel frontend, backend hosting requirements, desktop builds |
+| Doc                                          | Covers                                                                                                                                       |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| [docs/architecture.md](docs/architecture.md) | ML pipeline, the three prediction methods, priority scoring, emergency detection, normalization, evaluation, model comparison, feedback loop |
+| [docs/api.md](docs/api.md)                   | Full request/response examples for every route                                                                                               |
+| [docs/setup.md](docs/setup.md)               | Environment variables, local setup, troubleshooting                                                                                          |
+| [docs/frontend.md](docs/frontend.md)         | React dashboard structure: pages, hooks, shared components                                                                                   |
+| [docs/data-schema.md](docs/data-schema.md)   | Symptom/vital/history vocabulary and weight tables                                                                                           |
+| [docs/deployment.md](docs/deployment.md)     | Vercel frontend, backend hosting requirements, desktop builds                                                                                |
 
 ---
 
@@ -75,11 +75,17 @@ flowchart LR
     B --> C[Patient Router]
     B --> D[Gemini API]
     B --> E[Hybrid]
-    C --> F[Priority & Emergency Rules]
-    D --> G[Prediction Result]
-    E --> G
-    F --> G
-    G --> H[Recommendation + Logged Prediction]
+
+    E --> F[Local Model First]
+    F --> G{Confidence >= 0.60?}
+    G -- Yes --> H[Prediction Result]
+    G -- No --> D
+
+    C --> I[Priority & Emergency Rules]
+    I --> H
+    D --> H
+
+    H --> J[Recommendation + Logged Prediction]
 ```
 
 For the full breakdown of each stage, see [docs/architecture.md](docs/architecture.md).
@@ -91,16 +97,16 @@ For the full breakdown of each stage, see [docs/architecture.md](docs/architectu
 <details>
 <summary>Click to expand</summary>
 
-| Patient Router | Train Model |
-|---|---|
+| Patient Router                                      | Train Model                                       |
+| --------------------------------------------------- | ------------------------------------------------- |
 | ![Patient Router](docs/assets/screenshots/home.png) | ![Train Model](docs/assets/screenshots/train.png) |
 
-| Data Manager | Evaluation |
-|---|---|
+| Data Manager                                             | Evaluation                                            |
+| -------------------------------------------------------- | ----------------------------------------------------- |
 | ![Data Manager](docs/assets/screenshots/datamanager.png) | ![Evaluation](docs/assets/screenshots/evaluation.png) |
 
-| System Logs |
-|---|
+| System Logs                                      |
+| ------------------------------------------------ |
 | ![System Logs](docs/assets/screenshots/logs.png) |
 
 </details>
@@ -141,15 +147,15 @@ For environment variables, config, and troubleshooting, see [docs/setup.md](docs
 
 ## Limitations
 
-- Everything is trained on synthetic data I generated, not real patient records, so I can't say how it would actually perform in a hospital
-- Only 6 departments, 20 symptoms, 7 vitals, and 6 history conditions: this was a scope decision to keep the project manageable, not something I ran out of time to add
+* The local model is trained on synthetic data I generated, not real patient records, so I can't say how it would actually perform in a hospital
+* Only 6 departments, 20 symptoms, 7 vitals, and 6 history conditions: this was a scope decision to keep the project manageable, not something I ran out of time to add
 
 ---
 
 ## Tech Stack
 
-**Backend:** Python, Flask, scikit-learn, pandas, numpy, joblib  
-**Frontend:** React, TypeScript, Vite, lucide-react  
-**Desktop:** Electron, electron-builder  
-**ML:** GradientBoostingClassifier, CountVectorizer, OneHotEncoder  
+**Backend:** Python, Flask, scikit-learn, pandas, numpy, joblib
+**Frontend:** React, TypeScript, Vite, lucide-react
+**Desktop:** Electron, electron-builder
+**ML:** GradientBoostingClassifier, CountVectorizer, OneHotEncoder
 **External API:** Gemini 2.5 Flash
