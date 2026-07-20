@@ -160,4 +160,6 @@ This is a fixed three-level scale, not a continuous model probability.
 
 The local Gradient Boosting model uses `predict_proba` and can return confidence values anywhere between 0 and 1. Gemini confidence is always mapped to `0.4`, `0.65`, or `0.85`.
 
-`CONFIDENCE_THRESHOLD` is currently `0.60`. The local model uses this threshold for its `general` fallback, while the hybrid method uses it to decide whether to keep the local result or call Gemini.
+`CONFIDENCE_THRESHOLD` is currently `0.60`. The local model uses this threshold for its `general` fallback, the `llm` predictor uses it the same way on the mapped Gemini confidence, and the hybrid method uses it to decide whether to keep the local result or call Gemini.
+
+Because `low` always maps to `0.4`, which is below the `0.60` threshold, a Gemini `confidence_level` of `low` always triggers the `llm` predictor's `general` fallback.

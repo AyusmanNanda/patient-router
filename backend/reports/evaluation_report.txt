@@ -1,30 +1,30 @@
 Model Evaluation Report
 =======================================================
-Synthetic test accuracy  : 98.84%
-5-Fold CV accuracy       : 99.04% (±0.07%)
+Synthetic test accuracy  : 99.12%
+5-Fold CV accuracy       : 99.13% (±0.04%)
 Edge-case accuracy       : 91.18%
-Generalisation gap       : 7.7pp  ← cross-dept overlap performance
+Generalisation gap       : 7.9pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
   -----------------------------------
-  cardiology        98.4%      0.978
-  gastrology       100.0%      0.989
-  general           97.4%      0.960
-  neurology         99.5%      0.989
-  orthopedics      100.0%      0.997
-  pulmonology       97.7%      0.961
+  cardiology        99.1%      0.981
+  gastrology       100.0%      0.990
+  general           98.0%      0.965
+  neurology         99.7%      0.991
+  orthopedics      100.0%      0.999
+  pulmonology       97.9%      0.963
 
 Classification Report (synthetic):
               precision    recall  f1-score   support
 
-  cardiology       0.99      0.98      0.99      1667
-  gastrology       0.99      1.00      0.99      1667
-     general       0.98      0.97      0.98      1666
-   neurology       0.99      1.00      0.99      1667
- orthopedics       1.00      1.00      1.00      1666
- pulmonology       0.98      0.98      0.98      1667
+  cardiology       0.99      0.99      0.99      3334
+  gastrology       0.99      1.00      0.99      3333
+     general       0.99      0.98      0.98      3333
+   neurology       1.00      1.00      1.00      3333
+ orthopedics       1.00      1.00      1.00      3333
+ pulmonology       0.98      0.98      0.98      3334
 
-    accuracy                           0.99     10000
-   macro avg       0.99      0.99      0.99     10000
-weighted avg       0.99      0.99      0.99     10000
+    accuracy                           0.99     20000
+   macro avg       0.99      0.99      0.99     20000
+weighted avg       0.99      0.99      0.99     20000

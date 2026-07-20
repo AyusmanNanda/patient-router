@@ -121,8 +121,8 @@ The response has the same shape, except `departments` contains one entry because
 
 | Field           | Description                                                                                                |
 | --------------- | ---------------------------------------------------------------------------------------------------------- |
-| `recommended`   | Recommended department. The local method falls back to `general` below the configured confidence threshold |
-| `departments`   | Top 3 candidates when the result comes from `patient_router`; 1 entry when the result comes from `llm`     |
+| `recommended`   | Recommended department. Falls back to `general` when confidence is below the configured threshold (`0.60`). For the local method this is the model's own confidence; for the `llm` method it is the confidence mapped from Gemini's `confidence_level` |
+| `departments`   | Top 3 candidates when the result comes from `patient_router`; 1 entry when the result comes from `llm`. For `llm`, this entry reflects the post-fallback `recommended` value (e.g. `general`), not Gemini's original pick, when the confidence fallback fires |
 | `priority`      | `high`, `medium`, or `low`                                                                                 |
 | `emergency`     | Emergency status returned by the selected prediction method                                                |
 | `confidence`    | Top local model confidence or fixed confidence mapped from the Gemini confidence level                     |

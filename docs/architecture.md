@@ -79,7 +79,10 @@ flowchart TD
     I --> J
 
     D --> K[Gemini 2.5 Flash prediction]
-    K --> L[Return Gemini result]
+    K --> R{Mapped confidence >= 0.60?}
+    R -- Yes --> L[Return Gemini result]
+    R -- No --> S[Set recommended to general]
+    S --> L
 
     E --> M[Run predict_patient_router]
     M --> N{Confidence >= 0.60?}
@@ -118,6 +121,8 @@ Two parts of this path are different from `patient_router`:
 
 * **No input normalization.** Raw symptom and vital text is sent directly to Gemini. Alias mapping and fuzzy matching are not used.
 * **No rule-based emergency detection.** The `emergency` value comes from Gemini. History risk is still checked locally and can force priority to `high`.
+
+A third difference is the confidence-threshold fallback. The mapped confidence is checked against the same `CONFIDENCE_THRESHOLD` (`0.60`) used by `patient_router`. Since `CONFIDENCE_LEVEL_MAP` only produces `0.40`, `0.65`, or `0.85`, this fallback fires whenever Gemini reports `confidence_level: "low"`. When it fires, `recommended` is overwritten to `general`, and because the single `departments` entry for this path is built from `recommended`, it reflects `general` too instead of Gemini's original pick. This is different from `patient_router`, which keeps its original top-three predictions even after falling back.
 
 If Gemini returns an unknown department, the recommendation falls back to `general`.
 

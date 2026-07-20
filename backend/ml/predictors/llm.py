@@ -7,7 +7,7 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-from ml.constants import MODEL_VERSION, DEPARTMENTS, SAFE_FALLBACK_DEPT, CONFIDENCE_LEVEL_MAP
+from ml.constants import DEPARTMENTS, SAFE_FALLBACK_DEPT, CONFIDENCE_LEVEL_MAP, CONFIDENCE_THRESHOLD
 from ml.rules.history import analyze_history
 from utils.logger import logger
 
@@ -155,7 +155,7 @@ def predict_llm(data: dict) -> dict:
     if not isinstance(clinical_reasoning, list):
         clinical_reasoning = []
 
-    if is_high_risk:
+    if is_high_risk or is_emergency:
         priority = "high"
 
     reasons = list(clinical_reasoning)
@@ -170,6 +170,13 @@ def predict_llm(data: dict) -> dict:
         reasons.append(f"Acute onset ({duration} days)")
     elif duration > 14:
         reasons.append(f"Chronic condition ({duration} days)")
+
+    fallback_used = confidence < CONFIDENCE_THRESHOLD
+
+    if confidence < CONFIDENCE_THRESHOLD:
+        recommended = SAFE_FALLBACK_DEPT
+        reasons.append("Low LLM confidence - fallback to general")
+
 
     prediction = {
         "recommended": recommended,
@@ -197,7 +204,7 @@ def predict_llm(data: dict) -> dict:
         "confidence": confidence,
         "priority": priority,
         "emergency": is_emergency,
-        "fallback_used": False,
+        "fallback_used": fallback_used,
         "model": "gemini-2.5-flash",
     }
 
