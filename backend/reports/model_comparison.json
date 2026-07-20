@@ -1,72 +1,72 @@
 [
     {
-        "Model":"Random Forest",
-        "Test Accuracy (%)":95.06,
-        "Macro F1 (%)":95.05,
-        "5-Fold CV (%)":95.02,
-        "CV Std (\u00b1%)":0.15,
-        "Edge-Case Acc (%)":91.18,
-        "Generalisation Gap":3.9,
-        "Train Time (s)":14.29
-    },
-    {
         "Model":"Gradient Boosting",
-        "Test Accuracy (%)":95.52,
-        "Macro F1 (%)":95.5,
-        "5-Fold CV (%)":95.8,
-        "CV Std (\u00b1%)":0.22,
+        "Test Accuracy (%)":93.11,
+        "Macro F1 (%)":93.08,
+        "5-Fold CV (%)":93.27,
+        "CV Std (\u00b1%)":0.17,
         "Edge-Case Acc (%)":91.18,
-        "Generalisation Gap":4.3,
-        "Train Time (s)":11.58
-    },
-    {
-        "Model":"XGBoost",
-        "Test Accuracy (%)":95.27,
-        "Macro F1 (%)":95.26,
-        "5-Fold CV (%)":95.38,
-        "CV Std (\u00b1%)":0.18,
-        "Edge-Case Acc (%)":91.18,
-        "Generalisation Gap":4.1,
-        "Train Time (s)":0.86
-    },
-    {
-        "Model":"Decision Tree",
-        "Test Accuracy (%)":92.35,
-        "Macro F1 (%)":92.35,
-        "5-Fold CV (%)":92.14,
-        "CV Std (\u00b1%)":0.27,
-        "Edge-Case Acc (%)":88.24,
-        "Generalisation Gap":4.1,
-        "Train Time (s)":0.68
-    },
-    {
-        "Model":"Logistic Regression",
-        "Test Accuracy (%)":94.73,
-        "Macro F1 (%)":94.72,
-        "5-Fold CV (%)":94.64,
-        "CV Std (\u00b1%)":0.29,
-        "Edge-Case Acc (%)":88.24,
-        "Generalisation Gap":6.5,
-        "Train Time (s)":5.26
+        "Generalisation Gap":1.9,
+        "Train Time (s)":12.52
     },
     {
         "Model":"SVM (RBF)",
-        "Test Accuracy (%)":92.89,
-        "Macro F1 (%)":92.93,
-        "5-Fold CV (%)":93.16,
-        "CV Std (\u00b1%)":0.16,
+        "Test Accuracy (%)":92.64,
+        "Macro F1 (%)":92.65,
+        "5-Fold CV (%)":92.98,
+        "CV Std (\u00b1%)":0.19,
+        "Edge-Case Acc (%)":91.18,
+        "Generalisation Gap":1.5,
+        "Train Time (s)":540.44
+    },
+    {
+        "Model":"XGBoost",
+        "Test Accuracy (%)":92.63,
+        "Macro F1 (%)":92.63,
+        "5-Fold CV (%)":92.82,
+        "CV Std (\u00b1%)":0.12,
+        "Edge-Case Acc (%)":91.18,
+        "Generalisation Gap":1.5,
+        "Train Time (s)":0.85
+    },
+    {
+        "Model":"Logistic Regression",
+        "Test Accuracy (%)":93.21,
+        "Macro F1 (%)":93.19,
+        "5-Fold CV (%)":93.4,
+        "CV Std (\u00b1%)":0.18,
+        "Edge-Case Acc (%)":88.24,
+        "Generalisation Gap":5.0,
+        "Train Time (s)":5.24
+    },
+    {
+        "Model":"Decision Tree",
+        "Test Accuracy (%)":89.65,
+        "Macro F1 (%)":89.65,
+        "5-Fold CV (%)":89.45,
+        "CV Std (\u00b1%)":0.21,
+        "Edge-Case Acc (%)":88.24,
+        "Generalisation Gap":1.4,
+        "Train Time (s)":0.68
+    },
+    {
+        "Model":"Random Forest",
+        "Test Accuracy (%)":92.35,
+        "Macro F1 (%)":92.33,
+        "5-Fold CV (%)":92.56,
+        "CV Std (\u00b1%)":0.13,
         "Edge-Case Acc (%)":85.29,
-        "Generalisation Gap":7.6,
-        "Train Time (s)":274.36
+        "Generalisation Gap":7.1,
+        "Train Time (s)":15.38
     },
     {
         "Model":"K-Nearest Neighbors",
-        "Test Accuracy (%)":88.71,
-        "Macro F1 (%)":88.74,
-        "5-Fold CV (%)":88.93,
-        "CV Std (\u00b1%)":0.28,
-        "Edge-Case Acc (%)":73.53,
-        "Generalisation Gap":15.2,
+        "Test Accuracy (%)":68.8,
+        "Macro F1 (%)":68.81,
+        "5-Fold CV (%)":68.57,
+        "CV Std (\u00b1%)":0.55,
+        "Edge-Case Acc (%)":58.82,
+        "Generalisation Gap":10.0,
         "Train Time (s)":0.17
     }
 ]
