@@ -1,7 +1,7 @@
 export const SYMPTOMS = [
-    'abdominal pain', 'blurred vision', 'body pain', 'breathlessness', 'chest pain',
+    'abdominal_pain', 'blurred_vision', 'body_pain', 'breathlessness', 'chest_pain',
     'confusion', 'cough', 'diarrhea', 'dizziness', 'fatigue', 'fever', 'headache',
-    'joint pain', 'limited movement', 'nausea', 'stiffness', 'sweating', 'swelling',
+    'joint_pain', 'limited_movement', 'nausea', 'stiffness', 'sweating', 'swelling',
     'vomiting', 'weakness',
 ]
 

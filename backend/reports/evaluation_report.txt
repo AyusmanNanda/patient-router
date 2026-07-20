@@ -1,30 +1,30 @@
 Model Evaluation Report
 =======================================================
-Synthetic test accuracy  : 99.12%
-5-Fold CV accuracy       : 99.13% (±0.04%)
+Synthetic test accuracy  : 95.24%
+5-Fold CV accuracy       : 95.41% (±0.23%)
 Edge-case accuracy       : 91.18%
-Generalisation gap       : 7.9pp  ← cross-dept overlap performance
+Generalisation gap       : 4.1pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
   -----------------------------------
-  cardiology        99.1%      0.981
-  gastrology       100.0%      0.990
-  general           98.0%      0.965
-  neurology         99.7%      0.991
-  orthopedics      100.0%      0.999
-  pulmonology       97.9%      0.963
+  cardiology        97.1%      0.896
+  gastrology        98.6%      0.926
+  general           87.5%      0.832
+  neurology         98.1%      0.937
+  orthopedics       98.8%      0.960
+  pulmonology       91.4%      0.816
 
 Classification Report (synthetic):
               precision    recall  f1-score   support
 
-  cardiology       0.99      0.99      0.99      3334
-  gastrology       0.99      1.00      0.99      3333
-     general       0.99      0.98      0.98      3333
-   neurology       1.00      1.00      1.00      3333
- orthopedics       1.00      1.00      1.00      3333
- pulmonology       0.98      0.98      0.98      3334
+  cardiology       0.94      0.97      0.96      1667
+  gastrology       0.96      0.99      0.97      1667
+     general       0.96      0.88      0.91      1666
+   neurology       0.98      0.98      0.98      1667
+ orthopedics       0.99      0.99      0.99      1666
+ pulmonology       0.89      0.91      0.90      1667
 
-    accuracy                           0.99     20000
-   macro avg       0.99      0.99      0.99     20000
-weighted avg       0.99      0.99      0.99     20000
+    accuracy                           0.95     10000
+   macro avg       0.95      0.95      0.95     10000
+weighted avg       0.95      0.95      0.95     10000

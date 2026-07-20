@@ -49,20 +49,23 @@ def generate_symptoms(dept):
 
 def generate_vitals(dept):
     vitals_list = [v for v in DEPARTMENTS[dept]["vitals"] if v != "normal"]
+    if random.random() < 0.05:
+        return ["unknown"]
 
-    if random.random() < 0.10:
+    if random.random() < 0.30:
         return ["normal"]
 
     if not vitals_list:
         return ["normal"]
 
-    base = list(dict.fromkeys(vitals_list))
+    count = min(random.randint(1, 2), len(vitals_list))
+    base = random.sample(vitals_list, count)
 
     if random.random() < 0.15 and base != ["normal"]:
         error_idx = random.randint(0, len(base) - 1)
         base[error_idx] = OPPOSITES.get(base[error_idx], base[error_idx])
 
-    if random.random() < 0.3:
+    if random.random() < 0.40:
         extra = random.choice(ALL_VITALS)
         if extra not in base and OPPOSITES.get(extra) not in base:
             base.append(extra)

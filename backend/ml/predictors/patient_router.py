@@ -74,7 +74,7 @@ def predict_patient_router(data: dict) -> dict:
 
     vitals_missing = not vitals.strip()
     if vitals_missing:
-        vitals = "normal"
+        vitals = "unknown"
 
     if not isinstance(age, (int, float)) or age <= 0 or age > 120:
         logger.error(f"Invalid age received: {age}")

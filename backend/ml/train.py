@@ -48,12 +48,20 @@ def train():
 
     )
 
-    model = make_pipeline(preprocessor, GradientBoostingClassifier(random_state=42))
+    model = make_pipeline(preprocessor, GradientBoostingClassifier(
+        n_estimators=150,
+        learning_rate=0.05,
+        max_depth=2,
+        random_state=42
+    ))
     model.fit(X_train, y_train)
+
+    vectorizer = model.named_steps["columntransformer"].named_transformers_["countvectorizer"]
+
+    print(vectorizer.get_feature_names_out()[:100])
 
     train_accuracy = model.score(X_train, y_train)
     test_accuracy = model.score(X_test, y_test)
-
     print(f"Train Accuracy: {train_accuracy * 100:.4f}%")
     print(f"Test Accuracy: {test_accuracy * 100:.4f}%")
 

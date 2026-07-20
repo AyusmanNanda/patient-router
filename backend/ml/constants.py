@@ -5,7 +5,7 @@ SAMPLE_SIZE = 50000
 GENDERS = ['male', 'female', 'other']
 
 SYMPTOMS_WEIGHT = {
-    "chest pain": 2,
+    "chest_pain": 2,
     "breathlessness": 2,
     "confusion": 2,
     "fatigue": 1,
@@ -14,16 +14,16 @@ SYMPTOMS_WEIGHT = {
     "fever": 1,
     "headache": 1,
     "dizziness": 1,
-    "blurred vision": 1,
-    "joint pain": 1,
+    "blurred_vision": 1,
+    "joint_pain": 1,
     "swelling": 1,
     "stiffness": 1,
-    "limited movement": 1,
-    "abdominal pain": 1,
+    "limited_movement": 1,
+    "abdominal_pain": 1,
     "nausea": 1,
     "vomiting": 1,
     "diarrhea": 1,
-    "body pain": 1,
+    "body_pain": 1,
     "weakness": 1,
 }
 
@@ -35,23 +35,24 @@ VITALS_WEIGHT = {
     "temp_high": 0,
     "temp_low": 0,
     "normal": 0,
+    "unknown" : 0
 }
 
-EMERGENCY_SYMPTOMS = ["chest pain", "breathlessness", "confusion"]
+EMERGENCY_SYMPTOMS = ["chest_pain", "breathlessness", "confusion"]
 EMERGENCY_VITALS = ["bp_low", "hr_high"]
 
 CONFIDENCE_THRESHOLD = 0.60
 SAFE_FALLBACK_DEPT = "general"
 
 KNOWN_SYMPTOMS = [
-    "chest pain", "breathlessness", "fatigue", "sweating",
+    "chest_pain", "breathlessness", "fatigue", "sweating",
     "cough", "fever", "headache", "dizziness", "confusion",
-    "blurred vision", "joint pain", "swelling", "stiffness",
-    "limited movement", "abdominal pain", "nausea", "vomiting",
-    "diarrhea", "body pain", "weakness"
+    "blurred_vision", "joint_pain", "swelling", "stiffness",
+    "limited_movement", "abdominal_pain", "nausea", "vomiting",
+    "diarrhea", "body_pain", "weakness"
 ]
 
-KNOWN_VITALS = ["bp_high", "bp_low", "hr_high", "hr_low", "temp_high", "temp_low", "normal"]
+KNOWN_VITALS = ["bp_high", "bp_low", "hr_high", "hr_low", "temp_high", "temp_low", "normal", "unknown"]
 
 ALIASES = {
     "bp high": "bp_high",
@@ -67,15 +68,15 @@ ALIASES = {
     "shortness of breath": "breathlessness",
     "short of breath": "breathlessness",
     "sob": "breathlessness",
-    "chest tightness": "chest pain",
-    "stomach pain": "abdominal pain",
-    "stomach ache": "abdominal pain",
-    "belly pain": "abdominal pain",
+    "chest tightness": "chest_pain",
+    "stomach pain": "abdominal_pain",
+    "stomach ache": "abdominal_pain",
+    "belly pain": "abdominal_pain",
     "loose motion": "diarrhea",
     "loose motions": "diarrhea",
-    "blurred": "blurred vision",
-    "blur": "blurred vision",
-    "joint ache": "joint pain",
+    "blurred": "blurred_vision",
+    "blur": "blurred_vision",
+    "joint ache": "joint_pain",
     "tired": "fatigue",
     "tiredness": "fatigue",
     "breathless": "breathlessness",
@@ -83,42 +84,103 @@ ALIASES = {
 
 DEPARTMENTS = {
     "cardiology": {
-        "symptoms": ["chest pain", "breathlessness", "fatigue", "sweating"],
-        "vitals": ["bp_high", "hr_high"],
-        "age_range": (45, 80),
-        "duration_range": (1, 5)
-    },
-    "pulmonology": {
-        "symptoms": ["cough", "breathlessness", "fever", "fatigue"],
-        "vitals": ["temp_high", "hr_high"],
-        "age_range": (20, 70),
+        "symptoms": [
+            "chest_pain",
+            "breathlessness",
+            "fatigue",
+            "sweating"
+        ],
+        "vitals": [
+            "bp_high",
+            "hr_high",
+            "normal"
+        ],
+        "age_range": (40, 85),
         "duration_range": (1, 7)
     },
-    "neurology": {
-        "symptoms": ["headache", "dizziness", "confusion", "blurred vision"],
-        "vitals": ["bp_low", "bp_high"],
-        "age_range": (30, 80),
+
+    "pulmonology": {
+        "symptoms": [
+            "cough",
+            "breathlessness",
+            "fever",
+            "fatigue"
+        ],
+        "vitals": [
+            "temp_high",
+            "hr_high",
+            "normal"
+        ],
+        "age_range": (15, 75),
         "duration_range": (1, 10)
     },
+
+    "neurology": {
+        "symptoms": [
+            "headache",
+            "dizziness",
+            "confusion",
+            "blurred_vision"
+        ],
+        "vitals": [
+            "bp_high",
+            "bp_low",
+            "normal"
+        ],
+        "age_range": (20, 85),
+        "duration_range": (1, 14)
+    },
+
     "orthopedics": {
-        "symptoms": ["joint pain", "swelling", "stiffness", "limited movement"],
-        "vitals": ["normal"],
-        "age_range": (40, 85),
-        "duration_range": (7, 30)
+        "symptoms": [
+            "joint_pain",
+            "swelling",
+            "stiffness",
+            "limited_movement"
+        ],
+        "vitals": [
+            "normal",
+            "hr_high",
+            "temp_high"
+        ],
+        "age_range": (30, 90),
+        "duration_range": (3, 45)
     },
+
     "gastrology": {
-        "symptoms": ["abdominal pain", "nausea", "vomiting", "diarrhea"],
-        "vitals": ["normal"],
-        "age_range": (20, 65),
-        "duration_range": (1, 5)
+        "symptoms": [
+            "abdominal_pain",
+            "nausea",
+            "vomiting",
+            "diarrhea"
+        ],
+        "vitals": [
+            "normal",
+            "bp_low",
+            "hr_high",
+            "temp_high"
+        ],
+        "age_range": (15, 75),
+        "duration_range": (1, 10)
     },
+
     "general": {
-        "symptoms": ["fever", "body pain", "weakness", "fatigue"],
-        "vitals": ["temp_high"],
-        "age_range": (15, 60),
-        "duration_range": (1, 5)
+        "symptoms": [
+            "fever",
+            "body_pain",
+            "weakness",
+            "fatigue"
+        ],
+        "vitals": [
+            "normal",
+            "temp_high",
+            "hr_high"
+        ],
+        "age_range": (10, 85),
+        "duration_range": (1, 14)
     }
 }
+
 
 OPPOSITES = {
     "bp_high": "bp_low",
