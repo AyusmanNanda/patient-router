@@ -32,7 +32,7 @@ Generated synthetically by `generate_data.py`, with configurable size (`SAMPLE_S
 | Departments  | 6 (cardiology, pulmonology, neurology, orthopedics, gastrology, general)        |
 | Distribution | Evenly split across departments, then shuffled                                  |
 | Symptoms     | 20, grouped by department with cross-department overlap noise                   |
-| Vitals       | bp_high, bp_low, hr_high, hr_low, temp_high, temp_low, normal                   |
+| Vitals       | bp_high, bp_low, hr_high, hr_low, temp_high, temp_low, normal, unknown          |
 | History      | pregnant, previous_heart_attack, on_blood_thinners, hiv, diabetes, hypertension |
 
 **Noise applied during generation**, to keep the synthetic data from being trivially separable:
@@ -41,9 +41,10 @@ Generated synthetically by `generate_data.py`, with configurable size (`SAMPLE_S
 | ------------------------------------- | -------------------------- |
 | Cross-department symptom added        | 40%                        |
 | Symptom dropout (drop one if >1)      | 20%                        |
+| Vital reported as `unknown`           | 5%                         |
+| Vitals reported as `normal` only      | 30%                        |
 | Vital measurement flipped to opposite | 15%                        |
-| Extra unrelated vital added           | 30%                        |
-| Vitals reported as "normal" only      | 10%                        |
+| Extra unrelated vital added           | 40%                        |
 | Unrelated history condition added     | 15% (if history non-empty) |
 | History condition dropped             | 10% (if >1 present)        |
 | History cleared entirely              | 20%                        |
@@ -287,13 +288,13 @@ The current Gradient Boosting results are:
 
 | Metric                   | Result                |
 | ------------------------ | --------------------- |
-| Test Accuracy            | 93.11%                |
-| Macro F1                 | 93.08%                |
-| 5-Fold CV Accuracy       | 93.27%                |
-| CV Standard Deviation    | ±0.17%                |
+| Test Accuracy            | 98.84%                |
+| Macro F1                 | 98.84%                |
+| 5-Fold CV Accuracy       | 99.04%                |
+| CV Standard Deviation    | ±0.07%                |
 | Edge-Case Accuracy       | 91.18%                |
-| Generalisation Gap       | 1.9 percentage points |
-| Comparison Training Time | 12.52 seconds         |
+| Generalisation Gap       | 7.7 percentage points |
+| Comparison Training Time | 12.14 seconds         |
 
 After comparing the models, I changed the locally trained model from Random Forest to Gradient Boosting.
 
