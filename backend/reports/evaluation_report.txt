@@ -1,30 +1,30 @@
 Model Evaluation Report
 =======================================================
-Synthetic test accuracy  : 95.24%
-5-Fold CV accuracy       : 95.41% (±0.23%)
-Edge-case accuracy       : 91.18%
-Generalisation gap       : 4.1pp  ← cross-dept overlap performance
+Synthetic test accuracy  : 92.83%
+5-Fold CV accuracy       : 92.84% (±0.32%)
+Edge-case accuracy       : 85.29%
+Generalisation gap       : 7.5pp  ← cross-dept overlap performance
 
 Per-Department (synthetic):
   Department          Acc   Avg Conf
   -----------------------------------
-  cardiology        97.1%      0.896
-  gastrology        98.6%      0.926
-  general           87.5%      0.832
-  neurology         98.1%      0.937
-  orthopedics       98.8%      0.960
-  pulmonology       91.4%      0.816
+  cardiology        90.6%      0.848
+  gastrology        97.1%      0.916
+  general           90.5%      0.817
+  neurology         96.6%      0.924
+  orthopedics       97.7%      0.916
+  pulmonology       84.5%      0.783
 
 Classification Report (synthetic):
               precision    recall  f1-score   support
 
-  cardiology       0.94      0.97      0.96      1667
-  gastrology       0.96      0.99      0.97      1667
-     general       0.96      0.88      0.91      1666
-   neurology       0.98      0.98      0.98      1667
- orthopedics       0.99      0.99      0.99      1666
- pulmonology       0.89      0.91      0.90      1667
+  cardiology       0.95      0.91      0.93      1667
+  gastrology       0.95      0.97      0.96      1667
+     general       0.86      0.91      0.88      1666
+   neurology       0.98      0.97      0.97      1667
+ orthopedics       0.94      0.98      0.96      1666
+ pulmonology       0.89      0.85      0.87      1667
 
-    accuracy                           0.95     10000
-   macro avg       0.95      0.95      0.95     10000
-weighted avg       0.95      0.95      0.95     10000
+    accuracy                           0.93     10000
+   macro avg       0.93      0.93      0.93     10000
+weighted avg       0.93      0.93      0.93     10000

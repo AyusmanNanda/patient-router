@@ -3,6 +3,8 @@ MODEL_VERSION = "1.1.0"
 SAMPLE_SIZE = 50000
 
 GENDERS = ['male', 'female', 'other']
+GLOBAL_AGE_RANGE = (1, 100)
+GLOBAL_DURATION_RANGE = (1, 90)
 
 SYMPTOMS_WEIGHT = {
     "chest_pain": 2,
@@ -95,8 +97,8 @@ DEPARTMENTS = {
             "hr_high",
             "normal"
         ],
-        "age_range": (40, 85),
-        "duration_range": (1, 7)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     },
 
     "pulmonology": {
@@ -111,8 +113,8 @@ DEPARTMENTS = {
             "hr_high",
             "normal"
         ],
-        "age_range": (15, 75),
-        "duration_range": (1, 10)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     },
 
     "neurology": {
@@ -127,8 +129,8 @@ DEPARTMENTS = {
             "bp_low",
             "normal"
         ],
-        "age_range": (20, 85),
-        "duration_range": (1, 14)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     },
 
     "orthopedics": {
@@ -143,8 +145,8 @@ DEPARTMENTS = {
             "hr_high",
             "temp_high"
         ],
-        "age_range": (30, 90),
-        "duration_range": (3, 45)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     },
 
     "gastrology": {
@@ -160,8 +162,8 @@ DEPARTMENTS = {
             "hr_high",
             "temp_high"
         ],
-        "age_range": (15, 75),
-        "duration_range": (1, 10)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     },
 
     "general": {
@@ -176,8 +178,8 @@ DEPARTMENTS = {
             "temp_high",
             "hr_high"
         ],
-        "age_range": (10, 85),
-        "duration_range": (1, 14)
+        "age_range": GLOBAL_AGE_RANGE,
+        "duration_range": GLOBAL_DURATION_RANGE
     }
 }
 
