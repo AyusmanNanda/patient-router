@@ -287,14 +287,14 @@ The comparison measures test accuracy, Macro F1, 5-fold CV accuracy, CV standard
 The current Gradient Boosting results are:
 
 | Metric                   | Result                |
-| ------------------------ | --------------------- |
-| Test Accuracy            | 98.84%                |
-| Macro F1                 | 98.84%                |
-| 5-Fold CV Accuracy       | 99.04%                |
-| CV Standard Deviation    | ±0.07%                |
+| ------------------------ |-----------------------|
+| Test Accuracy            | 93.11%                |
+| Macro F1                 | 93.08%                |
+| 5-Fold CV Accuracy       | 93.27%                |
+| CV Standard Deviation    | ±0.17%                |
 | Edge-Case Accuracy       | 91.18%                |
-| Generalisation Gap       | 7.7 percentage points |
-| Comparison Training Time | 12.14 seconds         |
+| Generalisation Gap       | 1.9 percentage points |
+| Comparison Training Time | 12.52 seconds         |
 
 After comparing the models, I changed the locally trained model from Random Forest to Gradient Boosting.
 
